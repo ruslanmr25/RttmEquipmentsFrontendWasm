@@ -1,0 +1,221 @@
+﻿@page "/equipments/{id:int}/delete"
+@* @using Microsoft.AspNetCore.Components.Forms *@
+
+
+@if (equipment is null)
+{
+
+     <LoadingComponent></LoadingComponent>
+
+}
+else
+{
+     <div class="card fade-in">
+          <div class="card-header">
+               <h3>@equipment.Name ni o'chirish</h3>
+          </div>
+
+          <div class="card-body">
+               <div class="row mb-3">
+                    <div class="col-md-6">
+                         <strong>Nom:</strong> @equipment.Name
+                    </div>
+                    <div class="col-md-6">
+                         <strong>Inventar raqami:</strong> @equipment.InvertarId
+                    </div>
+               </div>
+
+               <div class="row mb-3">
+                    <div class="col-md-6">
+                         <strong>Binosi:</strong> @equipment.Department?.Name <br>
+                         <strong>Xonasi:</strong> @equipment.Room?.Name
+                    </div>
+                    <div class="col-md-6">
+                         <strong>Jihoz turi:</strong> @equipment.EquipmentType?.Name
+                    </div>
+               </div>
+
+               <hr />
+               <h5 class="text-secondary">Mas’ul xodim</h5>
+               <div class="row">
+                    <div class="col-md-6">
+                         <strong>F.I.O:</strong> @equipment.User?.FullName
+                    </div>
+                    <div class="col-md-6">
+                         <strong>Telefon:</strong> @equipment.User?.Phone
+                    </div>
+               </div>
+
+               <hr />
+
+               <h5 class="text-secondary">Parametrlari:</h5>
+               @foreach (Parameter parameter in equipment.Parameters ?? new())
+               {
+                    <div class="col-md-6">
+                         <strong>@parameter.Name</strong>
+                    </div>
+               }
+
+
+          </div>
+     </div>
+
+     <div class="card">
+
+
+          <div class="card-body">
+
+               <InputFile OnChange="HandleFileSelected" class="form-control"
+                    accept="application/pdf, application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document" />
+
+
+
+               @if (!string.IsNullOrEmpty(selectedFileName))
+               {
+                    <p class="text-success">Tanlangan fayl: @selectedFileName</p>
+               }
+               @if (!string.IsNullOrEmpty(errorMessage))
+               {
+                    <p class="text-danger">@errorMessage</p>
+               }
+
+
+
+               <LoadingButton IsRequestSending="isRequestSending" CssClass="btn btn-primary mt-3" Type="Button"
+                    Name="Saqlash" RunEvent="UploadFileAsync"></LoadingButton>
+
+          </div>
+
+     </div>
+}
+
+
+
+
+@inject ToastrService ToastrService
+
+@inject NavigationManager NavigationManager
+@inject EquipmentClient EquipmentClient
+@code {
+
+
+
+
+
+     protected bool isRequestSending = false;
+
+
+
+     [Parameter]
+     public int Id { get; set; }
+
+     private string? selectedFileName;
+
+     private string? errorMessage;
+
+     protected bool canUpload = false;
+
+     private IBrowserFile? selectedFile;
+
+
+     private void HandleFileSelected(InputFileChangeEventArgs e)
+     {
+
+          selectedFile = e.File;
+          errorMessage = null;
+          selectedFileName = null;
+
+          canUpload = false;
+
+          if (selectedFile != null)
+          {
+               var allowedTypes = new[]
+               {
+"application/pdf",
+"application/msword",
+"application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+};
+
+               if (!allowedTypes.Contains(selectedFile.ContentType))
+               {
+                    errorMessage = "Faqat PDF yoki DOCX fayl tanlashingiz mumkin!";
+                    return;
+               }
+
+               if (selectedFile.Size > 10 * 1024 * 1024)
+               {
+                    errorMessage = "Fayl hajmi 10 MB dan oshmasligi kerak!";
+                    return;
+               }
+               selectedFileName = selectedFile.Name;
+
+               canUpload = true;
+
+
+
+          }
+
+     }
+
+     private async Task UploadFileAsync()
+     {
+
+          isRequestSending = true;
+          if (selectedFile == null)
+          {
+               return;
+          }
+          try
+          {
+               var content = new MultipartFormDataContent();
+               var stream = selectedFile.OpenReadStream(10 * 1024 * 1024);
+               content.Add(new StreamContent(stream), "file", selectedFile.Name);
+
+
+
+               var response = await EquipmentClient.DeleteAsync(Id, content);
+
+               if (response.Success)
+               {
+
+
+                    ToastrService.ShowSucess(response.Message ?? "Nimadir xato ketti");
+
+
+                    NavigationManager.NavigateTo("equipments");
+               }
+               else
+               {
+                    selectedFile = null;
+                    canUpload = false;
+               }
+
+
+          }
+          catch (Exception e)
+          {
+
+               ToastrService.ShowError($"Nimadir xato ketti:{e}");
+
+               errorMessage = "Nimadir xato ketti";
+
+          }
+
+          isRequestSending = false;
+     }
+
+
+
+
+
+     protected Equipment? equipment;
+
+     protected override async Task OnParametersSetAsync()
+     {
+
+          var response = await EquipmentClient.GetAsync(id: Id);
+
+          equipment = response.Data;
+
+     }
+}

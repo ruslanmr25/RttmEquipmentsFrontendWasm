@@ -1,0 +1,36 @@
+﻿<button disabled="@IsRequestSending" class="@(CssClass ?? "btn btn-dark btn-lg fw-medium")" type="@Type"
+     @onclick="RunEvent">
+     @if (IsRequestSending)
+     {
+          <span class="spinner-border spinner-border-sm me-1" role="status" aria-hidden="true"></span>
+
+     }
+     else
+     {
+          @Name
+     }
+</button>
+
+
+@code
+{
+
+
+     [Parameter]
+     public string? CssClass { get; set; }
+
+     [Parameter]
+     public string Name { get; set; } = "Yaratish";
+
+     [Parameter]
+
+     public string Type { get; set; } = "submit";
+
+
+     [Parameter]
+     public EventCallback RunEvent { get; set; }
+
+
+     [Parameter]
+     public bool IsRequestSending { get; set; } = false;
+}

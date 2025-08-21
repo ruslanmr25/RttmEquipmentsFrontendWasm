@@ -1,0 +1,178 @@
+﻿@page "/equipments/{id:int}"
+
+<div class="container mt-4">
+    <div class="card fade-in shadow-lg border-0 rounded-3">
+        <div class="card-header text-white">
+            <h4 class="mb-0">Jihoz haqida ma’lumot</h4>
+        </div>
+        <div class="card-body">
+
+            @if (equipment is not null)
+            {
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <strong>Nom:</strong> @equipment.Name
+                    </div>
+                    <div class="col-md-6">
+                        <strong>Inventar raqami:</strong> @equipment.InvertarId
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <strong>Binosi:</strong> @equipment.Department?.Name <br>
+                        <strong>Xonasi:</strong> @equipment.Room?.Name
+                    </div>
+                    <div class="col-md-6">
+                        <strong>Jihoz turi:</strong> @equipment.EquipmentType?.Name
+                    </div>
+                </div>
+
+                <hr />
+                <h5 class="text-secondary">Mas’ul xodim</h5>
+                <div class="row">
+                    <div class="col-md-6">
+                        <strong>F.I.O:</strong> @equipment.User?.FullName
+                    </div>
+                    <div class="col-md-6">
+                        <strong>Telefon:</strong> @equipment.User?.Phone
+                    </div>
+                </div>
+
+                <hr />
+
+                <h5 class="text-secondary">Parametrlari:</h5>
+                @foreach (Parameter parameter in equipment.Parameters ?? new())
+                {
+                    <div class="col-md-6">
+                        <strong>@parameter.Name</strong>
+                    </div>
+                }
+            
+            
+            
+            }
+            else
+            {
+                <LoadingComponent></LoadingComponent>
+            }
+
+        </div>
+        <div class="card-footer text-end">
+            <button class="btn btn-outline-primary btn-sm">Tahrirlash</button>
+            <button class="btn btn-outline-danger btn-sm">O‘chirish</button>
+        </div>
+    </div>
+
+    @if (equipment?.Images is not null)
+    {
+        <div class="card p-3 mt-3">
+            <div class="card-header">
+                <h5 class="secondary-text">Jihoz rasmlari</h5>
+            </div>
+
+            <div class="card-body d-flex flex-wrap gap-3">
+
+                @foreach (var image in equipment.Images)
+                {
+                    <div class="card-item position-relative fade-in" style="width: 18rem;">
+                        <img src="@($"http://localhost:8000/storage/{image.Path}")" class="card-img-top" alt="Jihoz rasmi">
+
+                        <!-- Hover overlay -->
+                        <div class="overlay d-flex align-items-center justify-content-center">
+                            <button class="btn btn-danger btn-sm" @onclick="() => DeleteImageAsync(image)">
+                                <i class="bi bi-trash"></i> O‘chirish
+                            </button>
+                        </div>
+                    </div>
+                }
+
+
+                <div class="card text-center position-relative"
+                    style="width:18rem; background-color:rgb(246,246,246); cursor:pointer;">
+                    <div class="card-body d-flex flex-column align-items-center justify-content-center">
+                        <span style="font-size:48px;">+</span>
+                        <h5 class="mt-2 mb-0">Yangi rasm qo‘shish</h5>
+                    </div>
+
+                    <!-- InputFile div ustida, opacity:0 va full size -->
+                    <InputFile OnChange="HandleFileSelected" accept="image/*"
+                        style="position:absolute; top:0; left:0; width:100%; height:100%; opacity:0; cursor:pointer;" />
+                </div>
+
+
+            </div>
+        </div>
+    }
+</div>
+
+
+@inject EquipmentClient EquipmentClient
+@inject FileUploadClient FileUploadClient
+
+@inject ToastrService ToastrService
+@inject IJSRuntime JS
+
+@code {
+
+
+    [Parameter] public int Id { get; set; }
+
+    protected Equipment? equipment;
+    private string? selectedImageBase64;
+    protected override void OnInitialized()
+    {
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        var response = await EquipmentClient.GetAsync(Id);
+        equipment = response.Data;
+    }
+
+    private InputFile? fileInput;
+
+
+
+    private async Task HandleFileSelected(InputFileChangeEventArgs e)
+    {
+        var file = e.File;
+
+        using var stream = file.OpenReadStream(maxAllowedSize: 10_000_000); // 10 MB
+
+        var content = new MultipartFormDataContent();
+        var fileContent = new StreamContent(stream);
+
+        fileContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue(file.ContentType);
+
+        content.Add(fileContent, "image", file.Name);
+        var response = await FileUploadClient.SendPhoto(Id, content);
+
+        ToastrService.ShowInfo(response.Message ?? "Nimadir xato ketti");
+
+
+
+        var equipmentResponse = await EquipmentClient.GetAsync(Id);
+
+
+        equipment = equipmentResponse.Data;
+
+    }
+
+
+
+    protected async Task DeleteImageAsync(Image image)
+    {
+        var isSuccess = await FileUploadClient.DeleteAsync(image.Id);
+
+        if (isSuccess)
+        {
+            ToastrService.ShowSucess("Rasm muvaffaqiyatli o'chirildi");
+        }
+
+        equipment?.Images?.Remove(image);
+    }
+
+
+
+}

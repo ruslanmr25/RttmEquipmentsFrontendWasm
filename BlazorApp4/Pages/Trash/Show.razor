@@ -1,0 +1,91 @@
+﻿@page "/trashes/{id:int}"
+
+<div class="card">
+     <div class="card-header">
+          Jihoz haqida
+     </div>
+
+     <div class="card-body">
+
+          @if (equipment is not null)
+          {
+
+               <table class="table table-bordered table-striped m-5 mt-0">
+                    <tbody>
+                         <tr>
+                              <td>ID</td>
+                              <td>@equipment.Id</td>
+                         </tr>
+                         <tr>
+                              <td>Nomi</td>
+                              <td>@equipment.Name</td>
+                         </tr>
+                         <tr>
+                              <td>Invertar ID</td>
+                              <td>@equipment.InvertarId</td>
+                         </tr>
+                         <tr>
+                              <td>Foydalanuvchi</td>
+                              <td>@equipment.User?.FullName</td>
+                         </tr>
+                         <tr>
+                              <td>Uskuna turi</td>
+                              <td>@equipment.EquipmentType?.Name</td>
+                         </tr>
+                         <tr>
+                              <td>Xona ID</td>
+                              <td>@equipment.RoomId</td>
+                         </tr>
+                         <tr>
+                              <td>Bo‘lim ID</td>
+                              <td>@equipment.DepartmentId</td>
+                         </tr>
+                         <tr>
+                              <td>MAC Address</td>
+                              <td>@equipment.MacAddress</td>
+                         </tr>
+                         <tr>
+                              <td>O‘chirib tashlangan fayl</td>
+                              <td>
+                                   <a href="@($"http://localhost:8000/storage/{equipment.DeletedItemFile?.Path}")">
+                                        Yuklab olish</a>
+
+                              </td>
+                         </tr>
+                         <tr>
+                              <td>O‘chirilgan vaqt</td>
+                              <td>@equipment.DeletedAt</td>
+                         </tr>
+                    </tbody>
+               </table>
+
+          }
+          else
+          {
+               <LoadingComponent />
+          }
+
+     </div>
+</div>
+
+@inject TrashClient TrashClient
+
+
+
+@code {
+
+
+     [Parameter] public int Id { get; set; }
+
+     protected Equipment? equipment;
+
+     protected override async Task OnParametersSetAsync()
+     {
+
+          var response = await TrashClient.GetAsync(Id);
+
+          equipment = response.Data;
+
+          await base.OnParametersSetAsync();
+     }
+}

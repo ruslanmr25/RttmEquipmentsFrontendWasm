@@ -1,0 +1,258 @@
+﻿@page "/rooms"
+
+
+<div class="card fade-in">
+     <div class="card-header d-flex justify-content-between align-items-center">
+
+
+          <h5 class="card-title">
+               Xonalar
+          </h5>
+
+
+          <Modal @bind-Hidden="@isHidden" Title="Yangi xona qo'shish">
+
+
+               <EditForm Model="@createRoomDto" OnValidSubmit="@CreateAsync">
+                    <DataAnnotationsValidator />
+                    <div class="mb-3">
+                         <label for="name" class="form-label">Xona nomi</label>
+                         <InputText @bind-Value="createRoomDto.Name" type="text" id="name" class="form-control">
+                         </InputText>
+
+                         <ValidationMessage For="@(() => createRoomDto.Name)" />
+
+                    </div>
+                    <div class="mb-3">
+                         <label for="name" class="form-label">Binosi</label>
+                         <InputSelect @bind-Value="createRoomDto.DepartmentId" id="name" class="form-control">
+                              <option value="">-- Tanlang --</option>
+
+                              @foreach (Department department in departments)
+                              {
+
+                                   <option value="@department.Id">@department.Name</option>
+                              }
+
+                         </InputSelect>
+
+                         <ValidationMessage For="@(() => createRoomDto.DepartmentId)" />
+
+                    </div>
+
+                    <div class="text-end">
+                         <button type="button" @onclick="() => isHidden = true"
+                              class="btn btn-secondary me-2">Yopish</button>
+
+                         <LoadingButton CssClass="btn btn-primary" Type="submit" IsRequestSending="@isRequestSending"
+                              Name="Yaratish" />
+
+                    </div>
+               </EditForm>
+
+          </Modal>
+
+
+     </div>
+     @if (rooms is null)
+     {
+          <LoadingComponent />
+
+
+     }
+     else
+     {
+          <div class="card-body">
+               <div class="table-responsive">
+                    <table class="table  table-hover">
+                         <thead class="table-light">
+                              <tr>
+
+                                   <th scope="col">T/r</th>
+                                   <th scope="col">Nomi</th>
+                                   <th scope="col">Binosi</th>
+
+
+                                   <th scope="col">Jihozlar soni</th>
+                                   <th scope="col">Tahrirlash</th>
+
+
+
+
+
+                              </tr>
+                         </thead>
+                         <tbody>
+
+                              @foreach (Room room in rooms)
+                              {
+                                   <tr>
+                                        <td> @room.Id</td>
+                                        <td>@room.Name</td>
+                                        <td>@room.Department?.Name</td>
+
+
+                                        <td>@room.EquipmentsCount</td>
+                                        <td>
+                                             <span role="button" @onclick="() => OpenEditModal(room)">
+                                                  Tahrirlash
+                                             </span>
+                                        </td>
+                                   </tr>
+                              }
+
+                         </tbody>
+                    </table>
+               </div>
+
+
+          </div>
+
+     }
+</div>
+
+
+
+<Modal @bind-Hidden="isEditModalHidden" HideToggleButton="true" Title="Xonani tahrirlash">
+
+
+     <EditForm Model="@editRoomDto" OnValidSubmit="@EditAsync">
+          <DataAnnotationsValidator />
+          <div class="mb-3">
+               <label for="name" class="form-label">Xona nomi</label>
+               <InputText @bind-Value="editRoomDto.Name" type="text" id="name" class="form-control">
+               </InputText>
+
+               <ValidationMessage For="@(() => editRoomDto.Name)" />
+
+          </div>
+
+
+          <div class="mb-3">
+               <label for="name" class="form-label">Binosi</label>
+               <InputSelect @bind-Value="editRoomDto.DepartmentId" id="name" class="form-control">
+                    <option value="">-- Tanlang --</option>
+
+                    @foreach (Department department in departments)
+                    {
+
+                         <option value="@department.Id">@department.Name</option>
+                    }
+
+               </InputSelect>
+
+               <ValidationMessage For="@(() => editRoomDto.DepartmentId)" />
+
+          </div>
+
+          <div class="text-end">
+               <button type="button" @onclick="() => isEditModalHidden = true"
+                    class="btn btn-secondary me-2">Yopish</button>
+
+               <LoadingButton CssClass="btn btn-primary" Type="submit" IsRequestSending="@isRequestSending"
+                    Name="Tahrirlash" />
+
+          </div>
+     </EditForm>
+
+</Modal>
+
+
+@inject RoomClient RoomClient
+@inject ToastrService ToastrService
+
+@inject DepartmentClient DepartmentClient
+
+
+
+@code {
+
+     protected CreateRoomDto createRoomDto = new();
+
+
+     protected EditRoomDto editRoomDto = new();
+     protected List<Room>? rooms;
+
+
+     protected List<Department> departments = new();
+     protected bool isHidden = true;
+
+     protected bool isEditModalHidden = true;
+
+     protected bool isRequestSending = false;
+
+     protected override async Task OnInitializedAsync()
+     {
+
+
+
+
+          var responseDepartment = await DepartmentClient.GetAllAsync();
+
+          departments = responseDepartment.Data ?? new();
+
+
+          var response = await RoomClient.GetAllAsync();
+
+          rooms = response.Data ?? new();
+
+
+     }
+
+
+     public async Task CreateAsync()
+     {
+
+          isRequestSending = true;
+          var createResponse = await RoomClient.CreateAsync(createRoomDto);
+
+
+          var response = await RoomClient.GetAllAsync();
+
+          createRoomDto = new();
+
+          rooms = response.Data ?? new();
+
+          isHidden = true;
+
+          isRequestSending = false;
+
+
+          ToastrService.ShowSucess(createResponse.Message!);
+
+
+     }
+
+
+     public void OpenEditModal(Room room)
+     {
+
+          isEditModalHidden = false;
+          editRoomDto.Id = room.Id;
+          editRoomDto.Name = room.Name!;
+          editRoomDto.DepartmentId = room.Department?.Id ?? throw new Exception("Nimadir xato ketti");
+
+
+     }
+
+     public async Task EditAsync()
+     {
+          isRequestSending = true;
+          var updateResponse = await RoomClient.UpdateAsync(editRoomDto.Id, editRoomDto);
+
+
+          var response = await RoomClient.GetAllAsync();
+
+          editRoomDto = new();
+
+          rooms = response.Data ?? new();
+
+          isEditModalHidden = true;
+
+          isRequestSending = false;
+
+
+          ToastrService.ShowSucess(updateResponse.Message!);
+
+     }
+}

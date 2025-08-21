@@ -1,0 +1,41 @@
+<Project Sdk="Microsoft.NET.Sdk.BlazorWebAssembly">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <ServiceWorkerAssetsManifest>service-worker-assets.js</ServiceWorkerAssetsManifest>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="9.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="9.0.0" PrivateAssets="all" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ServiceWorker Include="wwwroot\service-worker.js" PublishedContent="wwwroot\service-worker.published.js" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\assets\vendor\chart.js\docs\" />
+    <Folder Include="wwwroot\assets\vendor\choices.js\public\types\cypress\integration\" />
+    <Folder Include="wwwroot\assets\vendor\choices.js\public\types\src\" />
+    <Folder Include="wwwroot\assets\vendor\choices.js\src\" />
+    <Folder Include="wwwroot\assets\vendor\daterangepicker\example\" />
+    <Folder Include="wwwroot\assets\vendor\flatpickr\types\" />
+    <Folder Include="wwwroot\assets\vendor\flatpickr\utils\" />
+    <Folder Include="wwwroot\assets\vendor\gmaps\docs\" />
+    <Folder Include="wwwroot\assets\vendor\gmaps\examples\" />
+    <Folder Include="wwwroot\assets\vendor\gmaps\test\" />
+    <Folder Include="wwwroot\assets\vendor\gridjs\src\" />
+    <Folder Include="wwwroot\assets\vendor\rater-js\example\" />
+    <Folder Include="wwwroot\assets\vendor\rater-js\test\" />
+    <Folder Include="wwwroot\assets\vendor\swiper\angular\angular\src\" />
+    <Folder Include="wwwroot\assets\vendor\swiper\angular\esm2020\angular\src\" />
+    <Folder Include="wwwroot\assets\vendor\swiper\types\modules\" />
+    <Folder Include="wwwroot\assets\vendor\toastify-js\example\" />
+    <Folder Include="wwwroot\assets\vendor\toastify-js\src\" />
+    <Folder Include="wwwroot\images\" />
+  </ItemGroup>
+
+</Project>

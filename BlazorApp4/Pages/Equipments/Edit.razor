@@ -1,0 +1,297 @@
+﻿@page "/equipments/{id:int}/edit"
+<div class="card fade-in">
+
+     <div class="card-header mt-2">
+          <h4>
+
+               Jihozni tahrirlash
+          </h4>
+     </div>
+
+     @if (editEquipmentDto is not null)
+     {
+
+          <div class="card-body">
+
+
+               <EditForm OnValidSubmit="@HandelValidSubmit" Model="@editEquipmentDto">
+
+                    <ValidationSummary></ValidationSummary>
+
+                    <DataAnnotationsValidator></DataAnnotationsValidator>
+
+                    <div class="m-5 mt-1">
+
+                         <!-- Name -->
+                         <div class="row mb-3">
+                              <label class="col-md-3 col-form-label">Uskuna nomi:</label>
+                              <div class="col-md-9">
+                                   <InputText @bind-Value="editEquipmentDto.Name" type="text" class="form-control"
+                                        placeholder="jihoz nomi" />
+                                   <ValidationMessage For="@(() => editEquipmentDto.Name)" />
+                              </div>
+
+
+
+                         </div>
+
+                         <!-- InvertarId -->
+                         <div class="row mb-3">
+                              <label class="col-md-3 col-form-label">Inventar raqami:</label>
+                              <div class="col-md-9">
+                                   <InputNumber @bind-Value="editEquipmentDto.InvertarId" type="number"
+                                        class="form-control" />
+                                   <ValidationMessage For="@(() => editEquipmentDto.InvertarId)" />
+                              </div>
+
+
+                         </div>
+
+                         <!-- MacAddress -->
+                         <div class="row mb-3">
+                              <label class="col-md-3 col-form-label">Mac manzil:</label>
+                              <div class="col-md-9">
+                                   <InputText @bind-Value="editEquipmentDto.MacAddress" type="text" class="form-control"
+                                        placeholder="00:1A:2B:3C:4D:5E" />
+                                   <ValidationMessage For="@(() => editEquipmentDto.MacAddress)" />
+                              </div>
+
+
+                         </div>
+
+                         <!-- UserId -->
+                         <div class="row mb-3">
+                              <label class="col-md-3 col-form-label">Foydalanuvchi:</label>
+                              <div class="col-md-9">
+                                   <InputSelect @bind-Value="editEquipmentDto.UserId" class="form-select">
+                                        <option value="">Tanlang</option>
+
+                                        @foreach (var user in users)
+                                        {
+                                             <option value="@user.Id">@user.FullName</option>
+
+                                        }
+                                        <!-- Dinamik userlar shu yerda -->
+                                   </InputSelect>
+                                   <ValidationMessage For="@(() => editEquipmentDto.UserId)" />
+                              </div>
+
+
+                         </div>
+
+                         <!-- EquipmentTypeId -->
+                         <div class="row mb-3">
+                              <label class="col-md-3 col-form-label">Uskuna turi:</label>
+                              <div class="col-md-9">
+                                   <InputSelect Value="@editEquipmentDto.EquipmentTypeId"
+                                        ValueChanged="@((int value) => OnEquipmentTypeChanged(value))"
+                                        ValueExpression="@(() => editEquipmentDto.EquipmentTypeId)" class="form-select">
+
+
+                                        <option value="">Tanlang</option>
+
+                                        @foreach (var equipmentType in categories)
+                                        {
+                                             <option value="@equipmentType.Id">@equipmentType.Name</option>
+
+                                        }
+                                        <!-- Dinamik uskuna turlari -->
+                                   </InputSelect>
+                                   <ValidationMessage For="@(() => editEquipmentDto.EquipmentTypeId)" />
+                              </div>
+
+
+                         </div>
+
+                         <!-- Parameters -->
+                         <div class="row mb-3">
+                              <label class="col-md-3 col-form-label">Parametrlar:</label>
+                              <div class="col-md-9">
+
+                                   <InputMultiSelect TItem="Parameter" GetText="@(p => p.Name)" GetValue="@(p => p.Id)"
+                                        @bind-Value="editEquipmentDto.Parameters" Items="@parameters" class="form-select">
+
+
+                                   </InputMultiSelect>
+
+                                   <ValidationMessage For="@(() => editEquipmentDto.Parameters)" />
+
+                                   <small class="text-muted">Bir nechta parametr tanlash mumkin</small>
+                              </div>
+                         </div>
+
+                         <!-- DepartmentId -->
+                         <!-- DepartmentId -->
+                         <div class="row mb-3">
+                              <label class="col-md-3 col-form-label">Bino:</label>
+                              <div class="col-md-9">
+                                   <InputSelect class="form-select" Value="@editEquipmentDto.DepartmentId"
+                                        ValueChanged="@((int value) => OnDepartmentChanged(value))"
+                                        ValueExpression="@(() => editEquipmentDto.DepartmentId)">
+                                        <option value="">-- Tanlang --</option>
+                                        @foreach (var department in departments)
+                                        {
+                                             <option value="@department.Id">@department.Name</option>
+                                        }
+                                   </InputSelect>
+
+
+                                   <ValidationMessage For="@(() => editEquipmentDto.DepartmentId)" />
+                              </div>
+                         </div>
+
+
+                         <!-- RoomId -->
+                         <div class="row mb-3">
+                              <label class="col-md-3 col-form-label">Xona:</label>
+                              <div class="col-md-9">
+                                   <InputSelect @bind-Value="editEquipmentDto.RoomId" class="form-select">
+                                        <option value="">Tanlang</option>
+
+                                        @foreach (var room in rooms)
+                                        {
+                                             <option value="@room.Id">@room.Name</option>
+
+                                        }
+                                        <!-- Dinamik xonalar -->
+                                   </InputSelect>
+
+                                   <ValidationMessage For="@(() => editEquipmentDto.RoomId)" />
+
+                              </div>
+
+
+                         </div>
+
+                         <!-- Submit button -->
+                         <div class="row mb-3">
+                              <div class="col-md-9 offset-md-3">
+                                   <button type="submit" class="btn btn-primary">Saqlash</button>
+                              </div>
+                         </div>
+
+                    </div>
+
+               </EditForm>
+
+
+          </div>
+     }
+
+</div>
+
+
+@inject UserClient UserClient
+@inject EquipmentTypeClient EquipmentTypeClient
+
+@inject DepartmentClient DepartmentClient
+
+@inject RoomClient RoomClient
+
+@inject ParameterClient ParameterClient
+@inject ToastrService ToastrService
+@inject EquipmentClient EquipmentClient
+
+@inject NavigationManager NavigationManager
+
+
+@code
+{
+
+     [Parameter]
+     public int Id { get; set; }
+
+
+     protected List<User> users = new();
+
+     protected List<EquipmentType> categories = new();
+
+     protected List<Department> departments = new();
+
+
+     protected List<Room> rooms = new();
+
+     protected List<Parameter> parameters = new();
+
+     protected EditEquipmentDto? editEquipmentDto;
+
+
+     protected override async Task OnParametersSetAsync()
+     {
+
+          var response = await EquipmentClient.GetAsync(Id);
+          editEquipmentDto = new EditEquipmentDto
+          {
+               Name = response.Data!.Name!,
+               InvertarId = (int)response.Data!.InvertarId!,
+               MacAddress = response.Data.MacAddress,
+               UserId = response.Data!.User!.Id,
+               EquipmentTypeId = response.Data!.EquipmentType!.Id,
+
+               DepartmentId = response.Data.DepartmentId,
+               RoomId = response.Data.RoomId
+          };
+
+
+     }
+
+
+     protected override async Task OnInitializedAsync()
+     {
+          var userResponse = await UserClient.GetAllAsync();
+
+          users = userResponse.Data ?? new();
+
+          var equipmentTypeResponse = await EquipmentTypeClient.GetAllAsync();
+
+          categories = equipmentTypeResponse.Data ?? new();
+
+
+          var deparmtentReponse = await DepartmentClient.GetAllAsync();
+
+          departments = deparmtentReponse.Data ?? new();
+
+     }
+
+     private async Task OnDepartmentChanged(int value)
+     {
+
+
+          editEquipmentDto!.DepartmentId = value;
+          var roomResponse = await DepartmentClient.GetAsync(value);
+          rooms = roomResponse.Data?.Rooms ?? new();
+
+     }
+
+
+     private async Task OnEquipmentTypeChanged(int value)
+     {
+          editEquipmentDto!.EquipmentTypeId = value;
+          var parmetersResponse = await EquipmentTypeClient.GetAsync(value);
+
+
+          parameters = parmetersResponse.Data?.Parameters ?? new();
+
+
+     }
+
+
+
+     public async Task HandelValidSubmit()
+     {
+
+
+          var response = await EquipmentClient.CreateAsync(editEquipmentDto);
+
+          ToastrService.ShowSucess(response.Message!);
+
+          NavigationManager.NavigateTo("equipments");
+
+     }
+
+
+
+
+
+
+}

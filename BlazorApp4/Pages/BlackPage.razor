@@ -1,0 +1,36 @@
+﻿@page "/black"
+@inject HttpClient Http
+
+<InputFile OnChange="HandleFileSelected" accept="image/*" />
+
+@code {
+    private async Task HandleFileSelected(InputFileChangeEventArgs e)
+    {
+        var file = e.File;
+
+        using var stream = file.OpenReadStream(maxAllowedSize: 10_000_000); // 10 MB
+
+        var content = new MultipartFormDataContent();
+        var fileContent = new StreamContent(stream);
+
+        fileContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue(file.ContentType);
+
+        content.Add(fileContent, "file", file.Name);
+
+        // Endpointga yuborish
+        var response = await Http.PostAsync("https://localhost:5001/api/upload", content);
+
+        if (response.IsSuccessStatusCode)
+        {
+            Console.WriteLine("Fayl muvaffaqiyatli yuklandi!");
+        }
+        else
+        {
+            Console.WriteLine($"Xato: {response.StatusCode}");
+        }
+    }
+
+
+
+
+}

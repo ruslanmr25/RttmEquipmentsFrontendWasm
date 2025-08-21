@@ -1,0 +1,242 @@
+﻿@page "/departments"
+
+
+<div class="card fade-in">
+     <div class="card-header d-flex justify-content-between align-items-center">
+
+
+          <div class="d-flex align-items-center justify-content-between gap-5">
+
+               <h5 class="card-title">
+
+
+
+                    Binolar
+
+
+               </h5>
+               <div class="d-flex align-items-center ">
+
+
+
+                    <input type="search" class="form-control" placeholder="izlash..." autocomplete="off"
+                         @oninput="Search">
+               </div>
+          </div>
+
+          <Modal @bind-Hidden="@isHidden" Title="Yangi bino qo'shish">
+
+
+               <EditForm Model="@createDepartmentDto" OnValidSubmit="@CreateAsync">
+                    <DataAnnotationsValidator />
+                    <div class="mb-3">
+                         <label for="name" class="form-label">Bino nomi</label>
+                         <InputText @bind-Value="createDepartmentDto.Name" type="text" id="name" class="form-control">
+                         </InputText>
+
+                         <ValidationMessage For="@(() => createDepartmentDto.Name)" />
+
+                    </div>
+
+
+                    <div class="text-end">
+                         <button type="button" @onclick="() => isHidden = true"
+                              class="btn btn-secondary me-2">Yopish</button>
+
+                         <LoadingButton CssClass="btn btn-primary" Type="submit" IsRequestSending="@isRequestSending"
+                              Name="Yaratish" />
+
+                    </div>
+               </EditForm>
+
+          </Modal>
+
+
+     </div>
+     @if (searchableDepartments is null)
+     {
+          <LoadingComponent />
+
+
+     }
+     else
+     {
+          <div class="card-body">
+               <div class="table-responsive">
+                    <table class="table  table-hover">
+                         <thead class="table-light">
+                              <tr>
+
+                                   <th scope="col">T/r</th>
+                                   <th scope="col">Nomi</th>
+                                   <th scope="col">Xonalar soni</th>
+
+                                   <th scope="col">Jihozlar soni</th>
+                                   <th scope="col">Tahrirlash</th>
+
+
+
+
+
+                              </tr>
+                         </thead>
+                         <tbody>
+
+                              @foreach (Department department in searchableDepartments)
+                              {
+                                   <tr>
+                                        <td> @department.Id</td>
+                                        <td>
+                                             <NavLink href="@($"/departments/{department.Id}")">
+                                                  @department.Name
+                                             </NavLink>
+                                        </td>
+                                        <td>@department.RoomsCount</td>
+
+                                        <td>@department.EquipmentsCount</td>
+                                        <td>
+                                             <span role="button" @onclick="() => OpenEditModal(department)">
+                                                  Tahrirlash
+                                             </span>
+                                        </td>
+                                   </tr>
+                              }
+
+                         </tbody>
+                    </table>
+               </div>
+
+
+          </div>
+
+     }
+</div>
+
+
+
+<Modal @bind-Hidden="isEditModalHidden" HideToggleButton="true" Title="Binoni tahrirlash">
+
+
+     <EditForm Model="@editDepartmentDto" OnValidSubmit="@EditAsync">
+          <DataAnnotationsValidator />
+          <div class="mb-3">
+               <label for="name" class="form-label">Bino nomi</label>
+               <InputText @bind-Value="editDepartmentDto.Name" type="text" id="name" class="form-control">
+               </InputText>
+
+               <ValidationMessage For="@(() => editDepartmentDto.Name)" />
+
+          </div>
+
+
+          <div class="text-end">
+               <button type="button" @onclick="() => isEditModalHidden = true"
+                    class="btn btn-secondary me-2">Yopish</button>
+
+               <LoadingButton CssClass="btn btn-primary" Type="submit" IsRequestSending="@isRequestSending"
+                    Name="Tahrirlash" />
+
+          </div>
+     </EditForm>
+
+</Modal>
+
+
+@inject DepartmentClient DepartmentClient
+@inject ToastrService ToastrService
+
+
+
+@code {
+
+     protected CreateDepartmentDto createDepartmentDto = new();
+
+
+     protected EditDepartmentDto editDepartmentDto = new();
+     protected List<Department>? departments;
+     protected List<Department>? searchableDepartments;
+
+     protected bool isHidden = true;
+
+     protected bool isEditModalHidden = true;
+
+     protected bool isRequestSending = false;
+
+     protected override async Task OnInitializedAsync()
+     {
+
+
+          var response = await DepartmentClient.GetAllAsync();
+
+          departments = response.Data ?? new();
+          searchableDepartments = departments;
+
+
+     }
+
+
+     public async Task CreateAsync()
+     {
+
+          isRequestSending = true;
+          var createResponse = await DepartmentClient.CreateAsync(createDepartmentDto);
+
+
+          var response = await DepartmentClient.GetAllAsync();
+
+          createDepartmentDto = new();
+
+          departments = response.Data ?? new();
+          searchableDepartments = departments;
+
+
+          isHidden = true;
+
+          isRequestSending = false;
+
+
+          ToastrService.ShowSucess(createResponse.Message!);
+
+
+     }
+
+
+     public void OpenEditModal(Department department)
+     {
+
+          isEditModalHidden = false;
+          editDepartmentDto.Id = department.Id ?? throw new Exception("Nimadir xato ketti");
+          editDepartmentDto.Name = department.Name!;
+
+     }
+
+     public async Task EditAsync()
+     {
+          isRequestSending = true;
+          var updateResponse = await DepartmentClient.UpdateAsync(editDepartmentDto.Id, editDepartmentDto);
+          var response = await DepartmentClient.GetAllAsync();
+          editDepartmentDto = new();
+          departments = response.Data ?? new();
+          isEditModalHidden = true;
+          isRequestSending = false;
+          ToastrService.ShowSucess(updateResponse.Message!);
+
+     }
+
+     public void Search(ChangeEventArgs e)
+     {
+          var searchValue = e.Value?.ToString()?.Trim();
+
+          if (string.IsNullOrWhiteSpace(searchValue))
+          {
+               searchableDepartments = departments;
+               return;
+          }
+
+          searchableDepartments = departments?
+          .Where(t => t.Name != null &&
+          t.Name.Contains(searchValue, StringComparison.OrdinalIgnoreCase))
+          .ToList();
+     }
+
+}

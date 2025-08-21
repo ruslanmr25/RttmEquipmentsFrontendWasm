@@ -1,0 +1,357 @@
+﻿@page "/parameters"
+
+
+<div class="card fade-in">
+
+     <div class="card-body">
+          <div class="row">
+
+               <div class="col">
+                    <label class="form-label w-auto">Nomi:</label>
+                    <input type="text" @bind="searchParameterDto.Name" class="form-control" placeholder="Nomi...">
+               </div>
+               <div class="col">
+
+                    <label class="form-label w-auto">Paramater turi:</label>
+
+
+                    <select @bind="searchParameterDto.EquipmentTypeId" class="form-control">
+
+                         <option> -- Tanlang --</option>
+
+                         @foreach (var equipmentType in equipmentTypes)
+                         {
+                              <option value="@equipmentType.Id">@equipmentType.Name</option>
+
+                         }
+                    </select>
+               </div>
+
+          </div>
+
+          <div class="mt-3">
+               <button @onclick="ClearAsync" class="btn btn-secondary me-2">Tozalash</button>
+               <button class="btn btn-primary" @onclick="SearchAsync">Qidirish</button>
+          </div>
+     </div>
+</div>
+
+<div class="card fade-in">
+     <div class="card-header d-flex justify-content-between align-items-center">
+
+
+          <h5 class="card-title">
+               Parameterlar
+          </h5>
+
+
+          <Modal @bind-Hidden="@isHidden" Title="Yangi parameter qo'shish">
+
+
+               <EditForm Model="@createParameterDto" OnValidSubmit="@CreateAsync">
+                    <DataAnnotationsValidator />
+                    <div class="mb-3">
+                         <label for="name" class="form-label">Parameter nomi</label>
+                         <InputText @bind-Value="createParameterDto.Name" type="text" id="name" class="form-control">
+                         </InputText>
+
+                         <ValidationMessage For="@(() => createParameterDto.Name)" />
+
+                    </div>
+                    <div class="mb-3">
+                         <label for="name" class="form-label">Jihoz turisi</label>
+                         <InputSelect @bind-Value="createParameterDto.EquipmentTypeId" id="name" class="form-control">
+                              <option value="">-- Tanlang --</option>
+
+                              @foreach (EquipmentType equipmentType in equipmentTypes)
+                              {
+
+                                   <option value="@equipmentType.Id">@equipmentType.Name</option>
+                              }
+
+                         </InputSelect>
+
+                         <ValidationMessage For="@(() => createParameterDto.EquipmentTypeId)" />
+
+                    </div>
+
+                    <div class="text-end">
+                         <button type="button" @onclick="() => isHidden = true"
+                              class="btn btn-secondary me-2">Yopish</button>
+
+                         <LoadingButton CssClass="btn btn-primary" Type="submit" IsRequestSending="@isRequestSending"
+                              Name="Yaratish" />
+
+                    </div>
+               </EditForm>
+
+          </Modal>
+
+
+     </div>
+     @if (parameters is null)
+     {
+          <LoadingComponent />
+
+
+     }
+     else
+     {
+          <div class="card-body">
+               <div class="table-responsive">
+                    <table class="table  table-hover">
+                         <thead class="table-light">
+                              <tr>
+
+                                   <th scope="col">T/r</th>
+                                   <th scope="col">Nomi</th>
+                                   <th scope="col">Jihoz turisi</th>
+
+                                   <th scope="col">Tahrirlash</th>
+
+
+
+
+
+                              </tr>
+                         </thead>
+                         <tbody>
+
+                              @foreach (Parameter parameter in parameters)
+                              {
+                                   <tr>
+                                        <td> @parameter.Id</td>
+                                        <td>@parameter.Name</td>
+                                        <td>@parameter.EquipmentType?.Name</td>
+
+
+                                        <td>
+                                             <span role="button" @onclick="() => OpenEditModal(parameter)">
+                                                  Tahrirlash
+                                             </span>
+                                        </td>
+                                   </tr>
+                              }
+
+                         </tbody>
+                    </table>
+               </div>
+
+
+          </div>
+
+
+          @if (meta is not null)
+          {
+               <div class="d-flex justify-content-end m-3">
+
+
+                    <nav aria-label="Page navigation example">
+                         <ul class="pagination">
+
+                              @foreach (var link in meta.Links)
+                              {
+                                   <li class="page-item">
+                                        <a role="button" @onclick="() => ChangePage(int.Parse(link.Label))"
+                                             class="page-link @(link.Active ? "active" : "")">@((MarkupString)link.Label)
+                                        </a>
+                                   </li>
+                              }
+
+                         </ul>
+                    </nav>
+               </div>
+          }
+
+     }
+</div>
+
+
+
+<Modal @bind-Hidden="isEditModalHidden" HideToggleButton="true" Title="Parameterni tahrirlash">
+
+
+     <EditForm Model="@editParameterDto" OnValidSubmit="@EditAsync">
+          <DataAnnotationsValidator />
+          <div class="mb-3">
+               <label for="name" class="form-label">Parameter nomi</label>
+               <InputText @bind-Value="editParameterDto.Name" type="text" id="name" class="form-control">
+               </InputText>
+
+               <ValidationMessage For="@(() => editParameterDto.Name)" />
+
+          </div>
+
+
+          <div class="mb-3">
+               <label for="name" class="form-label">Jihoz turisi</label>
+               <InputSelect @bind-Value="editParameterDto.EquipmentTypeId" id="name" class="form-control">
+                    <option value="">-- Tanlang --</option>
+
+                    @foreach (EquipmentType equipmentType in equipmentTypes)
+                    {
+
+                         <option value="@equipmentType.Id">@equipmentType.Name</option>
+                    }
+
+               </InputSelect>
+
+               <ValidationMessage For="@(() => editParameterDto.EquipmentTypeId)" />
+
+          </div>
+
+          <div class="text-end">
+               <button type="button" @onclick="() => isEditModalHidden = true"
+                    class="btn btn-secondary me-2">Yopish</button>
+
+               <LoadingButton CssClass="btn btn-primary" Type="submit" IsRequestSending="@isRequestSending"
+                    Name="Tahrirlash" />
+
+          </div>
+     </EditForm>
+
+</Modal>
+
+
+@inject ParameterClient ParameterClient
+@inject ToastrService ToastrService
+
+@inject EquipmentTypeClient EquipmentTypeClient
+
+
+
+
+
+@code {
+
+     protected CreateParameterDto createParameterDto = new();
+     protected EditParameterDto editParameterDto = new();
+     protected List<Parameter>? parameters;
+
+     protected SearchParameterDto searchParameterDto = new();
+
+
+     protected Meta? meta;
+
+
+     protected List<EquipmentType> equipmentTypes = new();
+     protected bool isHidden = true;
+     protected bool isEditModalHidden = true;
+     protected bool isRequestSending = false;
+
+     protected override async Task OnInitializedAsync()
+     {
+
+          var responseEquipmentType = await EquipmentTypeClient.GetAllAsync();
+
+          equipmentTypes = responseEquipmentType.Data ?? new();
+
+
+          var response = await ParameterClient.GetAllAsync();
+
+          parameters = response.Data ?? new();
+          meta = response.Meta;
+
+
+     }
+
+     protected async Task SearchAsync()
+     {
+          parameters = null;
+          searchParameterDto.Page = null;
+          var response = await ParameterClient.GetAllAsync(searchParam: searchParameterDto);
+          meta = response.Meta;
+          parameters = response.Data ?? new();
+
+     }
+
+
+     public async Task CreateAsync()
+     {
+
+          isRequestSending = true;
+          var createResponse = await ParameterClient.CreateAsync(createParameterDto);
+
+
+          var response = await ParameterClient.GetAllAsync();
+
+          createParameterDto = new();
+
+          parameters = response.Data ?? new();
+
+          isHidden = true;
+
+          isRequestSending = false;
+
+
+          ToastrService.ShowSucess(createResponse.Message!);
+
+
+     }
+
+
+     protected async Task ClearAsync()
+     {
+          parameters = null;
+          searchParameterDto = new();
+          var response = await ParameterClient.GetAllAsync();
+          meta = response.Meta;
+          parameters = response.Data ?? new();
+
+
+     }
+
+     protected async Task ChangePage(int pageNumber)
+     {
+
+          parameters = null;
+
+          searchParameterDto.Page = pageNumber;
+
+
+          var response = await ParameterClient.GetAllAsync(searchParameterDto);
+
+          meta = response.Meta;
+
+          parameters = response.Data ?? new();
+
+     }
+
+
+
+     public void OpenEditModal(Parameter parameter)
+     {
+
+          isEditModalHidden = false;
+          editParameterDto.Id = parameter.Id;
+          editParameterDto.Name = parameter.Name!;
+          editParameterDto.EquipmentTypeId = parameter.EquipmentType?.Id ?? throw new Exception("Nimadir xato ketti");
+
+
+     }
+
+     public async Task EditAsync()
+     {
+          isRequestSending = true;
+          var updateResponse = await ParameterClient.UpdateAsync(editParameterDto.Id, editParameterDto);
+
+
+          var response = await ParameterClient.GetAllAsync();
+
+          editParameterDto = new();
+
+          parameters = response.Data ?? new();
+
+          isEditModalHidden = true;
+
+          isRequestSending = false;
+
+
+          ToastrService.ShowSucess(updateResponse.Message!);
+
+     }
+
+
+
+
+}

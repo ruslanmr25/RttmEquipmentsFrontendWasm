@@ -1,0 +1,445 @@
+﻿@page "/equipments/upload"
+
+@inject HttpClient Http
+
+
+<div class="card">
+
+    <div class="card-header">
+        <h3>Jihoz yaratish</h3>
+
+        <span>Excel faylni yuklash</span>
+
+    </div>
+    <div class="card-body">
+
+        <div class="my-3">
+
+            <InputFile OnChange="OnFileSelected" class="form-control" />
+
+        </div>
+        <LoadingButton IsRequestSending="@isRequestSending" Type="button" CssClass="btn btn-primary mt-2"
+            RunEvent="@UploadFile" Name="Yuborish"></LoadingButton>
+
+    </div>
+</div>
+
+
+@if (error is not null)
+{
+    @if (error.TryGetValue("missingColumnsValue", out var missingColumnsValue)
+    && missingColumnsValue.ValueKind == JsonValueKind.Array
+    && missingColumnsValue.EnumerateArray().Any())
+    {
+        <div class="card mt-3">
+            <div class="card-header bg-danger text-white">
+                <h4>Quyidagi qatorlarda ma’lumotlar mavjud emas:</h4>
+            </div>
+            <div class="card-body">
+                <table class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Invertar raqam</th>
+                            <th>Yetishmayotgan qator</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{
+                            foreach (var item in missingColumnsValue.EnumerateArray())
+                            {
+                                var index = 1;
+                                var invertarId = item.GetProperty("invertarId").GetString();
+                                var missingColumn = item.GetProperty("missingColumn").GetString();
+                                <tr>
+                                    <td>@index</td>
+                                    <td>@invertarId</td>
+                                    <td>@missingColumn</td>
+                                </tr>
+                                index++;
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    }
+
+
+    @if (error.TryGetValue("missingColumns", out var overflowRows)
+    && overflowRows.ValueKind == JsonValueKind.String)
+    {
+        <div class="card">
+
+            <div class="card-body">
+                <div class="row">
+                    @overflowRows
+                </div>
+
+
+            </div>
+        </div>
+
+    }
+
+
+
+
+    @if (error.TryGetValue("missingColumns", out var missingColumns)
+    && missingColumns.ValueKind == JsonValueKind.Array
+    && missingColumns.EnumerateArray().Any())
+    {
+        <div class="card">
+
+            <div class="card-header">
+                <h4 class="text-danger">Quyidagicha nomlangan qatorlar majud emas:</h4>
+
+
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    @foreach (var missingColumn in error.GetValueOrDefault("missingColumns").EnumerateArray())
+                    {
+                        <div class="col-2 m-3">
+                            @missingColumn
+                        </div>
+                    }
+                </div>
+
+
+            </div>
+        </div>
+
+    }
+
+    <div class="card">
+
+        <div class="card-header">
+            <h4 class="text-danger">Faylda aniqlangan kamchiliklar (Jami: @error["total"] ta)</h4>
+
+
+
+        </div>
+        <div class="card-body">
+            @if (error.TryGetValue("exsistsInvertarId", out var exsistsInvertarId)
+                    && exsistsInvertarId.ValueKind == JsonValueKind.Array
+                    && exsistsInvertarId.EnumerateArray().Any())
+            {
+                <h3 class="">
+                    Ma'lumotlar bazasida excel faylingizdagi quyidagi invertar raqamli jihozlar allaqachon mavjud:
+                </h3>
+                <div class="row">
+                    @foreach (var invertarId in error.GetValueOrDefault("exsistsInvertarId").EnumerateArray())
+                    {
+                        <div class="col-2 m-3">
+                            @invertarId
+                        </div>
+                    }
+                </div>
+
+
+            }
+
+            @if (error.TryGetValue("duplicatedInvertarId", out var duplicatedInvertarId)
+                    && duplicatedInvertarId.ValueKind == JsonValueKind.Array
+                    && duplicatedInvertarId.EnumerateArray().Any())
+            {
+
+                <h3 class="">
+                    Sizning excel faylingizdagi quyidagi invertar raqamli jihozlar ikkita joyda turib qolgan:
+                </h3>
+                <div class="row">
+                    @foreach (var invertarId in error.GetValueOrDefault("duplicatedInvertarId").EnumerateArray())
+                    {
+                        <div class="col-2 mb-2">
+                            @invertarId
+                        </div>
+                    }
+                </div>
+
+
+            }
+
+
+            @if (error.TryGetValue("missingDepartment", out var missingDepartment)
+                    && missingDepartment.ValueKind == JsonValueKind.Array
+                    && missingDepartment.EnumerateArray().Any())
+            {
+                <h3 class="">
+                    Bazada quyidagi bino nomlari mavjud emas:
+                </h3>
+
+                <table class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Bino nomi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{
+                            var index = 1;
+                            foreach (var department in missingDepartment.EnumerateArray())
+                            {
+                                <tr>
+                                    <td>@index</td>
+                                    <td>@department</td>
+                                </tr>
+                                index++;
+                            }
+                        }
+                    </tbody>
+                </table>
+            }
+
+
+            @if (error.TryGetValue("missingEquipmentType", out var missingEquipmentType)
+                    && missingEquipmentType.ValueKind == JsonValueKind.Array
+                    && missingEquipmentType.EnumerateArray().Any())
+            {
+                <h3 class="">
+                    Bazada quyidagi jihoz turlari mavjud emas:
+                </h3>
+                <div class="row">
+                    @foreach (var equipmentType in missingEquipmentType.EnumerateArray())
+                    {
+                        <div class="mb-2">
+                            @equipmentType
+                        </div>
+                    }
+                </div>
+            }
+            @if (missingParamsList.Count != 0)
+            {
+                <h3 class="">
+                    Bazada quyidagi parameter nomlari mavjud emas:
+                </h3>
+
+                <table class="table table-bordered table-striped">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Parameter nomi</th>
+
+                            <th>Amalar</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{
+                            var index = 1;
+                            foreach (var parameter in missingParamsList)
+                            {
+                                <tr>
+                                    <td>@index</td>
+                                    <td>@parameter</td>
+                                    <td><button @onclick="() => OpenCreateParameterModal(parameter)" class="btn btn-primary">
+                                            Yaratish
+                                        </button></td>
+                                </tr>
+                                index++;
+                            }
+                        }
+                    </tbody>
+                </table>
+            }
+
+
+            @if (error.TryGetValue("missingUsers", out var missingUsers)
+                    && missingUsers.ValueKind == JsonValueKind.Array
+                    && missingUsers.EnumerateArray().Any())
+            {
+                <h3 class="">
+                    Bazada quyidagi foydalanuvchi ismlari mavjud emas:
+                </h3>
+                <div class="row">
+                    @foreach (var user in missingUsers.EnumerateArray())
+                    {
+                        <div class="mb-2">
+                            @user
+                        </div>
+                    }
+                </div>
+            }
+
+        </div>
+    </div>
+
+}
+
+
+
+
+
+<Modal @bind-Hidden="isEditModalHidden" HideToggleButton="true" Title="Parameter yaratish ">
+
+
+    <EditForm Model="@createParameterDto" OnValidSubmit="@CreateParameterAsync">
+        <DataAnnotationsValidator />
+        <div class="mb-3">
+            <label for="name" class="form-label">Parameter nomi</label>
+            <InputText @bind-Value="createParameterDto.Name" type="text" id="name" class="form-control">
+            </InputText>
+
+            <ValidationMessage For="@(() => createParameterDto.Name)" />
+
+        </div>
+
+
+        <div class="mb-3">
+            <label for="name" class="form-label">Jihoz turi</label>
+            <InputSelect @bind-Value="createParameterDto.EquipmentTypeId" id="name" class="form-control">
+                <option value="">-- Tanlang --</option>
+
+                @foreach (EquipmentType equipmentType in equipmentTypes)
+                {
+
+                    <option value="@equipmentType.Id">@equipmentType.Name</option>
+                }
+
+            </InputSelect>
+
+            <ValidationMessage For="@(() => createParameterDto.EquipmentTypeId)" />
+
+        </div>
+
+        <div class="text-end">
+            <button type="button" @onclick="() => isEditModalHidden = true"
+                class="btn btn-secondary me-2">Yopish</button>
+
+            <LoadingButton CssClass="btn btn-primary" Type="submit" IsRequestSending="@isRequestSending"
+                Name="Yaratish" />
+
+        </div>s
+    </EditForm>
+
+</Modal>
+
+
+
+
+@inject NavigationManager NavigationManager
+@inject EquipmentClient EquipmentClient
+@inject ToastrService ToastrService
+
+@inject ParameterClient ParameterClient
+
+@inject EquipmentTypeClient EquipmentTypeClient
+@code {
+
+
+    protected bool isEditModalHidden = true;
+    private IBrowserFile? selectedFile;
+    private string title = string.Empty;
+
+    protected bool isRequestSending = false;
+    private string? message;
+    private List<string> missingParamsList = new();
+
+
+
+    protected CreateParameterDto createParameterDto = new();
+
+    protected List<EquipmentType> equipmentTypes = new();
+    protected Dictionary<string, JsonElement>? error;
+
+    private void OnFileSelected(InputFileChangeEventArgs e)
+    {
+        selectedFile = e.File;
+    }
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        var equipmentResponse = await EquipmentTypeClient.GetAllAsync();
+
+        equipmentTypes = equipmentResponse.Data ?? new();
+    }
+
+    private async Task UploadFile()
+    {
+        if (selectedFile == null)
+        {
+            message = "Fayl tanlanmadi!";
+            return;
+        }
+
+        isRequestSending = true;
+
+        var content = new MultipartFormDataContent();
+
+        // Fayl qo‘shish
+        var streamContent = new StreamContent(selectedFile.OpenReadStream(10_000_000)); // 10 MB limit
+        streamContent.Headers.ContentType = new
+        System.Net.Http.Headers.MediaTypeHeaderValue("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+
+        // Fayl nomini toza qilib olish
+        var cleanFileName = Path.GetFileNameWithoutExtension(selectedFile.Name) + ".xlsx";
+
+        content.Add(streamContent, "file", cleanFileName);
+        var response = await EquipmentClient.UploadFile(content);
+
+        ToastrService.ShowError(response.Message ?? "Nimadir xato ketti");
+        if (response.Success)
+        {
+
+            error = null;
+            NavigationManager.NavigateTo("/equipments");
+
+
+
+        }
+        else
+        {
+            error = response.Errors;
+            SetParameters();
+        }
+
+        isRequestSending = false;
+
+    }
+
+
+    protected void OpenCreateParameterModal(string parameterName)
+    {
+        createParameterDto.Name = parameterName;
+
+        isEditModalHidden = false;
+    }
+
+
+    public async Task CreateParameterAsync()
+    {
+        isRequestSending = true;
+        var updateResponse = await ParameterClient.CreateAsync(createParameterDto);
+
+
+        var response = await ParameterClient.GetAllAsync();
+
+
+
+        isEditModalHidden = true;
+
+        isRequestSending = false;
+        ToastrService.ShowSucess(updateResponse.Message!);
+
+        missingParamsList.Remove(createParameterDto.Name);
+
+
+        createParameterDto = new();
+
+        @* StateHasChanged(); *@
+    }
+
+
+    protected void SetParameters()
+    {
+
+        if (error!.TryGetValue("missingParameters", out var missingParameters)
+        && missingParameters.ValueKind == JsonValueKind.Array)
+        {
+            missingParamsList = missingParameters.EnumerateArray()
+            .Select(x => x.GetString()!)
+            .ToList();
+        }
+    }
+}

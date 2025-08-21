@@ -1,0 +1,64 @@
+﻿@typeparam TItem
+@typeparam TValue
+
+<div class="mb-3">
+     @if (!string.IsNullOrEmpty(Label))
+     {
+          <label class="form-label">@Label</label>
+     }
+
+     <select class="form-select  @CssClass" @bind="CurrentValueAsString">
+          <option value="">@Placeholder</option>
+          @foreach (var item in Items)
+          {
+
+
+               <option value="@GetValue(item)">
+                    @GetLabel(item)
+               </option>
+          }
+     </select>
+
+     @if (!string.IsNullOrWhiteSpace(Error))
+     {
+          <div class="text-danger mt-1">@Error</div>
+     }
+</div>
+
+@code {
+     [Parameter] public string? Label { get; set; }
+
+     [Parameter] public string? Placeholder { get; set; } = "Tanlang";
+
+     [Parameter] public IEnumerable<TItem> Items { get; set; } = [];
+
+     [Parameter] public Func<TItem, string> GetLabel { get; set; } = _ => string.Empty;
+
+     [Parameter] public Func<TItem, TValue> GetValue { get; set; } = _ => default!;
+
+     [Parameter] public TValue? Value { get; set; }
+
+     [Parameter] public EventCallback<TValue?> ValueChanged { get; set; }
+
+     [Parameter] public string? CssClass { get; set; }
+
+     [Parameter] public string? Error { get; set; }
+
+     private string? CurrentValueAsString
+     {
+          get => Value?.ToString();
+          set
+          {
+               if (typeof(TValue) == typeof(int) && int.TryParse(value, out int intVal))
+               {
+                    Value = (TValue)(object)intVal;
+               }
+               else if (typeof(TValue) == typeof(string))
+               {
+                    Value = (TValue)(object)(value ?? string.Empty);
+               }
+
+               ValueChanged.InvokeAsync(Value);
+          }
+     }
+}

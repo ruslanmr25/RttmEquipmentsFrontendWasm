@@ -1,0 +1,48 @@
+﻿<div class="border rounded" @onblur="HandleBlur" On>
+     <span class="p-2 d-flex justify-content-between align-items-center" role="button"
+          @onclick="() => IsOpen = !IsOpen">
+          <span>
+               @Name
+          </span>
+          <span class="arrow  @(IsOpen ? "open" : "") "></span></span>
+
+     <div class="my-panel-wrapper border @(IsOpen ? "my-open" : "my-closed")">
+          <div id="myselect" class="my-panel-content">
+
+
+               @ChildContent
+
+          </div>
+     </div>
+</div>
+
+
+@inject IJSRuntime JS
+
+@code {
+     private bool IsOpen = false;
+
+     [Parameter]
+     public string Name { get; set; } = "Ochish";
+
+
+     [Parameter]
+
+     public RenderFragment? ChildContent { get; set; }
+
+
+
+
+     private void HandleBlur()
+     {
+          IsOpen = false;
+          StateHasChanged();
+     }
+
+     protected override async Task OnAfterRenderAsync(bool firstRender)
+     {
+
+          await JS.InvokeVoidAsync("myselectstart");
+
+     }
+}

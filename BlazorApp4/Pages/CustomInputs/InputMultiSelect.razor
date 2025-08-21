@@ -1,0 +1,49 @@
+﻿@typeparam TItem
+@inherits InputBase<List<int>>
+
+<select multiple class="@CssClass" @onchange="OnSelectionChanged" style="min-height: 150px;">
+     @if (Items != null)
+     {
+          @foreach (var item in Items)
+          {
+               <option value="@GetValue(item)" selected="@IsSelected(item)">
+                    @GetText(item)
+               </option>
+          }
+     }
+</select>
+
+@code {
+     [Parameter] public List<TItem>? Items { get; set; }
+     [Parameter] public Func<TItem, string> GetText { get; set; } = default!;
+     [Parameter] public Func<TItem, int> GetValue { get; set; } = default!;
+
+     private bool IsSelected(TItem item)
+     {
+          return CurrentValue != null && CurrentValue.Contains(GetValue(item));
+     }
+
+     private void OnSelectionChanged(ChangeEventArgs e)
+     {
+          var selectedValues = new List<int>();
+
+          if (e.Value is not null)
+          {
+               var values = e.Value.ToString()?.Split(',', StringSplitOptions.RemoveEmptyEntries) ?? Array.Empty<string>();
+               selectedValues = values
+               .Select(v => int.TryParse(v, out var id) ? id : 0)
+               .Where(id => id != 0)
+               .ToList();
+          }
+
+          CurrentValue = selectedValues;
+     }
+
+     protected override bool TryParseValueFromString(string? value, out List<int> result, out string validationErrorMessage)
+     {
+          // Bu metodni Blazor majburan chaqiradi, lekin biz OnSelectionChanged ichida qiymatlarni to'ldiramiz
+          result = CurrentValue ?? new List<int>();
+          validationErrorMessage = "";
+          return true;
+     }
+}

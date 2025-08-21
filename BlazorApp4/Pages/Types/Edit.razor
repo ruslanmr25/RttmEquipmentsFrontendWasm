@@ -1,0 +1,127 @@
+﻿@page "/types/{id:int}"
+
+
+@if (editEquipmentDto is null)
+{
+     <LoadingComponent></LoadingComponent>
+
+}
+else
+{
+
+     <div class="card">
+          <div class="card-header">
+               <h5 class="card-title mb-0">Tahrirlash</h5>
+          </div>
+
+          <div class="card-body">
+               <div>
+                    <EditForm Model="@editEquipmentDto" OnValidSubmit="@SubmitAsync">
+
+                         <DataAnnotationsValidator></DataAnnotationsValidator>
+                         <div class="mb-3">
+                              <label class="form-label">Tur nomi</label>
+                              <InputText @bind-Value="editEquipmentDto.Name" class="form-control"></InputText>
+                         </div>
+
+                         <div class="mb-3">
+                              <label for="example-email" class="form-label">Kategoriyasi</label>
+
+                              <InputSelect class="form-control" @bind-Value="editEquipmentDto.CategoryId">
+                                   @foreach (Category category in categories!)
+                                   {
+                                        <option value="@category.Id">@category.Name</option>
+                                   }
+
+                              </InputSelect>
+                         </div>
+
+
+                         <button type="submit" class="btn btn-primary">Saqlash</button>
+
+
+                    </EditForm>
+               </div>
+          </div>
+     </div>
+
+}
+
+
+
+@inject EquipmentTypeClient EquipmentTypeClient
+
+@inject CategoryClient CategoryClient
+@inject NavigationManager NavigationManager
+@inject ToastrService ToastrService
+@code
+{
+
+     [Parameter]
+
+     public int Id { get; set; }
+
+     protected EditEquipmentTypeDto? editEquipmentDto;
+
+     protected List<Category>? categories;
+
+     protected override async Task OnInitializedAsync()
+     {
+
+          var response = await CategoryClient.GetAllAsync();
+
+          categories = response.Data;
+
+     }
+
+
+     protected override async Task OnParametersSetAsync()
+     {
+
+          try
+          {
+               Response<EquipmentType> response = await EquipmentTypeClient.GetAsync(Id);
+
+
+
+               if (response.StatusCode == 200)
+               {
+
+                    EquipmentType equipmentType = response.Data!;
+
+                    editEquipmentDto = new()
+                    {
+                         Name = equipmentType.Name,
+                         CategoryId = equipmentType.Category!.Id
+                    };
+               }
+               else
+               {
+
+                    ToastrService.ShowSucess("Nimadir xato ketti");
+
+               }
+
+          }
+          catch (Exception e)
+          {
+
+               ToastrService.ShowError($"Nimadir xato ketti: {e}");
+
+          }
+
+
+
+     }
+
+
+     protected async Task SubmitAsync()
+     {
+
+
+          var response = await EquipmentTypeClient.UpdateAsync<EditEquipmentTypeDto>(Id, editEquipmentDto!);
+          ToastrService.ShowSucess(response.Message!);
+          NavigationManager.NavigateTo("/types");
+
+     }
+}

@@ -1,0 +1,135 @@
+﻿@page "/logs/{model}/{id:int}"
+@using System.Text.Json
+
+@if (log is null)
+{
+     <LoadingComponent />
+}
+else
+{
+
+     <div class="card @CssClass">
+          <div class="card-header d-flex justify-content-between align-items-center">
+
+
+               <h5 class="card-title">
+                    Harakat <br>
+
+               </h5>
+
+          </div>
+
+
+          <div class="card-body">
+               <div class="table-responsive">
+
+
+
+                    <table class="table table-hover">
+                         <thead class="table-light">
+                              <tr>
+                                   <th>Harakat nomlari</th>
+                                   <th>Qiymati</th>
+                              </tr>
+                         </thead>
+                         <tbody>
+                              <tr>
+                                   <td>Id</td>
+                                   <td>@log.Id</td>
+                              </tr>
+                              <tr>
+                                   <td>Bajaruvchi</td>
+                                   <td>@log.Agent</td>
+                              </tr>
+                              <tr>
+                                   <td>Model</td>
+                                   <td>@log.Model</td>
+                              </tr>
+                              <tr>
+                                   <td>Harakat turi</td>
+                                   <td>@log.Action</td>
+                              </tr>
+                              <tr>
+                                   <td>Xabar</td>
+                                   <td>@log.Message</td>
+                              </tr>
+                              <tr>
+                                   <td>Harakat vaqti</td>
+                                   <td>@log.CreatedAt</td>
+                              </tr>
+                         </tbody>
+                    </table>
+
+
+
+               </div>
+
+
+          </div>
+
+
+
+
+     </div>
+
+     <div class="card">
+          <div class="card-header">
+               O'zgarishlar
+          </div>
+          <div class="card-body">
+               <strong>Changes:</strong>
+               <pre>@JsonSerializer.Serialize(log.Changes, new JsonSerializerOptions { WriteIndented = true })</pre>
+               <strong>Original:</strong>
+               <pre>@JsonSerializer.Serialize(log.Original, new JsonSerializerOptions { WriteIndented = true })</pre>
+
+
+
+          </div>
+     </div>
+}
+
+@inject LogClient LogClient
+
+@code {
+
+
+
+     [Parameter] public string? Model { get; set; }
+
+     [Parameter] public int Id { get; set; }
+
+
+
+
+     private string CssClass = "";
+
+     protected Log? log;
+
+     protected override async Task OnParametersSetAsync()
+     {
+
+          var reponse = await LogClient.GetAsync(Model!, Id);
+
+          log = reponse.Data;
+
+
+
+     }
+
+
+
+
+
+     protected override void OnAfterRender(bool firstRender)
+     {
+
+          if (firstRender)
+          {
+               CssClass = "fade-in";
+               StateHasChanged();
+          }
+          base.OnAfterRender(firstRender);
+     }
+
+
+}

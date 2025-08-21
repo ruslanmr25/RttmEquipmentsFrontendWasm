@@ -1,0 +1,118 @@
+.fade-in {
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+.my-panel-wrapper {
+    /* margin-top: ; */
+    border-top: none;
+    background-color: var(--taplox-topbar-bg);
+    overflow-y: scroll;
+    overflow-x: hidden;
+    position: absolute;
+    z-index: 9000;
+    max-height: 0;
+    transition: max-height 0.4s ease, padding 0.3s ease;
+    padding: 0 12px;
+    padding-right: 45px;
+    border: none;
+    border-radius: 5px;
+}
+
+    .my-panel-wrapper.my-open {
+        max-height: 300px;
+        /* Yetarli katta qiymat */
+        padding: 12px;
+        padding-top: 4px;
+    }
+
+/* Ichki kontent */
+.my-panel-content {
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+}
+
+.my-panel-wrapper.my-open .my-panel-content {
+    opacity: 1;
+}
+
+
+.toggle-item {
+    padding: 0.5rem;
+    transition: all 0.3s ease-in-out;
+}
+
+    .toggle-item:hover {
+        background-color: rgb(241, 241, 241);
+    }
+
+
+.arrow {
+    display: inline-block;
+    margin-left: 10px;
+    width: 10px;
+    height: 10px;
+    border: solid rgb(67, 67, 67);
+    border-width: 0 2px 2px 0;
+    padding: 3px;
+    transform: rotate(45deg);
+    /* pastga */
+    transition: all 0.3s ease;
+    border-top: white 1px solid;
+}
+
+    .arrow.open {
+        transform: rotate(-135deg);
+        /* tepaga */
+    }
+
+
+
+
+.custom-select {
+    width: 200px;
+    padding: 8px;
+    font-size: 16px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    background-color: #f5f5f5;
+    color: #333;
+}
+
+.custom-option {
+    background-color: #fff;
+    color: #000;
+}
+
+.my-closed {
+    border-top: 0 !important;
+    opacity: 0;
+    /* transition: 0.3s opacity ease  ; */
+}
+
+.card-item .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    transition: 0.3s ease;
+}
+
+.card-item:hover .overlay {
+    opacity: 1;
+}

@@ -1,0 +1,215 @@
+﻿@page "/types"
+
+
+
+
+<div class="card fade-in">
+
+     <div class="card-header">
+          <div class="p-3 pb-1 d-flex justify-content-between align-items-center">
+               <div class="d-flex align-items-center justify-content-between gap-5">
+
+                    <h5 class="card-title">
+
+
+
+                         Jihoz turlari
+
+
+                    </h5>
+                    <div class="d-flex align-items-center ">
+
+
+
+                         <input type="search" class="form-control" placeholder="izlash..." autocomplete="off"
+                              @oninput="Search">
+                    </div>
+               </div>
+               <Modal @bind-Hidden="hidden" Title="Yangi tur qo'shish">
+
+                    <EditForm Model="@createEquipmentTypeDto" OnValidSubmit="@CreateAsync">
+                         <DataAnnotationsValidator />
+                         <div class="mb-3">
+                              <label for="name" class="form-label">Turning nomi</label>
+                              <InputText @bind-Value="createEquipmentTypeDto.Name" type="text" id="name"
+                                   class="form-control">
+                              </InputText>
+
+                              <ValidationMessage For="@(() => createEquipmentTypeDto.Name)" />
+
+                         </div>
+                         <div class="mb-3">
+                              <label for="category" class="form-label">Kategoriyasi</label>
+                              <InputSelect @bind-Value="createEquipmentTypeDto.CategoryId" class="form-select"
+                                   id="category">
+                                   @foreach (var category in categories)
+                                   {
+                                        <option value="@category.Id">@category.Name</option>
+                                   }
+                              </InputSelect>
+
+                              <ValidationMessage For="@(() => createEquipmentTypeDto.CategoryId)" />
+
+                         </div>
+
+                         <div class="text-end">
+                              <button type="button" @onclick="() => hidden = true"
+                                   class="btn btn-secondary me-2">Yopish</button>
+
+                              <LoadingButton CssClass="btn btn-primary" Type="submit"
+                                   IsRequestSending="@isRequestSending" Name="Yaratish" />
+
+                         </div>
+                    </EditForm>
+
+               </Modal>
+
+          </div>
+
+     </div>
+     @if (searchableEquipmentType is null)
+     {
+          <LoadingComponent />
+
+
+     }
+     else
+     {
+
+          <div class="card-body">
+               <div class="table-responsive">
+                    <table class="table  table-hover">
+                         <thead class="table-light">
+                              <tr>
+
+                                   <th scope="col">T/r</th>
+                                   <th scope="col">Nomi</th>
+                                   <th scope="col">Jihozlar soni</th>
+                                   <th scope="col">Kategoriyasi</th>
+                                   <th scope="col">Tarhrirlash</th>
+
+                              </tr>
+
+                         </thead>
+                         <tbody>
+
+                              @foreach (EquipmentType equipmentType in searchableEquipmentType)
+                              {
+
+                                   <tr>
+
+                                        <td> @equipmentType.Id</td>
+                                        <td> @equipmentType.Name</td>
+                                        <td> @equipmentType.EquipmentsCount</td>
+                                        <td> @(equipmentType.Category?.Name ?? "Mavjud emas")</td>
+                                        <td>
+                                             <NavLink href="@( $"types/{equipmentType.Id}")">
+                                                  Tahrirlash
+                                             </NavLink>
+                                        </td>
+
+
+                                   </tr>
+                              }
+                         </tbody>
+                    </table>
+               </div>
+          </div>
+     }
+</div>
+
+
+@inject ToastrService ToastrService
+
+@inject EquipmentTypeClient EquipmentTypeClient
+
+@inject CategoryClient CategoryClient
+
+
+@code {
+     protected bool hidden = true;
+     protected bool isRequestSending = false;
+
+     protected List<EquipmentType>? equipmentTypes;
+     protected List<EquipmentType>? searchableEquipmentType;
+
+     protected List<Category> categories = new();
+
+
+     protected string searchString = string.Empty;
+
+
+     protected CreateEquipmentTypeDto createEquipmentTypeDto = new();
+
+     protected override async Task OnInitializedAsync()
+     {
+
+          await this.GetTypes();
+          var categoryResponse = await CategoryClient.GetAllAsync();
+
+          categories = categoryResponse.Data ?? new();
+
+          if (categories.Any())
+          {
+               createEquipmentTypeDto.CategoryId = categories.First().Id;
+          }
+
+     }
+
+     protected async Task GetTypes()
+     {
+          var response = await EquipmentTypeClient.GetAllAsync();
+
+          equipmentTypes = response.Data ?? new();
+
+          searchableEquipmentType = equipmentTypes;
+
+
+     }
+     protected async Task CreateAsync()
+     {
+
+          isRequestSending = true;
+          var response = await EquipmentTypeClient.CreateAsync<CreateEquipmentTypeDto>(createEquipmentTypeDto);
+
+          if (response.Success)
+          {
+
+               hidden = true;
+
+               await GetTypes();
+               createEquipmentTypeDto.Name = string.Empty;
+          }
+          else
+          {
+          }
+          isRequestSending = false;
+
+          ToastrService.ShowSucess(response.Message!);
+
+     }
+
+
+     public void Search(ChangeEventArgs e)
+     {
+          var searchValue = e.Value?.ToString()?.Trim();
+
+          if (string.IsNullOrWhiteSpace(searchValue))
+          {
+               searchableEquipmentType = equipmentTypes;
+               return;
+          }
+
+          searchableEquipmentType = equipmentTypes?
+          .Where(t => t.Name != null &&
+          t.Name.Contains(searchValue, StringComparison.OrdinalIgnoreCase))
+          .ToList();
+     }
+
+
+
+
+
+
+
+}

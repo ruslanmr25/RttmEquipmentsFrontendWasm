@@ -1,0 +1,265 @@
+﻿@page "/"
+
+<div class="container-fluid">
+
+    @if (statisticData is not null)
+    {
+
+        <div class="row">
+            <!-- Card 1 -->
+            <div class="col-md-6 col-xl-3">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="avatar-md bg-primary bg-opacity-10 rounded-circle">
+                                    <iconify-icon icon="solar:globus-outline"
+                                                  class="fs-32 text-primary avatar-title"></iconify-icon>
+                                </div>
+                            </div>
+                            <div class="col-6 text-end">
+                                <p class="text-muted mb-0 text-truncate">Jihozlar soni</p>
+                                <h3 class="text-dark mt-2 mb-0">@statisticData.EquipmentsCount</h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 2 -->
+            <div class="col-md-6 col-xl-3">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="avatar-md bg-primary bg-opacity-10 rounded-circle">
+                                    <iconify-icon icon="solar:bag-check-outline"
+                                                  class="fs-32 text-primary avatar-title"></iconify-icon>
+                                </div>
+                            </div>
+                            <div class="col-6 text-end">
+                                <p class="text-muted mb-0 text-truncate">Foydalanuvchilar soni</p>
+                                <h3 class="text-dark mt-2 mb-0">@statisticData.UserCount</h3>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Card 3 -->
+            <div class="col-md-6 col-xl-3">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="avatar-md bg-primary bg-opacity-10 rounded-circle">
+                                    <iconify-icon icon="solar:calendar-date-outline"
+                                                  class="fs-32 text-primary avatar-title"></iconify-icon>
+                                </div>
+                            </div>
+                            <div class="col-6 text-end">
+                                <p class="text-muted mb-0 text-truncate">Foydalanishdan chiqarilgan jihozlar soni</p>
+                                <h3 class="text-dark mt-2 mb-0">@statisticData.DeletedEquipmentCount</h3>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Card 4 -->
+            <div class="col-md-6 col-xl-3">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-6">
+                                <div class="avatar-md bg-primary bg-opacity-10 rounded-circle">
+                                    <iconify-icon icon="solar:users-group-two-rounded-outline"
+                                                  class="fs-32 text-primary avatar-title"></iconify-icon>
+                                </div>
+                            </div>
+                            <div class="col-6 text-end">
+                                <p class="text-muted mb-0 text-truncate">Binolar soni</p>
+                                <h3 class="text-dark mt-2 mb-0">@statisticData.DepartmentCount</h3>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col-lg-6">
+
+                <div class="card">
+                    <div class="card-header d-flex align-items-center justify-content-between">
+                        <h2 class="card-title mb-0">Xodimlar bo'yicha</h2>
+                    </div>
+
+                    <div class="card-body p-0">
+                        <ul class="list-group list-group-flush overflow-auto" style="max-height: 330px;">
+                            @foreach (var user in statisticData.Users)
+                            {
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+
+                                    <span>
+                                    <NavLink href="@($"users/{@user.Id}")">
+                                        @user.FullName
+                                    </NavLink>
+                                        </span>
+                                    <span class="badge badge-outline-info me-1">@user.EquipmentsCount ta</span>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+
+
+            </div> <!-- end col -->
+
+
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title mb-0">Kategoriyalar bo'yicha</h4>
+                    </div>
+
+                    <div class="card-body">
+                        <div dir="ltr">
+                            <div id="apex-pie-2" class="apex-charts"></div>
+                        </div>
+                    </div> <!-- end card-body -->
+                </div> <!-- end card-->
+            </div> <!-- end col-->
+
+
+        </div> <!-- End row -->
+
+
+
+
+        <div class="row">
+            <div class="col-lg-6">
+
+                <div class="card">
+                    <div class="card-header d-flex align-items-center justify-content-between">
+                        <h2 class="card-title mb-0">Binolar bo'yicha bo'yicha</h2>
+                    </div>
+
+                    <div class="card-body p-0">
+                        <ul class="list-group list-group-flush overflow-auto" style="max-height: 470px;">
+                            @foreach (var department in statisticData.Departments)
+                            {
+                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                    <span>@department.Name</span>
+                                    <span class="badge badge-outline-info me-1">@department.EquipmentsCount ta</span>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                </div>
+
+
+            </div> <!-- end col -->
+
+
+            <div class="col-lg-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title mb-0">Binolar bo'yicha</h4>
+                    </div>
+
+                    <div class="card-body">
+                        <div dir="ltr">
+                            <div id="apex-bar-1" class="apex-charts"></div>
+                        </div>
+                    </div> <!-- end card-body -->
+                </div>
+            </div> <!-- end col-->
+
+
+        </div> <!-- End row -->
+    }
+    else
+    {
+        <LoadingComponent></LoadingComponent>
+    }
+
+</div>
+
+@* 
+<div class="row">
+    <div class="col-lg-6">
+        <div class="card card-height-100">
+            <div class="card-header d-flex align-items-center justify-content-between gap-2">
+                <h4 class="card-title flex-grow-1">Top Pages</h4>
+                <div>
+                    <button type="button" class="btn btn-sm btn-outline-light">ALL</button>
+                    <button type="button" class="btn btn-sm btn-outline-light">1M</button>
+                    <button type="button" class="btn btn-sm btn-outline-light">6M</button>
+                    <button type="button" class="btn btn-sm btn-outline-light active">1Y</button>
+                </div>
+            </div>
+
+            <div class="card-body pt-0">
+                <div dir="ltr">
+                    <div id="dash-performance-chart" class="apex-charts"></div>
+                </div>
+            </div>
+
+        </div> <!-- end card-->
+
+    </div>
+</div> *@
+
+
+<!-- Dashboard Js -->
+@inject IJSRuntime JS
+
+@inject StatisticsClient StatisticsClient
+@code
+{
+
+
+    StatisticData? statisticData;
+    protected override async Task OnInitializedAsync()
+    {
+
+        var response = await StatisticsClient.GetAllAsync();
+        statisticData = response.Data;
+
+
+    }
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (statisticData != null)
+        {
+            var chartData = new
+            {
+                lineSeries = new object[]
+           {
+                   new { name = "Page Views", type = "bar", data = new[] { 34, 65, 46, 68, 49, 61, 42, 44, 78, 52, 63, 67 } },
+                   new { name = "Clicks", type = "area", data = new[] { 8, 12, 7, 17, 21, 11, 5, 9, 7, 29, 12, 35 } },
+                   new { name = "Conversion Ratio", type = "area", data = new[] { 12, 16, 11, 22, 28, 25, 15, 29, 35, 45, 42, 48 } }
+           },
+                categories = new[] { "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" },
+
+
+
+                donutSeries = statisticData.Categories.Select(c => c.EquipmentsCount).ToArray(),
+                donutLabels = statisticData.Categories.Select(c => $"{c.Name} ({c.EquipmentsCount})").ToArray(),
+
+                departmentLabels = statisticData.Departments.Select(d => d.Name).ToArray(),
+                departmentSeries = statisticData.Departments.Select(d => d.EquipmentsCount).ToArray(),
+
+            };
+
+
+            await JS.InvokeVoidAsync("Start", chartData);
+        }
+    }
+
+}

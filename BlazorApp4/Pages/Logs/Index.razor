@@ -1,0 +1,118 @@
+﻿@page "/logs"
+
+<div class="card @CssClass">
+     <div class="card-header d-flex justify-content-between align-items-center">
+
+
+          <h5 class="card-title">
+               Jihozlar <br>
+               @($"Jami: {meta?.Total ?? 0} ta")
+          </h5>
+
+     </div>
+     @if (logs is null)
+     {
+          <LoadingComponent />
+     }
+     else
+     {
+          <div class="card-body">
+               <div class="table-responsive">
+                    <table class="table  table-hover">
+                         <thead class="table-light">
+                              <tr>
+
+                                   <th scope="col">T/r</th>
+                                   <th scope="col">Xabar</th>
+                                   <th scope="col">Harakat</th>
+
+
+
+
+                              </tr>
+                         </thead>
+                         <tbody>
+
+                              @foreach (Log log in logs)
+                              {
+
+                                   <tr>
+
+                                        <td> @log.Id</td>
+                                        <td>
+                                             <NavLink href="@($"/logs/{log.Model}/{log.Id}")">
+
+                                                  @log.Message
+                                             </NavLink>
+                                        </td>
+                                        <td>@log.Action</td>
+
+
+
+                                   </tr>
+                              }
+
+                         </tbody>
+                    </table>
+               </div>
+
+
+          </div>
+
+
+          @if (meta is not null)
+          {
+               <div class="d-flex justify-content-end m-3">
+
+
+
+               </div>
+          }
+
+
+     }
+</div>
+
+
+
+@inject LogClient LogClient
+
+
+
+@code {
+
+     protected List<Log>? logs;
+
+
+     protected Meta? meta;
+     private string CssClass = "";
+
+
+     protected override async Task OnInitializedAsync()
+     {
+          var response = await LogClient.GetAllAsync();
+
+          meta = response.Meta;
+          logs = response.Data ?? new();
+
+
+     }
+
+
+
+
+
+
+     protected override void OnAfterRender(bool firstRender)
+     {
+
+          if (firstRender)
+          {
+               CssClass = "fade-in";
+               StateHasChanged();
+          }
+          base.OnAfterRender(firstRender);
+     }
+
+
+}

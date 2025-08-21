@@ -1,0 +1,264 @@
+﻿@page "/trashes"
+
+<div class="card fade-in">
+     <div class="card-body">
+          <div class="row">
+               <div class="col-md-4 mb-3">
+                    <label class="form-label w-auto">Nomi:</label>
+                    <input @bind="equipmentSearchParameters.Name" type="text" class="form-control" />
+               </div>
+
+               <div class="col-md-4 mb-3">
+                    <label class="form-label w-auto">Invertar raqami:</label>
+                    <input @bind="equipmentSearchParameters.InvertarId" type="number" class="form-control" />
+               </div>
+
+               <div class="col-md-4 mb-3">
+                    <label class="form-label w-auto">Moddiy javobgar:</label>
+                    <select @bind="equipmentSearchParameters.UserId" class="form-control">
+
+                         <option value="">Tanlang</option>
+
+                         @foreach (User user in users)
+                         {
+                              <option value="@user.Id">
+                                   @user.FullName
+                              </option>
+                         }
+
+                    </select>
+               </div>
+
+               <div class="col-md-4 mb-3">
+                    <label class="form-label w-auto">Bino</label>
+
+                    <ToggleComponent
+                         Name="@(equipmentSearchParameters.DepartmentId is null?"-- Tanlash --":$" {departments?.FirstOrDefault(d => d.Id == equipmentSearchParameters.DepartmentId)?.Name}")">
+
+                         @if (departments is not null)
+                         {
+
+                              @foreach (Department department in departments)
+                              {
+                                   <div @onclick="() => ChangeDepartmentName(department)" role="button" class="toggle-item">
+                                        @department.Name</div>
+                              }
+
+
+                         }
+
+
+                    </ToggleComponent>
+               </div>
+
+               <div class="col-md-4 mb-3">
+                    <label class="form-label w-auto">Joylashuvi:</label>
+                    <input type="text" class="form-control" />
+               </div>
+
+               <div class="col-md-4 mb-3">
+                    <label class="form-label w-auto">Turini tanlang:</label>
+                    <input type="text" class="form-control" />
+               </div>
+
+               <div class="col-md-4 mb-3">
+                    <label class="form-label w-auto">Parametrlari:</label>
+                    <input type="number" class="form-control" />
+               </div>
+          </div>
+
+
+          <div>
+               <button @onclick="SearchAsync" class="btn btn-primary">
+                    Qidirish
+               </button>
+          </div>
+     </div>
+
+</div>
+
+<div class="card @CssClass">
+     <div class="card-header d-flex justify-content-between align-items-center">
+
+
+          <h5 class="card-title">
+               Jihozlar <br>
+               @($"Jami: {meta?.Total ?? 0} ta")
+          </h5>
+
+     </div>
+     @if (equipments is null)
+     {
+          <LoadingComponent />
+     }
+     else
+     {
+          <div class="card-body">
+               <div class="table-responsive">
+                    <table class="table  table-hover">
+                         <thead class="table-light">
+                              <tr>
+
+                                   <th scope="col">T/r</th>
+                                   <th scope="col">Nomi</th>
+                                   <th scope="col">Invertar raqami</th>
+                                   <th scope="col">Moddiy javobgar</th>
+                                   <th scope="col">Jihoz turi</th>
+                                   <th scope="col">Mac Adresi</th>
+
+
+
+                              </tr>
+                         </thead>
+                         <tbody>
+
+                              @foreach (Equipment equipment in equipments)
+                              {
+
+                                   <tr>
+
+                                        <td> @equipment.Id</td>
+                                        <td>
+                                             <NavLink href="@($"/trashes/{equipment.Id}")">
+
+                                                  @equipment.Name
+                                             </NavLink>
+                                        </td>
+                                        <td>@equipment.InvertarId</td>
+
+                                        <td>@equipment.User?.FullName</td>
+
+                                        <td>@equipment.EquipmentType?.Name</td>
+                                        <td>@equipment.MacAddress</td>
+
+                                   </tr>
+                              }
+
+                         </tbody>
+                    </table>
+               </div>
+
+
+          </div>
+
+
+          @if (meta is not null)
+          {
+               <div class="d-flex justify-content-end m-3">
+
+
+                    <nav aria-label="Page navigation example">
+                         <ul class="pagination">
+
+                              @foreach (var link in meta.Links)
+                              {
+                                   <li class="page-item">
+                                        <a role="button" @onclick="() => ChangePage(int.Parse(link.Label))"
+                                             class="page-link @(link.Active ? "active" : "")">@((MarkupString)link.Label)
+                                        </a>
+                                   </li>
+                              }
+
+                         </ul>
+                    </nav>
+               </div>
+          }
+
+
+     }
+</div>
+
+
+
+@inject TrashClient TrashClient
+
+@inject DepartmentClient DepartmentClient
+
+@inject UserClient UserClient
+
+
+@code {
+
+     protected List<Equipment>? equipments;
+
+
+     protected List<Department>? departments;
+
+     protected List<User> users = new();
+
+     protected Meta? meta;
+     private string CssClass = "";
+
+     protected EquipmentSearchParameters equipmentSearchParameters = new();
+
+
+     protected override async Task OnInitializedAsync()
+     {
+          var response = await TrashClient.GetAllAsync();
+
+          meta = response.Meta;
+          equipments = response.Data ?? new();
+
+          var userResponse = await UserClient.GetAllAsync();
+          users = userResponse.Data!;
+
+
+          var departmentReponse = await DepartmentClient.GetAllAsync();
+
+
+          departments = departmentReponse.Data ?? new();
+
+     }
+
+     protected void ChangeDepartmentName(Department department)
+     {
+
+          equipmentSearchParameters.DepartmentId = department.Id;
+
+     }
+
+
+
+
+     protected async Task SearchAsync()
+     {
+
+          var response = await TrashClient.GetAllAsync(searchParam: equipmentSearchParameters);
+
+          meta = response.Meta;
+
+          equipments = response.Data ?? new();
+
+
+     }
+
+
+     protected async Task ChangePage(int pageNumber)
+     {
+
+          equipments = null;
+
+          equipmentSearchParameters.Page = pageNumber;
+
+
+          var response = await TrashClient.GetAllAsync(equipmentSearchParameters);
+
+          meta = response.Meta;
+
+          equipments = response.Data ?? new();
+
+     }
+
+     protected override void OnAfterRender(bool firstRender)
+     {
+
+          if (firstRender)
+          {
+               CssClass = "fade-in";
+               StateHasChanged();
+          }
+          base.OnAfterRender(firstRender);
+     }
+
+
+}

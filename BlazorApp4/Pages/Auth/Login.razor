@@ -1,0 +1,133 @@
+﻿@page "/login"
+@layout LoginLayout
+
+<div class="account-pages py-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6 col-lg-5">
+                <div class="card border-0 shadow-lg">
+                    <div class="card-body p-5">
+                        <div class="text-center">
+                            <div class="mx-auto mb-4 text-center auth-logo">
+                                <a href="/" class="logo-dark">
+                                    <img src="/images/logo.png" height="84" alt="logo dark">
+                                </a>
+                                <a href="/" class="logo-light">
+                                    <img src="/images/logo.png" height="84" alt="logo light">
+                                </a>
+                            </div>
+                            <h4 class="fw-bold text-dark mb-2">Tizimga kirish</h4>
+
+                        </div>
+
+                        <EditForm Model="@loginDto" OnValidSubmit="@SubmitAsync">
+
+                            <DataAnnotationsValidator></DataAnnotationsValidator>
+
+                            <div class="mb-3">
+                                <label class="form-label" for="name">Foydalanuvchi nomi:</label>
+
+                                <InputText @bind-Value="loginDto.Username" type="text" id="name" class="form-control">
+                                </InputText>
+
+                                @if (errorMessage is not null)
+                                {
+                                    <span class="text-danger">
+                                        @errorMessage
+                                    </span>
+                                }
+
+                                <ValidationMessage For="@(() => loginDto.Username)" />
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label" for="password">Parolingiz:</label>
+
+                                <InputText type="password" @bind-Value="loginDto.Password" id="password"
+                                    class="form-control">
+                                </InputText>
+                                <ValidationMessage For="@(() => loginDto.Password)" />
+
+                            </div>
+
+
+                            <div class="mb-1 text-center d-grid">
+                                <button disabled="@isRequestSending" class="btn btn-dark btn-lg fw-medium"
+                                    type="submit">
+                                    @if (isRequestSending)
+                                    {
+                                        <span class="spinner-border spinner-border-sm me-1" role="status"
+                                            aria-hidden="true"></span>
+
+                                    }
+                                    else
+                                    {
+                                        @("Kirish")
+                                    }
+                                </button>
+                            </div>
+
+                        </EditForm>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@if (errorMessage != null)
+{
+
+    <p>
+        @errorMessage
+    </p>
+
+}
+
+@inject NavigationManager NavigationManager
+@inject AuthClient AuthClient
+
+@inject StorageService StorageService
+
+@code {
+
+    protected LoginDto loginDto = new();
+
+    protected User? User;
+    protected string? Token;
+    protected string? errorMessage;
+
+    protected bool isRequestSending = false;
+
+
+
+
+    protected async Task SubmitAsync()
+    {
+
+        isRequestSending = true;
+
+        var response = await AuthClient.Login(loginDto);
+
+
+        if (response.StatusCode == 200)
+        {
+            Token = response.Data!.Token;
+            await StorageService.SaveToLocalStorage("token", Token);
+            errorMessage = null;
+            NavigationManager.NavigateTo("/");
+
+        }
+        else if (response.StatusCode == 422)
+        {
+            loginDto.Password = "";
+            errorMessage = response.Message;
+
+        }
+        isRequestSending = false;
+
+    }
+
+}

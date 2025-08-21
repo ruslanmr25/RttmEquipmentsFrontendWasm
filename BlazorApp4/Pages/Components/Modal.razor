@@ -1,0 +1,56 @@
+﻿@if (!HideToggleButton)
+{
+
+     <button onclick="@ChangeVisibility" class="@(CssClass ?? "btn btn-primary")">
+          @ButtonName
+     </button>
+}
+
+<div class="position-fixed top-0 start-0 w-100 h-100 @(Hidden ? "modal-fade" : "modal-show")"
+     style="background-color: rgba(0, 0, 0, 0.4); z-index: 1040;" @onclick="ChangeVisibility">
+
+     <div class="card position-absolute top-50 translate-middle-y mx-auto border rounded shadow pt-4"
+          style="z-index: 1050; width: 500px; left: 0; right: 0;" @onclick:stopPropagation>
+
+          <div class="card-header d-flex justify-content-between align-items-center">
+               <h4 class="fw-bold">@Title</h4>
+               <button type="button" class="btn-close" @onclick="ChangeVisibility"></button>
+          </div>
+
+          <div class="card-body">
+               @ChildContent
+          </div>
+     </div>
+</div>
+
+
+@code {
+
+     [Parameter]
+     public string? CssClass { get; set; }
+
+     [Parameter]
+     public EventCallback<bool> HiddenChanged { get; set; }
+
+     [Parameter]
+     public bool Hidden { get; set; }
+
+     [Parameter]
+     public string Title { get; set; } = "Yaratish";
+
+     [Parameter]
+     public RenderFragment? ChildContent { get; set; }
+
+     [Parameter]
+     public string ButtonName { get; set; } = "Yaratish";
+
+     [Parameter]
+     public bool HideToggleButton { get; set; } = false;
+
+
+     private void ChangeVisibility()
+     {
+          HiddenChanged.InvokeAsync(!Hidden);
+
+     }
+}

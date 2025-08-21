@@ -1,0 +1,137 @@
+﻿@page "/departments/{id:int}"
+
+
+@if (department is not null)
+{
+     <div class="card fade-in">
+          <div class="card-header">
+               <h3 class="text-secondary">
+                    Bino haqida
+
+               </h3>
+          </div>
+
+
+
+          <div class="card-body d-flex justify-content-center">
+               <table class="table">
+                    <tbody>
+                         <tr>
+                              <td><b>Bino nomi</b></td>
+                              <td>@department.Name</td>
+                         </tr>
+
+                         <tr>
+                              <td><b>Xonalar soni </b></td>
+                              <td>@department.Rooms?.Count</td>
+                         </tr>
+
+                         <tr>
+                              <td><b>Tayinlangan qorovuli </b></td>
+                              <td>@department.Guard?.FullName</td>
+                         </tr>
+
+
+                         <tr>
+                              <td><b>Jizhozlari soni </b></td>
+                              <td>@department.Equipments?.Count </td>
+                         </tr>
+                    </tbody>
+               </table>
+          </div>
+
+
+
+
+     </div>
+
+     <div class="card">
+          <div class="card-header">
+               <h4>Jihozlari</h4>
+          </div>
+
+          <div class="card-body">
+               <div class="table-responsive">
+                    <table class="table  table-hover">
+                         <thead class="table-light">
+                              <tr>
+
+                                   <th scope="col">T/r</th>
+                                   <th scope="col">Nomi</th>
+                                   <th scope="col">Invertar raqami</th>
+
+                                   <th scope="col">Jihoz turi</th>
+                                   <th scope="col">Mac Adresi</th>
+                                   <th>Tahrirlash</th>
+
+                              </tr>
+                         </thead>
+                         <tbody>
+
+                              @foreach (Equipment equipment in department.Equipments ?? new())
+                              {
+
+                                   <tr>
+
+                                        <td> @equipment.Id</td>
+
+
+                                        <td>
+                                             <NavLink href="@($"equipments/{equipment.Id}")">
+                                                  @equipment.Name
+                                             </NavLink>
+
+                                        </td>
+                                        <td>@equipment.InvertarId</td>
+
+
+                                        <td>@equipment.EquipmentType?.Name</td>
+                                        <td>@equipment.MacAddress</td>
+
+                                        <td>
+
+                                             <NavLink href="@($"/equipments/{equipment.Id}/edit")">
+                                                  Tahrirlash
+                                             </NavLink>
+                                        </td>
+
+                                   </tr>
+                              }
+
+                         </tbody>
+                    </table>
+               </div>
+
+
+          </div>
+
+     </div>
+
+}
+else
+{
+     <LoadingComponent />
+}
+
+
+@inject DepartmentClient DepartmentClient
+
+@code
+{
+
+     [Parameter]
+
+     public int Id { get; set; }
+
+     public Department? department;
+
+
+     protected override async Task OnParametersSetAsync()
+     {
+
+          var response = await DepartmentClient.GetAsync(Id);
+          department = response.Data;
+
+
+     }
+}

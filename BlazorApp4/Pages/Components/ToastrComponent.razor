@@ -1,0 +1,66 @@
+﻿@if (isVisible || isHiding)
+{
+     <div class="position-fixed top-0 end-0 p-3 fade-in" style="z-index: 2000;">
+          <div class="@toastClass" role="alert">
+               <div class="d-flex align-items-center p-2 px-3">
+                    <img src="/images/logo.png" width="30" class="me-2" alt="Logo" />
+                    <div class="me-auto">@_message</div>
+                    <button type="button" class="btn-close btn-close ms-2" @onclick="HideToast"></button>
+               </div>
+          </div>
+     </div>
+}
+
+
+@inject ToastrService ToastrService
+@inject IJSRuntime JS
+
+@code {
+     private string? _message;
+     private bool isVisible = false;
+     private bool isHiding = false;
+     private string toastClass => $"toast bg-white border-0 shadow-lg fade {(isVisible && !isHiding ? "show" : "hide")}";
+
+     protected override void OnInitialized()
+     {
+          ToastrService.OnShow += ShowToast;
+     }
+
+
+
+     private async void ShowToast(string type, string message)
+     {
+          _message = message;
+          isVisible = true;
+          isHiding = false;
+          StateHasChanged();
+
+          // 3 sekund ko'rsatiladi
+          await Task.Delay(3000);
+
+          // Animate out
+          isHiding = true;
+          StateHasChanged();
+
+          // 500ms — fade animatsiya muddati
+          await Task.Delay(500);
+
+          isVisible = false;
+          isHiding = false;
+          StateHasChanged();
+     }
+
+     private async void HideToast()
+     {
+          if (!isVisible) return;
+
+          isHiding = true;
+          StateHasChanged();
+
+          await Task.Delay(500);
+
+          isVisible = false;
+          isHiding = false;
+          StateHasChanged();
+     }
+}

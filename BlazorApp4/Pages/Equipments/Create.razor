@@ -1,0 +1,280 @@
+﻿@page "/equipments/create"
+<div class="card 
+">
+
+     <div class="card-header mt-2">
+          <h4>
+
+               Yangi jihoz qo'shish
+          </h4>
+     </div>
+
+     @if (createEquipmentDto is not null)
+     {
+
+          <div class="card-body">
+
+
+
+               <EditForm OnValidSubmit="@HandelValidSubmit" Model="@createEquipmentDto">
+
+                    <ValidationSummary></ValidationSummary>
+
+                    <DataAnnotationsValidator></DataAnnotationsValidator>
+
+                    <div class="m-5 mt-1">
+
+                         <!-- Name -->
+                         <div class="row mb-3">
+                              <label class="col-md-3 col-form-label">Uskuna nomi:</label>
+                              <div class="col-md-9">
+                                   <InputText @bind-Value="createEquipmentDto.Name" type="text" class="form-control"
+                                        placeholder="jihoz nomi" />
+                                   <ValidationMessage For="@(() => createEquipmentDto.Name)" />
+                              </div>
+
+
+
+                         </div>
+
+                         <!-- InvertarId -->
+                         <div class="row mb-3">
+                              <label class="col-md-3 col-form-label">Inventar raqami:</label>
+                              <div class="col-md-9">
+                                   <InputNumber @bind-Value="createEquipmentDto.InvertarId" type="number"
+                                        class="form-control" />
+                                   <ValidationMessage For="@(() => createEquipmentDto.InvertarId)" />
+                              </div>
+
+
+                         </div>
+
+                         <!-- MacAddress -->
+                         <div class="row mb-3">
+                              <label class="col-md-3 col-form-label">Mac manzil:</label>
+                              <div class="col-md-9">
+                                   <InputText @bind-Value="createEquipmentDto.MacAddress" type="text" class="form-control"
+                                        placeholder="00:1A:2B:3C:4D:5E" />
+                                   <ValidationMessage For="@(() => createEquipmentDto.MacAddress)" />
+                              </div>
+
+
+                         </div>
+
+                         <!-- UserId -->
+                         <div class="row mb-3">
+                              <label class="col-md-3 col-form-label">Foydalanuvchi:</label>
+                              <div class="col-md-9">
+                                   <InputSelect @bind-Value="createEquipmentDto.UserId" class="form-select">
+                                        <option value="">Tanlang</option>
+
+                                        @foreach (var user in users)
+                                        {
+                                             <option value="@user.Id">@user.FullName</option>
+
+                                        }
+                                        <!-- Dinamik userlar shu yerda -->
+                                   </InputSelect>
+                                   <ValidationMessage For="@(() => createEquipmentDto.UserId)" />
+                              </div>
+
+
+                         </div>
+
+                         <!-- EquipmentTypeId -->
+                         <div class="row mb-3">
+                              <label class="col-md-3 col-form-label">Uskuna turi:</label>
+                              <div class="col-md-9">
+                                   <InputSelect Value="@createEquipmentDto.EquipmentTypeId"
+                                        ValueChanged="@((int value) => OnEquipmentTypeChanged(value))"
+                                        ValueExpression="@(() => createEquipmentDto.EquipmentTypeId)" class="form-select">
+
+
+                                        <option value="">Tanlang</option>
+
+                                        @foreach (var equipmentType in categories)
+                                        {
+                                             <option value="@equipmentType.Id">@equipmentType.Name</option>
+
+                                        }
+                                        <!-- Dinamik uskuna turlari -->
+                                   </InputSelect>
+                                   <ValidationMessage For="@(() => createEquipmentDto.EquipmentTypeId)" />
+                              </div>
+
+
+                         </div>
+
+                         <!-- Parameters -->
+                         <div class="row mb-3">
+                              <label class="col-md-3 col-form-label">Parametrlar:</label>
+                              <div class="col-md-9">
+
+                                   <InputMultiSelect TItem="Parameter" GetText="@(p => p.Name)" GetValue="@(p => p.Id)"
+                                        @bind-Value="createEquipmentDto.Parameters" Items="@parameters" class="form-select">
+
+
+                                   </InputMultiSelect>
+
+                                   <ValidationMessage For="@(() => createEquipmentDto.Parameters)" />
+
+                                   <small class="text-muted">Bir nechta parametr tanlash mumkin</small>
+                              </div>
+                         </div>
+
+                         <!-- DepartmentId -->
+                         <!-- DepartmentId -->
+                         <div class="row mb-3">
+                              <label class="col-md-3 col-form-label">Bino:</label>
+                              <div class="col-md-9">
+                                   <InputSelect class="form-select" Value="@createEquipmentDto.DepartmentId"
+                                        ValueChanged="@((int value) => OnDepartmentChanged(value))"
+                                        ValueExpression="@(() => createEquipmentDto.DepartmentId)">
+                                        <option value="">-- Tanlang --</option>
+                                        @foreach (var department in departments)
+                                        {
+                                             <option value="@department.Id">@department.Name</option>
+                                        }
+                                   </InputSelect>
+
+
+                                   <ValidationMessage For="@(() => createEquipmentDto.DepartmentId)" />
+                              </div>
+                         </div>
+
+
+                         <!-- RoomId -->
+                         <div class="row mb-3">
+                              <label class="col-md-3 col-form-label">Xona:</label>
+                              <div class="col-md-9">
+                                   <InputSelect @bind-Value="createEquipmentDto.RoomId" class="form-select">
+                                        <option value="">Tanlang</option>
+
+                                        @foreach (var room in rooms)
+                                        {
+                                             <option value="@room.Id">@room.Name</option>
+
+                                        }
+                                        <!-- Dinamik xonalar -->
+                                   </InputSelect>
+
+                                   <ValidationMessage For="@(() => createEquipmentDto.RoomId)" />
+
+                              </div>
+
+
+                         </div>
+
+                         <!-- Submit button -->
+                         <div class="row mb-3">
+                              <div class="col-md-9 offset-md-3">
+                                   <button type="submit" class="btn btn-primary">Saqlash</button>
+                              </div>
+                         </div>
+
+                    </div>
+
+               </EditForm>
+
+
+          </div>
+     }
+
+</div>
+
+
+@inject UserClient UserClient
+@inject EquipmentTypeClient EquipmentTypeClient
+
+@inject DepartmentClient DepartmentClient
+
+@inject RoomClient RoomClient
+
+@inject ParameterClient ParameterClient
+@inject ToastrService ToastrService
+@inject EquipmentClient EquipmentClient
+
+@inject NavigationManager NavigationManager
+
+
+@code
+{
+
+
+     protected List<User> users = new();
+
+     protected List<EquipmentType> categories = new();
+
+     protected List<Department> departments = new();
+
+
+     protected List<Room> rooms = new();
+
+     protected List<Parameter> parameters = new();
+
+     protected CreateEquipmentDto? createEquipmentDto = new();
+
+
+     protected override async Task OnInitializedAsync()
+     {
+          var userResponse = await UserClient.GetAllAsync();
+
+          users = userResponse.Data ?? new();
+
+          var equipmentTypeResponse = await EquipmentTypeClient.GetAllAsync();
+
+          categories = equipmentTypeResponse.Data ?? new();
+
+
+          var deparmtentReponse = await DepartmentClient.GetAllAsync();
+
+          departments = deparmtentReponse.Data ?? new();
+
+
+
+
+
+     }
+
+     private async Task OnDepartmentChanged(int value)
+     {
+
+
+          createEquipmentDto!.DepartmentId = value;
+          var roomResponse = await DepartmentClient.GetAsync(value);
+          rooms = roomResponse.Data?.Rooms ?? new();
+
+     }
+
+
+     private async Task OnEquipmentTypeChanged(int value)
+     {
+          createEquipmentDto!.EquipmentTypeId = value;
+          var parmetersResponse = await EquipmentTypeClient.GetAsync(value);
+
+
+          parameters = parmetersResponse.Data?.Parameters ?? new();
+
+
+     }
+
+
+
+     public async Task HandelValidSubmit()
+     {
+
+
+          var response = await EquipmentClient.CreateAsync(createEquipmentDto);
+
+          ToastrService.ShowSucess(response.Message!);
+
+          NavigationManager.NavigateTo("equipments");
+
+     }
+
+
+
+
+
+
+}

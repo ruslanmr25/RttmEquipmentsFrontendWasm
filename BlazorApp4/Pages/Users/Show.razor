@@ -1,0 +1,152 @@
+﻿@page "/users/{id:int}"
+
+
+@if (user is not null)
+{
+     <div class="card fade-in">
+          <div class="card-header">
+               <h3 class="text-secondary">
+                    Foydalanuvchi haqida
+
+               </h3>
+          </div>
+
+
+
+          <div class="card-body d-flex justify-content-center">
+               <table class="table">
+                    <tbody>
+                         <tr>
+                              <td><b>To'liq ismi</b></td>
+                              <td>@user.FullName</td>
+                         </tr>
+
+                         <tr>
+                              <td><b>Foydalanuvchi nomi</b></td>
+                              <td>@user.Username</td>
+                         </tr>
+
+                         <tr>
+                              <td><b>Telefon raqami </b></td>
+                              <td>@user.Phone</td>
+                         </tr>
+
+                         <tr>
+                              <td><b>Roli </b></td>
+                              <td>@user.Role?.Name</td>
+                         </tr>
+
+
+                         <tr>
+                              <td><b>Ishlash joyi </b></td>
+                              <td>@user.Position?.Division?.Name </td>
+                         </tr>
+
+                         <tr>
+                              <td><b>Lavozimi </b></td>
+                              <td>@user.Position?.Name </td>
+                         </tr>
+
+                         <tr>
+                              <td><b>Jizhozlari soni </b></td>
+                              <td>@user.Equipments?.Count </td>
+                         </tr>
+                    </tbody>
+               </table>
+          </div>
+
+
+
+
+     </div>
+
+     <div class="card">
+          <div class="card-header">
+               <h4>Jihozlari</h4>
+          </div>
+
+          <div class="card-body">
+               <div class="table-responsive">
+                    <table class="table  table-hover">
+                         <thead class="table-light">
+                              <tr>
+
+                                   <th scope="col">T/r</th>
+                                   <th scope="col">Nomi</th>
+                                   <th scope="col">Invertar raqami</th>
+
+                                   <th scope="col">Jihoz turi</th>
+                                   <th scope="col">Mac Adresi</th>
+                                   <th>Tahrirlash</th>
+
+                              </tr>
+                         </thead>
+                         <tbody>
+
+                              @foreach (Equipment equipment in user.Equipments ?? new())
+                              {
+
+                                   <tr>
+
+                                        <td> @equipment.Id</td>
+
+
+                                        <td>
+                                             <NavLink href="@($"equipments/{equipment.Id}")">
+                                                  @equipment.Name
+                                             </NavLink>
+
+                                        </td>
+                                        <td>@equipment.InvertarId</td>
+
+
+                                        <td>@equipment.EquipmentType?.Name</td>
+                                        <td>@equipment.MacAddress</td>
+
+                                        <td>
+
+                                             <NavLink href="@($"/equipments/{equipment.Id}/edit")">
+                                                  Tahrirlash
+                                             </NavLink>
+                                        </td>
+
+                                   </tr>
+                              }
+
+                         </tbody>
+                    </table>
+               </div>
+
+
+          </div>
+
+     </div>
+
+}
+else
+{
+     <LoadingComponent />
+}
+
+
+@inject UserClient UserClient
+
+@code
+{
+
+     [Parameter]
+
+     public int Id { get; set; }
+
+     public User? user;
+
+
+     protected override async Task OnParametersSetAsync()
+     {
+
+          var response = await UserClient.GetAsync(Id);
+          user = response.Data;
+
+
+     }
+}

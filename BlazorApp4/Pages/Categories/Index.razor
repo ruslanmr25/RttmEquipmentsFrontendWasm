@@ -1,0 +1,80 @@
+﻿@page "/categories"
+
+
+<div class="card fade-in">
+     <div class="card-header">
+
+
+          <h5 class="card-title">
+               Jihoz kategoriyalar
+          </h5>
+
+
+     </div>
+     @if (categories is null)
+     {
+          <LoadingComponent />
+
+
+     }
+     else
+     {
+          <div class="card-body">
+               <div class="table-responsive">
+                    <table class="table  table-hover">
+                         <thead class="table-light">
+                              <tr>
+
+                                   <th scope="col">T/r</th>
+                                   <th scope="col">Nomi</th>
+                                   <th scope="col">Jihozlar soni</th>
+
+
+
+
+                              </tr>
+                         </thead>
+                         <tbody>
+
+                              @foreach (Category category in categories)
+                              {
+
+                                   <tr>
+
+                                        <td> @category.Id</td>
+                                        <td>@category.Name</td>
+                                        <td>@category.EquipmentsCount</td>
+
+
+                                   </tr>
+                              }
+
+                         </tbody>
+                    </table>
+               </div>
+
+
+          </div>
+
+     }
+</div>
+
+@inject CategoryClient CategoryClient
+
+@code {
+
+     protected List<Category>? categories;
+
+     protected override async Task OnInitializedAsync()
+     {
+
+
+          var response = await CategoryClient.GetAllAsync();
+
+          categories = response.Data ?? new();
+
+
+     }
+
+
+}
