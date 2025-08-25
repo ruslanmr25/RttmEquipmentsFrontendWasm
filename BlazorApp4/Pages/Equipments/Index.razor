@@ -1,6 +1,9 @@
 ﻿@page "/equipments"
 
 
+@attribute [Authorize(Roles = "superAdmin,admin,viewer")]
+
+
 <div class="card fade-in">
      <div class="card-body">
           <div class="row">
@@ -88,11 +91,33 @@
 
           <h5 class="card-title">
                Jihozlar <br>
-               @($"Jami: {meta?.Total ?? 0} ta")
+               @($"Jami: {meta?.Total ?? 0} ta") <br>
+
+               @if (equipments is not null && equipments.Any(e => e.IsSelected == true))
+               {
+
+
+
+                    <span> Tanlangan jihozlar:</span>
+                    @equipments?.Where(e => e.IsSelected == true).Count()
+
+               }
+
+
 
 
           </h5>
           <div>
+
+
+               @if (equipments is not null && equipments.Any(e => e.IsSelected == true))
+               {
+
+                    <button class="btn btn-primary me-2" @onclick="SendEquipment">
+                         Boshqaning nomiga o'tkazish
+                    </button>
+
+               }
 
                <NavLink href="equipments/create" class="btn btn-primary me-2">
                     Yaratish
@@ -115,6 +140,7 @@
                     <table class="table  table-hover">
                          <thead class="table-light">
                               <tr>
+                                   <th class="col"><input type="checkbox" @onchange="SelectAll"></th>
 
                                    <th scope="col">T/r</th>
                                    <th scope="col">Nomi</th>
@@ -133,7 +159,9 @@
                               @foreach (Equipment equipment in equipments)
                               {
 
+
                                    <tr>
+                                        <td><input @bind="equipment.IsSelected" type="checkbox"></td>
 
                                         <td> @equipment.Id</td>
 
@@ -209,8 +237,9 @@
 @inject DepartmentClient DepartmentClient
 @inject RoomClient RoomClient
 @inject UserClient UserClient
+@inject AppStateService AppStateService
 
-
+@inject NavigationManager NavigationManager
 @code {
 
      protected List<Equipment>? equipments;
@@ -241,7 +270,7 @@
           equipments = response.Data ?? new();
 
           var userResponse = await UserClient.GetAllAsync();
-          users = userResponse.Data!;
+          users = userResponse.Data ?? new();
 
 
           var departmentReponse = await DepartmentClient.GetAllAsync();
@@ -303,6 +332,36 @@
           }
           base.OnAfterRender(firstRender);
      }
+
+
+     protected void SelectAll(ChangeEventArgs e)
+     {
+
+          bool isChecked = (bool)e.Value!;
+          if (equipments is not null)
+          {
+
+               equipments.ForEach(e => e.IsSelected = isChecked);
+          }
+
+          StateHasChanged();
+     }
+
+
+     protected void SendEquipment()
+     {
+
+          if (equipments is not null)
+          {
+
+               AppStateService.Equipments = equipments.Where(e => e.IsSelected == true).ToList();
+
+               NavigationManager.NavigateTo("equipments/move");
+          }
+     }
+
+
+
 
 
      protected async Task OnDepartmentChangedAsync(ChangeEventArgs e)

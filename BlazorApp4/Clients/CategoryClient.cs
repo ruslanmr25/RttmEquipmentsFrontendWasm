@@ -4,5 +4,5 @@ using BlazorApp4.Services;
 
 namespace BlazorApp4.Clients;
 
-public class CategoryClient(HttpClient httpClient, StorageService storageService)
-    : BaseClient<Category>(httpClient, "/api/categories", storageService) { }
+public class CategoryClient(IHttpClientFactory factory, StorageService storageService)
+    : BaseClient<Category>(factory, "/api/categories", storageService) { }

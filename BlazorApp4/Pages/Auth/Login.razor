@@ -88,7 +88,9 @@
 
 @inject NavigationManager NavigationManager
 @inject AuthClient AuthClient
+@inject AuthenticationStateProvider AuthProvider
 
+@inject ToastrService ToastrService
 @inject StorageService StorageService
 
 @code {
@@ -101,9 +103,6 @@
 
     protected bool isRequestSending = false;
 
-
-
-
     protected async Task SubmitAsync()
     {
 
@@ -111,13 +110,31 @@
 
         var response = await AuthClient.Login(loginDto);
 
-
         if (response.StatusCode == 200)
         {
             Token = response.Data!.Token;
-            await StorageService.SaveToLocalStorage("token", Token);
+
+            var apiAuth = (ApiAuthenticationStateProvider)AuthProvider;
+            await apiAuth.MarkUserAsAuthenticated(Token);
+            ToastrService.ShowSucess(response.Message ?? "Nimadir xato ketti");
+
             errorMessage = null;
+
+            var state = await AuthProvider.GetAuthenticationStateAsync();
+
+            Console.WriteLine(state);
+
+            if (state.User.IsInRole("staff") || state.User.IsInRole("guard"))
+            {
+
+                NavigationManager.NavigateTo("/my-equipments");
+
+                return;
+
+            }
+
             NavigationManager.NavigateTo("/");
+
 
         }
         else if (response.StatusCode == 422)
@@ -126,6 +143,7 @@
             errorMessage = response.Message;
 
         }
+
         isRequestSending = false;
 
     }

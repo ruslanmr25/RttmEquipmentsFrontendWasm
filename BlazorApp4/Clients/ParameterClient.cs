@@ -6,6 +6,6 @@ namespace BlazorApp4.Clients;
 
 public class ParameterClient : BaseClient<Parameter>
 {
-    public ParameterClient(HttpClient httpClient, StorageService storageService)
-        : base(httpClient, "/api/parameters", storageService) { }
+    public ParameterClient(IHttpClientFactory factory, StorageService storageService)
+        : base(factory, "/api/parameters", storageService) { }
 }

@@ -1,4 +1,7 @@
 ﻿@page "/equipments/{id:int}/edit"
+
+@attribute [Authorize(Roles = "superAdmin,admin")]
+
 <div class="card fade-in">
 
      <div class="card-header mt-2">

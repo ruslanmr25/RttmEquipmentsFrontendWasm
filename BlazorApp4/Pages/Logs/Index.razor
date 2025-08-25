@@ -1,5 +1,7 @@
 ﻿@page "/logs"
 
+@attribute [Authorize(Roles = "superAdmin")]
+
 <div class="card @CssClass">
      <div class="card-header d-flex justify-content-between align-items-center">
 

@@ -14,9 +14,9 @@ public class FileUploadClient
 
     protected readonly string url = "/images/upload";
 
-    public FileUploadClient(HttpClient httpClient, StorageService storageService)
+    public FileUploadClient(IHttpClientFactory factory, StorageService storageService)
     {
-        _client = httpClient;
+        _client = factory.CreateClient("ApiClient");
 
         _storageService = storageService;
     }

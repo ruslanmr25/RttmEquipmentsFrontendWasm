@@ -1,6 +1,6 @@
 ﻿@page "/types"
 
-
+@attribute [Authorize(Roles = "superAdmin,admin,viewer")]
 
 
 <div class="card fade-in">
@@ -25,44 +25,51 @@
                               @oninput="Search">
                     </div>
                </div>
-               <Modal @bind-Hidden="hidden" Title="Yangi tur qo'shish">
 
-                    <EditForm Model="@createEquipmentTypeDto" OnValidSubmit="@CreateAsync">
-                         <DataAnnotationsValidator />
-                         <div class="mb-3">
-                              <label for="name" class="form-label">Turning nomi</label>
-                              <InputText @bind-Value="createEquipmentTypeDto.Name" type="text" id="name"
-                                   class="form-control">
-                              </InputText>
+               <AuthorizeView Roles="superAdmin,admin" Context="authContext">
 
-                              <ValidationMessage For="@(() => createEquipmentTypeDto.Name)" />
 
-                         </div>
-                         <div class="mb-3">
-                              <label for="category" class="form-label">Kategoriyasi</label>
-                              <InputSelect @bind-Value="createEquipmentTypeDto.CategoryId" class="form-select"
-                                   id="category">
-                                   @foreach (var category in categories)
-                                   {
-                                        <option value="@category.Id">@category.Name</option>
-                                   }
-                              </InputSelect>
+                    <Modal @bind-Hidden="hidden" Title="Yangi tur qo'shish">
 
-                              <ValidationMessage For="@(() => createEquipmentTypeDto.CategoryId)" />
+                         <EditForm Model="@createEquipmentTypeDto" OnValidSubmit="@CreateAsync">
+                              <DataAnnotationsValidator />
+                              <div class="mb-3">
+                                   <label for="name" class="form-label">Turning nomi</label>
+                                   <InputText @bind-Value="createEquipmentTypeDto.Name" type="text" id="name"
+                                        class="form-control">
+                                   </InputText>
 
-                         </div>
+                                   <ValidationMessage For="@(() => createEquipmentTypeDto.Name)" />
 
-                         <div class="text-end">
-                              <button type="button" @onclick="() => hidden = true"
-                                   class="btn btn-secondary me-2">Yopish</button>
+                              </div>
+                              <div class="mb-3">
+                                   <label for="category" class="form-label">Kategoriyasi</label>
+                                   <InputSelect @bind-Value="createEquipmentTypeDto.CategoryId" class="form-select"
+                                        id="category">
+                                        @foreach (var category in categories)
+                                        {
+                                             <option value="@category.Id">@category.Name</option>
+                                        }
+                                   </InputSelect>
 
-                              <LoadingButton CssClass="btn btn-primary" Type="submit"
-                                   IsRequestSending="@isRequestSending" Name="Yaratish" />
+                                   <ValidationMessage For="@(() => createEquipmentTypeDto.CategoryId)" />
 
-                         </div>
-                    </EditForm>
+                              </div>
 
-               </Modal>
+                              <div class="text-end">
+                                   <button type="button" @onclick="() => hidden = true"
+                                        class="btn btn-secondary me-2">Yopish</button>
+
+                                   <LoadingButton CssClass="btn btn-primary" Type="submit"
+                                        IsRequestSending="@isRequestSending" Name="Yaratish" />
+
+                              </div>
+                         </EditForm>
+
+                    </Modal>
+
+
+               </AuthorizeView>
 
           </div>
 
@@ -86,7 +93,10 @@
                                    <th scope="col">Nomi</th>
                                    <th scope="col">Jihozlar soni</th>
                                    <th scope="col">Kategoriyasi</th>
-                                   <th scope="col">Tarhrirlash</th>
+
+                                   <AuthorizeView Roles="superAdmin">
+                                        <th scope="col">Tarhrirlash</th>
+                                   </AuthorizeView>
 
                               </tr>
 
@@ -102,11 +112,16 @@
                                         <td> @equipmentType.Name</td>
                                         <td> @equipmentType.EquipmentsCount</td>
                                         <td> @(equipmentType.Category?.Name ?? "Mavjud emas")</td>
-                                        <td>
-                                             <NavLink href="@( $"types/{equipmentType.Id}")">
-                                                  Tahrirlash
-                                             </NavLink>
-                                        </td>
+
+                                        <AuthorizeView Roles="superAdmin">
+
+                                             <td>
+                                                  <NavLink href="@( $"types/{equipmentType.Id}")">
+                                                       Tahrirlash
+                                                  </NavLink>
+                                             </td>
+
+                                        </AuthorizeView>
 
 
                                    </tr>

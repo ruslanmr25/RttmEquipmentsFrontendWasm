@@ -6,6 +6,6 @@ namespace BlazorApp4.Clients;
 
 public class DepartmentClient : BaseClient<Department>
 {
-    public DepartmentClient(HttpClient httpClient, StorageService storageService)
-        : base(httpClient, "/api/departments", storageService) { }
+    public DepartmentClient(IHttpClientFactory factory, StorageService storageService)
+        : base(factory, "/api/departments", storageService) { }
 }

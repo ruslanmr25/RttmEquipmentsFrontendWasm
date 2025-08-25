@@ -4,5 +4,5 @@ using BlazorApp4.Services;
 
 namespace BlazorApp4.Clients;
 
-public class UserClient(HttpClient httpClient, StorageService storageService)
-    : BaseClient<User>(httpClient, "/api/users", storageService) { }
+public class UserClient(IHttpClientFactory factory, StorageService storageService)
+    : BaseClient<User>(factory, "/api/users", storageService) { }

@@ -39,12 +39,26 @@
 
                          <tr>
                               <td><b>Ishlash joyi </b></td>
-                              <td>@user.Position?.Division?.Name </td>
+
+
+                              <td>
+                                   @foreach (var position in user.Positions ?? new())
+                                   {
+
+                                        @position.Division?.Name <br>
+                                   } 
+                              </td>
                          </tr>
 
                          <tr>
                               <td><b>Lavozimi </b></td>
-                              <td>@user.Position?.Name </td>
+                              <td>
+                                   @foreach (var position in user.Positions ?? new())
+                                   {
+                                        @position.Name  <br>
+                                        
+                                        }
+                                        </td>
                          </tr>
 
                          <tr>

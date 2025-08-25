@@ -1,7 +1,6 @@
 window.Start = function (chartData) {
 
 
-    console.log(chartData);
     // chartData object ichida series, categories, labels va h.k. keladi
 
     // 1. Line/Bar chart options

@@ -1,5 +1,7 @@
 ﻿@page "/trashes/{id:int}"
 
+
+@attribute [Authorize(Roles = "superAdmin,admin,viewer")]
 <div class="card">
      <div class="card-header">
           Jihoz haqida

@@ -1,5 +1,5 @@
 ﻿@page "/types/{id:int}"
-
+@attribute [Authorize(Roles ="superAdmin")]
 
 @if (editEquipmentDto is null)
 {

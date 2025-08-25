@@ -1,6 +1,8 @@
 ﻿@page "/departments"
 
 
+@attribute [Authorize(Roles = "superAdmin,admin,viewer")]
+
 <div class="card fade-in">
      <div class="card-header d-flex justify-content-between align-items-center">
 
@@ -72,7 +74,12 @@
                                    <th scope="col">Xonalar soni</th>
 
                                    <th scope="col">Jihozlar soni</th>
-                                   <th scope="col">Tahrirlash</th>
+
+
+                                   <AuthorizeView Roles="superAdmin">
+
+                                        <th scope="col">Tahrirlash</th>
+                                   </AuthorizeView>
 
 
 
@@ -94,11 +101,15 @@
                                         <td>@department.RoomsCount</td>
 
                                         <td>@department.EquipmentsCount</td>
-                                        <td>
-                                             <span role="button" @onclick="() => OpenEditModal(department)">
-                                                  Tahrirlash
-                                             </span>
-                                        </td>
+                                        <AuthorizeView Roles="superAdmin">
+
+
+                                             <td>
+                                                  <span role="button" @onclick="() => OpenEditModal(department)">
+                                                       Tahrirlash
+                                                  </span>
+                                             </td>
+                                        </AuthorizeView>
                                    </tr>
                               }
 
@@ -114,32 +125,35 @@
 
 
 
-<Modal @bind-Hidden="isEditModalHidden" HideToggleButton="true" Title="Binoni tahrirlash">
+<AuthorizeView Roles="superAdmin" Context="authContext">
+
+     <Modal @bind-Hidden="isEditModalHidden" HideToggleButton="true" Title="Binoni tahrirlash">
 
 
-     <EditForm Model="@editDepartmentDto" OnValidSubmit="@EditAsync">
-          <DataAnnotationsValidator />
-          <div class="mb-3">
-               <label for="name" class="form-label">Bino nomi</label>
-               <InputText @bind-Value="editDepartmentDto.Name" type="text" id="name" class="form-control">
-               </InputText>
+          <EditForm Model="@editDepartmentDto" OnValidSubmit="@EditAsync">
+               <DataAnnotationsValidator />
+               <div class="mb-3">
+                    <label for="name" class="form-label">Bino nomi</label>
+                    <InputText @bind-Value="editDepartmentDto.Name" type="text" id="name" class="form-control">
+                    </InputText>
 
-               <ValidationMessage For="@(() => editDepartmentDto.Name)" />
+                    <ValidationMessage For="@(() => editDepartmentDto.Name)" />
 
-          </div>
+               </div>
 
 
-          <div class="text-end">
-               <button type="button" @onclick="() => isEditModalHidden = true"
-                    class="btn btn-secondary me-2">Yopish</button>
+               <div class="text-end">
+                    <button type="button" @onclick="() => isEditModalHidden = true"
+                         class="btn btn-secondary me-2">Yopish</button>
 
-               <LoadingButton CssClass="btn btn-primary" Type="submit" IsRequestSending="@isRequestSending"
-                    Name="Tahrirlash" />
+                    <LoadingButton CssClass="btn btn-primary" Type="submit" IsRequestSending="@isRequestSending"
+                         Name="Tahrirlash" />
 
-          </div>
-     </EditForm>
+               </div>
+          </EditForm>
 
-</Modal>
+     </Modal>
+</AuthorizeView>
 
 
 @inject DepartmentClient DepartmentClient

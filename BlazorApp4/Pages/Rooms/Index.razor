@@ -1,6 +1,8 @@
 ﻿@page "/rooms"
 
 
+@attribute [Authorize(Roles = "superAdmin,admin,viewer")]
+
 <div class="card fade-in">
      <div class="card-header d-flex justify-content-between align-items-center">
 
@@ -9,49 +11,49 @@
                Xonalar
           </h5>
 
+          <AuthorizeView Roles="superAdmin,admin" Context="authContext">
+               <Modal @bind-Hidden="@isHidden" Title="Yangi xona qo'shish">
 
-          <Modal @bind-Hidden="@isHidden" Title="Yangi xona qo'shish">
 
+                    <EditForm Model="@createRoomDto" OnValidSubmit="@CreateAsync">
+                         <DataAnnotationsValidator />
+                         <div class="mb-3">
+                              <label for="name" class="form-label">Xona nomi</label>
+                              <InputText @bind-Value="createRoomDto.Name" type="text" id="name" class="form-control">
+                              </InputText>
 
-               <EditForm Model="@createRoomDto" OnValidSubmit="@CreateAsync">
-                    <DataAnnotationsValidator />
-                    <div class="mb-3">
-                         <label for="name" class="form-label">Xona nomi</label>
-                         <InputText @bind-Value="createRoomDto.Name" type="text" id="name" class="form-control">
-                         </InputText>
+                              <ValidationMessage For="@(() => createRoomDto.Name)" />
 
-                         <ValidationMessage For="@(() => createRoomDto.Name)" />
+                         </div>
+                         <div class="mb-3">
+                              <label for="name" class="form-label">Binosi</label>
+                              <InputSelect @bind-Value="createRoomDto.DepartmentId" id="name" class="form-control">
+                                   <option value="">-- Tanlang --</option>
 
-                    </div>
-                    <div class="mb-3">
-                         <label for="name" class="form-label">Binosi</label>
-                         <InputSelect @bind-Value="createRoomDto.DepartmentId" id="name" class="form-control">
-                              <option value="">-- Tanlang --</option>
+                                   @foreach (Department department in departments)
+                                   {
 
-                              @foreach (Department department in departments)
-                              {
+                                        <option value="@department.Id">@department.Name</option>
+                                   }
 
-                                   <option value="@department.Id">@department.Name</option>
-                              }
+                              </InputSelect>
 
-                         </InputSelect>
+                              <ValidationMessage For="@(() => createRoomDto.DepartmentId)" />
 
-                         <ValidationMessage For="@(() => createRoomDto.DepartmentId)" />
+                         </div>
 
-                    </div>
+                         <div class="text-end">
+                              <button type="button" @onclick="() => isHidden = true"
+                                   class="btn btn-secondary me-2">Yopish</button>
 
-                    <div class="text-end">
-                         <button type="button" @onclick="() => isHidden = true"
-                              class="btn btn-secondary me-2">Yopish</button>
+                              <LoadingButton CssClass="btn btn-primary" Type="submit"
+                                   IsRequestSending="@isRequestSending" Name="Yaratish" />
 
-                         <LoadingButton CssClass="btn btn-primary" Type="submit" IsRequestSending="@isRequestSending"
-                              Name="Yaratish" />
+                         </div>
+                    </EditForm>
 
-                    </div>
-               </EditForm>
-
-          </Modal>
-
+               </Modal>
+          </AuthorizeView>
 
      </div>
      @if (rooms is null)
@@ -74,8 +76,12 @@
 
 
                                    <th scope="col">Jihozlar soni</th>
-                                   <th scope="col">Tahrirlash</th>
 
+                                   <AuthorizeView Roles="superAdmin">
+
+                                        <th scope="col">Tahrirlash</th>
+
+                                   </AuthorizeView>
 
 
 
@@ -93,11 +99,15 @@
 
 
                                         <td>@room.EquipmentsCount</td>
-                                        <td>
-                                             <span role="button" @onclick="() => OpenEditModal(room)">
-                                                  Tahrirlash
-                                             </span>
-                                        </td>
+
+                                        <AuthorizeView Roles="superAdmin">
+
+                                             <td>
+                                                  <span role="button" @onclick="() => OpenEditModal(room)">
+                                                       Tahrirlash
+                                                  </span>
+                                             </td>
+                                        </AuthorizeView>
                                    </tr>
                               }
 
@@ -111,52 +121,53 @@
      }
 </div>
 
+<AuthorizeView Roles="superAdmin" Context="authContext">
 
 
-<Modal @bind-Hidden="isEditModalHidden" HideToggleButton="true" Title="Xonani tahrirlash">
+     <Modal @bind-Hidden="isEditModalHidden" HideToggleButton="true" Title="Xonani tahrirlash">
 
 
-     <EditForm Model="@editRoomDto" OnValidSubmit="@EditAsync">
-          <DataAnnotationsValidator />
-          <div class="mb-3">
-               <label for="name" class="form-label">Xona nomi</label>
-               <InputText @bind-Value="editRoomDto.Name" type="text" id="name" class="form-control">
-               </InputText>
+          <EditForm Model="@editRoomDto" OnValidSubmit="@EditAsync">
+               <DataAnnotationsValidator />
+               <div class="mb-3">
+                    <label for="name" class="form-label">Xona nomi</label>
+                    <InputText @bind-Value="editRoomDto.Name" type="text" id="name" class="form-control">
+                    </InputText>
 
-               <ValidationMessage For="@(() => editRoomDto.Name)" />
+                    <ValidationMessage For="@(() => editRoomDto.Name)" />
 
-          </div>
+               </div>
 
 
-          <div class="mb-3">
-               <label for="name" class="form-label">Binosi</label>
-               <InputSelect @bind-Value="editRoomDto.DepartmentId" id="name" class="form-control">
-                    <option value="">-- Tanlang --</option>
+               <div class="mb-3">
+                    <label for="name" class="form-label">Binosi</label>
+                    <InputSelect @bind-Value="editRoomDto.DepartmentId" id="name" class="form-control">
+                         <option value="">-- Tanlang --</option>
 
-                    @foreach (Department department in departments)
-                    {
+                         @foreach (Department department in departments)
+                         {
 
-                         <option value="@department.Id">@department.Name</option>
-                    }
+                              <option value="@department.Id">@department.Name</option>
+                         }
 
-               </InputSelect>
+                    </InputSelect>
 
-               <ValidationMessage For="@(() => editRoomDto.DepartmentId)" />
+                    <ValidationMessage For="@(() => editRoomDto.DepartmentId)" />
 
-          </div>
+               </div>
 
-          <div class="text-end">
-               <button type="button" @onclick="() => isEditModalHidden = true"
-                    class="btn btn-secondary me-2">Yopish</button>
+               <div class="text-end">
+                    <button type="button" @onclick="() => isEditModalHidden = true"
+                         class="btn btn-secondary me-2">Yopish</button>
 
-               <LoadingButton CssClass="btn btn-primary" Type="submit" IsRequestSending="@isRequestSending"
-                    Name="Tahrirlash" />
+                    <LoadingButton CssClass="btn btn-primary" Type="submit" IsRequestSending="@isRequestSending"
+                         Name="Tahrirlash" />
 
-          </div>
-     </EditForm>
+               </div>
+          </EditForm>
 
-</Modal>
-
+     </Modal>
+</AuthorizeView>
 
 @inject RoomClient RoomClient
 @inject ToastrService ToastrService

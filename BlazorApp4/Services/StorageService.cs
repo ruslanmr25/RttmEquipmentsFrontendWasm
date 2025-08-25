@@ -24,16 +24,21 @@ public class StorageService(IJSRuntime jSRuntime)
 
     public async Task SaveToLocalStorage(string key, string value)
     {
-        await JS.InvokeVoidAsync("storageFunctions.setSessionItem", key, value);
+
+        if (string.IsNullOrEmpty(await ReadFromLocalStorage(key)))
+        {
+            await RemoveFromLocalStorage(key);
+        }
+        await JS.InvokeVoidAsync("storageFunctions.setLocalItem", key, value);
     }
 
     public async Task<string?> ReadFromLocalStorage(string key)
     {
-        return await JS.InvokeAsync<string>("storageFunctions.getSessionItem", key);
+        return await JS.InvokeAsync<string>("storageFunctions.getLocalItem", key);
     }
 
     public async Task RemoveFromLocalStorage(string key)
     {
-        await JS.InvokeVoidAsync("storageFunctions.removeSessionItem", key);
+        await JS.InvokeVoidAsync("storageFunctions.removeLocalItem", key);
     }
 }

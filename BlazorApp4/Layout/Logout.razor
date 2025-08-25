@@ -1,0 +1,19 @@
+﻿
+
+<a role="button" class="dropdown-item text-danger" @onclick="OnClick">
+     <iconify-icon icon="solar:logout-3-outline" class="align-middle me-2 fs-18"></iconify-icon><span
+          class="align-middle">Logout</span>
+</a>
+
+
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@code {
+
+
+     protected async Task OnClick()
+     {
+
+          var stateProvider = (ApiAuthenticationStateProvider)AuthenticationStateProvider;
+          await stateProvider.MarkUserAsLoggedOut();
+     }
+}

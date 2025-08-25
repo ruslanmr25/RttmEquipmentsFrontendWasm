@@ -1,5 +1,6 @@
 ﻿@page "/departments/{id:int}"
 
+@attribute [Authorize(Roles = "superAdmin,admin,viewer")]
 
 @if (department is not null)
 {

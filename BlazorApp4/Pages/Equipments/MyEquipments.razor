@@ -1,0 +1,315 @@
+﻿@page "/my-equipments"
+@attribute [Authorize(Roles = "staff,guard")]
+
+
+<div class="card fade-in">
+     <div class="card-body">
+          <div class="row">
+               <div class="col-md-4 mb-3">
+                    <label class="form-label w-auto">Nomi:</label>
+                    <input @bind="equipmentSearchParameters.Name" type="text" class="form-control" />
+               </div>
+
+               <div class="col-md-4 mb-3">
+                    <label class="form-label w-auto">Invertar raqami:</label>
+
+
+                    <input @bind="equipmentSearchParameters.InvertarId" type="number" class="form-control" />
+               </div>
+
+               
+
+               <div class="col-md-4 mb-3">
+                    <label class="form-label w-auto">Bino</label>
+                    <select class="form-control" @onchange="OnDepartmentChangedAsync">
+                         <option value="">-- Tanlang --</option>
+
+                         @foreach (var department in departments ?? new())
+                         {
+                              <option value="@department.Id">@department.Name</option>
+                         }
+                    </select>
+
+               </div>
+
+               <div class="col-md-4 mb-3">
+                    <label class="form-label w-auto">Xonasi:</label>
+                    <select class="form-control" @bind="equipmentSearchParameters.RoomId">
+                         <option value="">-- Tanlang --</option>
+
+                         @foreach (Room room in rooms ?? new())
+                         {
+                              <option value="@room.Id">@room.Name</option>
+                         }
+                    </select>
+               </div>
+
+               <div class="col-md-4 mb-3">
+                    <label class="form-label w-auto">Turini tanlang:</label>
+                    <select class="form-control" @bind="equipmentSearchParameters.EquipmentTypeId">
+
+                         <option value="">-- Tanlang --</option>
+
+                         @foreach (EquipmentType equipmentType in equipmentTypes ?? new())
+                         {
+                              <option value="@equipmentType.Id">@equipmentType.Name</option>
+                         }
+                    </select>
+               </div>
+
+          </div>
+
+
+          <div>
+               <button @onclick="SearchAsync" class="btn btn-primary">
+                    Qidirish
+               </button>
+          </div>
+     </div>
+
+</div>
+
+<div class="card @CssClass">
+     <div class="card-header d-flex justify-content-between align-items-center">
+
+
+          <h5 class="card-title">
+               Jihozlar <br>
+               @($"Jami: {meta?.Total ?? 0} ta")
+
+
+          </h5>
+          <div>
+
+               <NavLink href="equipments/create" class="btn btn-primary me-2">
+                    Yaratish
+               </NavLink>
+
+               <NavLink href="equipments/upload" class="btn btn-primary">
+                    Yuklash
+               </NavLink>
+          </div>
+
+     </div>
+     @if (equipments is null)
+     {
+          <LoadingComponent />
+     }
+     else
+     {
+          <div class="card-body">
+               <div class="table-responsive">
+                    <table class="table  table-hover">
+                         <thead class="table-light">
+                              <tr>
+
+                                   <th scope="col">T/r</th>
+                                   <th scope="col">Nomi</th>
+                                   <th scope="col">Invertar raqami</th>
+                                   <th scope="col">Moddiy javobgar</th>
+                                   <th scope="col">Jihoz turi</th>
+                                   <th scope="col">Mac Adresi</th>
+                                   <th>Tahrirlash</th>
+                                   <th>O'chirish</th>
+
+
+                              </tr>
+                         </thead>
+                         <tbody>
+
+                              @foreach (Equipment equipment in equipments)
+                              {
+
+                                   <tr>
+
+                                        <td> @equipment.Id</td>
+
+
+                                        <td>
+                                             <NavLink href="@($"equipments/{equipment.Id}")">
+                                                  @equipment.Name
+                                             </NavLink>
+
+                                        </td>
+                                        <td>@equipment.InvertarId</td>
+
+                                        <td>@equipment.User?.FullName</td>
+
+                                        <td>@equipment.EquipmentType?.Name</td>
+                                        <td>@equipment.MacAddress</td>
+
+                                        <td>
+
+                                             <NavLink href="@($"/equipments/{equipment.Id}/edit")">
+                                                  Tahrirlash
+                                             </NavLink>
+                                        </td>
+
+                                        <td>
+
+                                             <NavLink href="@($"/equipments/{equipment.Id}/delete")">
+                                                  O'chirish
+                                             </NavLink>
+                                        </td>
+
+                                   </tr>
+                              }
+
+                         </tbody>
+                    </table>
+               </div>
+
+
+          </div>
+
+
+          @if (meta is not null)
+          {
+               <div class="d-flex justify-content-end m-3">
+
+
+                    <nav aria-label="Page navigation example">
+                         <ul class="pagination">
+
+                              @foreach (var link in meta.Links)
+                              {
+                                   <li class="page-item">
+                                        <a role="button" @onclick="() => ChangePage(int.Parse(link.Label))"
+                                             class="page-link @(link.Active ? "active" : "")">@((MarkupString)link.Label)
+                                        </a>
+                                   </li>
+                              }
+
+                         </ul>
+                    </nav>
+               </div>
+          }
+
+
+     }
+</div>
+
+
+
+@inject EquipmentClient EquipmentClient
+@inject EquipmentTypeClient EquipmentTypeClient
+@inject DepartmentClient DepartmentClient
+@inject RoomClient RoomClient
+
+
+@code {
+
+     protected List<Equipment>? equipments;
+
+
+     protected List<Department>? departments;
+
+     protected List<Room>? rooms;
+     protected List<EquipmentType>? equipmentTypes;
+
+     protected string? selectedParameters { get; set; }
+
+
+     protected Meta? meta;
+     private string CssClass = "";
+
+     protected EquipmentSearchParameters equipmentSearchParameters = new();
+
+
+     protected override async Task OnInitializedAsync()
+     {
+          var response = await EquipmentClient.GetMyEquipments();
+
+          meta = response.Meta;
+          equipments = response.Data ?? new();
+
+
+          var departmentReponse = await DepartmentClient.GetAllAsync();
+
+          departments = departmentReponse.Data ?? new();
+
+          var equipmentTypeResponse = await EquipmentTypeClient.GetAllAsync();
+          equipmentTypes = equipmentTypeResponse.Data ?? new();
+     }
+
+     protected void ChangeDepartmentName(Department department)
+     {
+
+          equipmentSearchParameters.DepartmentId = department.Id;
+
+     }
+
+
+
+
+     protected async Task SearchAsync()
+     {
+          equipments = null;
+
+
+          var response = await EquipmentClient.GetMyEquipments(searchParam: equipmentSearchParameters);
+
+          meta = response.Meta;
+
+          equipments = response.Data ?? new();
+
+
+     }
+
+
+     protected async Task ChangePage(int pageNumber)
+     {
+
+          equipments = null;
+
+          equipmentSearchParameters.Page = pageNumber;
+
+
+          var response = await EquipmentClient.GetMyEquipments(equipmentSearchParameters);
+
+          meta = response.Meta;
+
+          equipments = response.Data ?? new();
+
+     }
+
+     protected override void OnAfterRender(bool firstRender)
+     {
+
+          if (firstRender)
+          {
+               CssClass = "fade-in";
+               StateHasChanged();
+          }
+          base.OnAfterRender(firstRender);
+     }
+
+
+     protected async Task OnDepartmentChangedAsync(ChangeEventArgs e)
+     {
+
+          if (int.TryParse(e.Value?.ToString(), out int value))
+          {
+
+               equipmentSearchParameters.DepartmentId = value;
+
+               var response = await DepartmentClient.GetAsync(value);
+
+               rooms = response.Data?.Rooms ?? new();
+
+
+          }
+
+          else
+          {
+               equipmentSearchParameters.DepartmentId = null;
+
+          }
+
+     }
+
+
+
+
+
+}

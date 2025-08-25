@@ -7,13 +7,11 @@ using BlazorApp4.Services;
 
 namespace BlazorApp4.Clients;
 
-public class TrashClient(HttpClient httpClient, StorageService storageService)
-    : BaseClient<Equipment>(httpClient, "/api/trashes", storageService)
+public class TrashClient(IHttpClientFactory factory, StorageService storageService)
+    : BaseClient<Equipment>(factory, "/api/trashes", storageService)
 {
     public override async Task<Response<List<Equipment>>> GetAllAsync()
     {
-        await BeforeSend();
-
         try
         {
             var response = await _client.GetFromJsonAsync<Response<List<Equipment>>>(url);

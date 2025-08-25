@@ -15,9 +15,9 @@ public class StatisticsClient
 
     protected readonly StorageService _storageService;
 
-    public StatisticsClient(HttpClient httpClient, StorageService storageService)
+    public StatisticsClient(IHttpClientFactory factory, StorageService storageService)
     {
-        _client = httpClient;
+        _client = factory.CreateClient("ApiClient");
 
         this.url = "/api/statistics";
         _storageService = storageService;

@@ -1,5 +1,6 @@
 ﻿@page "/equipments/{id:int}/delete"
 @* @using Microsoft.AspNetCore.Components.Forms *@
+@attribute [Authorize(Roles = "superAdmin,admin")]
 
 
 @if (equipment is null)

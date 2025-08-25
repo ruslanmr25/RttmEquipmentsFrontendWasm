@@ -1,0 +1,198 @@
+﻿@page "/equipments/move"
+
+
+@attribute [Authorize(Roles = "superAdmin,admin")]
+
+
+
+<div class="card">
+     <div class="card-body">
+
+          <div class="row">
+
+
+               <div class="col-md-6 mb-3">
+                    <label class="form-label w-auto">Kimning nomiga:</label>
+                    <select @bind="selectedUserId" class="form-control">
+
+                         <option value="">Tanlang</option>
+
+                         @foreach (User user in users)
+                         {
+                              <option value="@user.Id">
+                                   @user.FullName
+                              </option>
+                         }
+
+                    </select>
+               </div>
+
+               <div class="col-md-6">
+                    <button class="btn btn-primary" @onclick="SendAsync">O'tkazish</button>
+               </div>
+          </div>
+
+     </div>
+</div>
+
+
+<div class="card @CssClass">
+     <div class="card-header d-flex justify-content-between align-items-center">
+
+
+          <h5 class="card-title">
+               Jihozlar <br>
+               @($"Jami: {equipments?.Count ?? 0} ta")
+
+
+          </h5>
+
+
+     </div>
+     @if (equipments is null)
+     {
+          <LoadingComponent />
+     }
+     else
+     {
+          <div class="card-body">
+               <div class="table-responsive">
+                    <table class="table  table-hover">
+                         <thead class="table-light">
+                              <tr>
+
+                                   <th scope="col">T/r</th>
+                                   <th scope="col">Nomi</th>
+                                   <th scope="col">Invertar raqami</th>
+                                   <th scope="col">Moddiy javobgar</th>
+                                   <th scope="col">Jihoz turi</th>
+                                   <th scope="col">Mac Adresi</th>
+
+
+
+                              </tr>
+                         </thead>
+                         <tbody>
+
+                              @foreach (Equipment equipment in equipments)
+                              {
+
+                                   <tr>
+
+                                        <td> @equipment.Id</td>
+
+
+                                        <td>
+                                             <NavLink href="@($"equipments/{equipment.Id}")">
+                                                  @equipment.Name
+                                             </NavLink>
+
+                                        </td>
+                                        <td>@equipment.InvertarId</td>
+
+                                        <td>@equipment.User?.FullName</td>
+
+                                        <td>@equipment.EquipmentType?.Name</td>
+                                        <td>@equipment.MacAddress</td>
+
+                                   </tr>
+                              }
+
+                         </tbody>
+                    </table>
+               </div>
+
+
+          </div>
+
+
+
+
+     }
+</div>
+
+
+
+@inject EquipmentClient EquipmentClient
+
+@inject UserClient UserClient
+@inject AppStateService AppStateService
+
+@inject NavigationManager NavigationManager
+
+@inject ToastrService ToastrService
+
+@code {
+
+     protected List<Equipment>? equipments;
+
+
+     protected int? selectedUserId;
+
+
+
+     protected List<User> users = new();
+
+     private string CssClass = "";
+
+
+     protected override async Task OnInitializedAsync()
+     {
+          var response = await EquipmentClient.GetAllAsync();
+
+
+          if (AppStateService.Equipments is null)
+          {
+               ToastrService.ShowWarning("Siz jihozlarni tanlamagansiz");
+
+               NavigationManager.NavigateTo("equipments");
+
+          }
+
+          var userResponse = await UserClient.GetAllAsync();
+          users = userResponse.Data ?? new();
+          equipments = AppStateService.Equipments;
+
+     }
+
+
+
+     protected override void OnAfterRender(bool firstRender)
+     {
+
+          if (firstRender)
+          {
+               CssClass = "fade-in";
+               StateHasChanged();
+          }
+          base.OnAfterRender(firstRender);
+     }
+
+
+     protected async Task SendAsync()
+     {
+
+          if (selectedUserId is not null)
+          {
+
+               var response = await EquipmentClient.SendEquipmentTo(selectedUserId!.Value, equipments);
+
+               ToastrService.ShowInfo(response.Message!);
+
+               NavigationManager.NavigateTo("equipments");
+          }
+          else
+          {
+               ToastrService.ShowWarning("Foydalanubchini tanlamadingiz");
+          }
+
+     }
+
+
+
+
+
+
+
+
+}

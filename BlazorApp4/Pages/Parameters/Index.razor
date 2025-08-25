@@ -1,5 +1,7 @@
 ﻿@page "/parameters"
 
+@attribute [Authorize(Roles = "superAdmin,admin,viewer")]
+
 
 <div class="card fade-in">
 
@@ -107,7 +109,15 @@
                                    <th scope="col">Nomi</th>
                                    <th scope="col">Jihoz turisi</th>
 
-                                   <th scope="col">Tahrirlash</th>
+
+
+                                   <AuthorizeView Roles="superAdmin">
+
+
+
+
+                                        <th scope="col">Tahrirlash</th>
+                                   </AuthorizeView>
 
 
 
@@ -166,53 +176,54 @@
      }
 </div>
 
+<AuthorizeView Roles="superAdmin" Context="authContext">
 
 
-<Modal @bind-Hidden="isEditModalHidden" HideToggleButton="true" Title="Parameterni tahrirlash">
+     <Modal @bind-Hidden="isEditModalHidden" HideToggleButton="true" Title="Parameterni tahrirlash">
 
 
-     <EditForm Model="@editParameterDto" OnValidSubmit="@EditAsync">
-          <DataAnnotationsValidator />
-          <div class="mb-3">
-               <label for="name" class="form-label">Parameter nomi</label>
-               <InputText @bind-Value="editParameterDto.Name" type="text" id="name" class="form-control">
-               </InputText>
+          <EditForm Model="@editParameterDto" OnValidSubmit="@EditAsync">
+               <DataAnnotationsValidator />
+               <div class="mb-3">
+                    <label for="name" class="form-label">Parameter nomi</label>
+                    <InputText @bind-Value="editParameterDto.Name" type="text" id="name" class="form-control">
+                    </InputText>
 
-               <ValidationMessage For="@(() => editParameterDto.Name)" />
+                    <ValidationMessage For="@(() => editParameterDto.Name)" />
 
-          </div>
-
-
-          <div class="mb-3">
-               <label for="name" class="form-label">Jihoz turisi</label>
-               <InputSelect @bind-Value="editParameterDto.EquipmentTypeId" id="name" class="form-control">
-                    <option value="">-- Tanlang --</option>
-
-                    @foreach (EquipmentType equipmentType in equipmentTypes)
-                    {
-
-                         <option value="@equipmentType.Id">@equipmentType.Name</option>
-                    }
-
-               </InputSelect>
-
-               <ValidationMessage For="@(() => editParameterDto.EquipmentTypeId)" />
-
-          </div>
-
-          <div class="text-end">
-               <button type="button" @onclick="() => isEditModalHidden = true"
-                    class="btn btn-secondary me-2">Yopish</button>
-
-               <LoadingButton CssClass="btn btn-primary" Type="submit" IsRequestSending="@isRequestSending"
-                    Name="Tahrirlash" />
-
-          </div>
-     </EditForm>
-
-</Modal>
+               </div>
 
 
+               <div class="mb-3">
+                    <label for="name" class="form-label">Jihoz turisi</label>
+                    <InputSelect @bind-Value="editParameterDto.EquipmentTypeId" id="name" class="form-control">
+                         <option value="">-- Tanlang --</option>
+
+                         @foreach (EquipmentType equipmentType in equipmentTypes)
+                         {
+
+                              <option value="@equipmentType.Id">@equipmentType.Name</option>
+                         }
+
+                    </InputSelect>
+
+                    <ValidationMessage For="@(() => editParameterDto.EquipmentTypeId)" />
+
+               </div>
+
+               <div class="text-end">
+                    <button type="button" @onclick="() => isEditModalHidden = true"
+                         class="btn btn-secondary me-2">Yopish</button>
+
+                    <LoadingButton CssClass="btn btn-primary" Type="submit" IsRequestSending="@isRequestSending"
+                         Name="Tahrirlash" />
+
+               </div>
+          </EditForm>
+
+     </Modal>
+
+</AuthorizeView>
 @inject ParameterClient ParameterClient
 @inject ToastrService ToastrService
 

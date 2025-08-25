@@ -1,13 +1,53 @@
-﻿<Router AppAssembly="@typeof(App).Assembly">
-    <Found Context="routeData">
-        <RouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)" />
-        <FocusOnNavigate RouteData="@routeData" Selector="h1" />
-        <ToastrComponent/>
-    </Found>
-    <NotFound>
-        <PageTitle>Not found</PageTitle>
-        <LayoutView Layout="@typeof(MainLayout)">
-            <p role="alert">Sorry, there's nothing at this address.</p>
-        </LayoutView>
-    </NotFound>
-</Router>
+﻿<CascadingAuthenticationState>
+    <Router AppAssembly="@typeof(App).Assembly">
+        <Found Context="routeData">
+
+            @if (routeData.PageType == typeof(BlazorApp4.Pages.Auth.Login))
+            {
+                <RouteView RouteData="@routeData" DefaultLayout="@typeof(BlankLayout)">
+
+                </RouteView>
+            }
+            else
+            {
+
+                <AuthorizeRouteView RouteData="@routeData" DefaultLayout="@typeof(MainLayout)">
+                    <Authorizing>
+                        <h3>Loading authentication...</h3>
+                    </Authorizing>
+                    <NotAuthorized>
+                        @if (!context.User.Identity?.IsAuthenticated ?? true)
+                        {
+                            <BlazorApp4.Pages.Auth.Redirect></BlazorApp4.Pages.Auth.Redirect>
+
+                        }
+                        else
+                        {
+                            <!-- Agar login qilingan, lekin rol/ruxsat yetarli bo‘lmasa -->
+                            <LayoutView Layout="@typeof(BlankLayout)">
+                                <h3>🚫 Sizda ushbu sahifaga kirish huquqi yo‘q.</h3>
+                            </LayoutView>
+                        }
+                    </NotAuthorized>
+
+                </AuthorizeRouteView>
+                <script src="assets/js/app.js"></script>
+
+            }
+
+            <FocusOnNavigate RouteData="@routeData" Selector="h1" />
+
+            <ToastrComponent />
+
+
+
+        </Found>
+
+        <NotFound>
+            <PageTitle>Not found</PageTitle>
+            <LayoutView Layout="@typeof(MainLayout)">
+                <p role="alert">Sorry, there's nothing at this address.</p>
+            </LayoutView>
+        </NotFound>
+    </Router>
+</CascadingAuthenticationState>

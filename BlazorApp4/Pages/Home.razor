@@ -1,4 +1,5 @@
 ﻿@page "/"
+@attribute [Authorize(Roles ="superAdmin,admin,viewer")]
 
 <div class="container-fluid">
 
@@ -100,16 +101,16 @@
                     </div>
 
                     <div class="card-body p-0">
-                        <ul class="list-group list-group-flush overflow-auto" style="max-height: 330px;">
+                        <ul class="list-group list-group-flush overflow-auto" style="max-height: 330px; min-height:330px">
                             @foreach (var user in statisticData.Users)
                             {
                                 <li class="list-group-item d-flex justify-content-between align-items-center">
 
                                     <span>
-                                    <NavLink href="@($"users/{@user.Id}")">
-                                        @user.FullName
-                                    </NavLink>
-                                        </span>
+                                        <NavLink href="@($"users/{@user.Id}")">
+                                            @user.FullName
+                                        </NavLink>
+                                    </span>
                                     <span class="badge badge-outline-info me-1">@user.EquipmentsCount ta</span>
                                 </li>
                             }
@@ -154,7 +155,10 @@
                             @foreach (var department in statisticData.Departments)
                             {
                                 <li class="list-group-item d-flex justify-content-between align-items-center">
+                                        <NavLink href="@($"departments/{@department.Id}")">
+
                                     <span>@department.Name</span>
+                                    </NavLink>
                                     <span class="badge badge-outline-info me-1">@department.EquipmentsCount ta</span>
                                 </li>
                             }
@@ -182,16 +186,9 @@
 
 
         </div> <!-- End row -->
-    }
-    else
-    {
-        <LoadingComponent></LoadingComponent>
-    }
 
-</div>
-
-@* 
-<div class="row">
+        
+@* <div class="row">
     <div class="col-lg-6">
         <div class="card card-height-100">
             <div class="card-header d-flex align-items-center justify-content-between gap-2">
@@ -214,6 +211,15 @@
 
     </div>
 </div> *@
+    }
+    else
+    {
+        <LoadingComponent></LoadingComponent>
+    }
+
+</div>
+
+
 
 
 <!-- Dashboard Js -->

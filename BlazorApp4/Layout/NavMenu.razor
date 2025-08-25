@@ -1,15 +1,12 @@
 ﻿<div class="app-sidebar">
     <!-- Sidebar Logo -->
     <div class="logo-box">
-        <NavLink href="" class="logo-dark">
-            <img src="assets/images/logo-sm.png" class="logo-sm" alt="logo sm">
-            <img src="assets/images/logo-dark.png" class="logo-lg" alt="logo dark">
+        <NavLink href="/" class="logo-dark d-flex align-items-center gap-2 py-4">
+            <img width="40" src="/logo.png" alt="logo" />
+            <h2 class="mb-0 mt-2">Jihozlar</h2>
         </NavLink>
 
-        <a href="index.html" class="logo-light">
-            <img src="assets/images/logo-sm.png" class="logo-sm" alt="logo sm">
-            <img src="assets/images/logo-light.png" class="logo-lg" alt="logo light">
-        </a>
+
     </div>
 
     <div class="scrollbar" data-simplebar>
@@ -18,109 +15,170 @@
 
             <li class="menu-title">Menu...</li>
 
-            <li class="nav-item">
-                <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-                    <span class="nav-icon">
-                        <iconify-icon icon="solar:widget-2-outline"></iconify-icon>
-                    </span>
-                    <span class="nav-text"> Dashboard </span>
-                    <span class="badge bg-primary badge-pill text-end">New</span>
-                </NavLink>
-            </li>
-
-            <li class="nav-item">
-                <NavLink class="nav-link" href="categories" Match="NavLinkMatch.All">
-                    <span class="nav-icon">
-                        <iconify-icon icon="solar:chart-square-outline"></iconify-icon>
-
-                    </span>
-                    <span class="nav-text"> Jihozlar kategoriyalari </span>
-                </NavLink>
-            </li>
-            <li class="nav-item">
-                <NavLink class="nav-link" href="types" Match="NavLinkMatch.All">
-                    <span class="nav-icon">
-                        <iconify-icon icon="solar:checklist-outline"></iconify-icon>
-
-                    </span>
-                    <span class="nav-text"> Jihozlar turlari </span>
-                </NavLink>
-            </li>
-
-            <li class="nav-item">
-                <NavLink class="nav-link" href="equipments" Match="NavLinkMatch.All">
-                    <span class="nav-icon">
-                        <iconify-icon icon="solar:box-outline"></iconify-icon>
-                    </span>
-                    <span class="nav-text"> Jihozlar </span>
-                </NavLink>
-            </li>
-
-            <li class="nav-item">
-                <NavLink class="nav-link" href="users" Match="NavLinkMatch.All">
-                    <span class="nav-icon">
-                        <iconify-icon icon="solar:user-circle-outline"></iconify-icon>
-
-                    </span>
-                    <span class="nav-text"> Foydalanuvchilar </span>
-                </NavLink>
-            </li>
+            <AuthorizeView Context="authContext">
 
 
-
-            <li class="nav-item">
-                <NavLink class="nav-link" href="departments" Match="NavLinkMatch.All">
-                    <span class="nav-icon">
-                        <iconify-icon icon="solar:map-outline"></iconify-icon>
-
-                    </span>
-                    <span class="nav-text"> Binolar </span>
-                </NavLink>
-            </li>
-
-            <li class="nav-item">
-                <NavLink class="nav-link" href="rooms" Match="NavLinkMatch.All">
-                    <span class="nav-icon">
-                        <iconify-icon icon="solar:map-outline"></iconify-icon>
-
-                    </span>
-                    <span class="nav-text"> Xonalar </span>
-                </NavLink>
-            </li>
+                @if (authContext.User.IsInRole("superAdmin") ||
+                                authContext.User.IsInRole("admin") || authContext.User.IsInRole("admin"))
+                {
 
 
-            <li class="nav-item">
-                <NavLink class="nav-link" href="parameters" Match="NavLinkMatch.All">
-                    <span class="nav-icon">
-                        <iconify-icon icon="solar:window-frame-outline"></iconify-icon>
+                    <li class="nav-item">
+                        <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
+                            <span class="nav-icon">
+                                <iconify-icon icon="solar:widget-2-outline"></iconify-icon>
+                            </span>
+                            <span class="nav-text"> Dashboard </span>
+                            <span class="badge bg-primary badge-pill text-end">New</span>
+                        </NavLink>
+                    </li>
 
 
-                    </span>
-                    <span class="nav-text"> Parameterlar </span>
-                </NavLink>
-            </li>
+                    <li class="nav-item">
+                        <NavLink class="nav-link" href="categories" Match="NavLinkMatch.All">
+                            <span class="nav-icon">
+                                <iconify-icon icon="solar:chart-square-outline"></iconify-icon>
+
+                            </span>
+                            <span class="nav-text"> Jihozlar kategoriyalari </span>
+                        </NavLink>
+                    </li>
+                    <li class="nav-item">
+                        <NavLink class="nav-link" href="types" Match="NavLinkMatch.All">
+                            <span class="nav-icon">
+                                <iconify-icon icon="solar:checklist-outline"></iconify-icon>
+
+                            </span>
+                            <span class="nav-text"> Jihozlar turlari </span>
+                        </NavLink>
+                    </li>
 
 
-            <li class="nav-item">
-                <NavLink class="nav-link" href="trashes" Match="NavLinkMatch.All">
-                    <span class="nav-icon">
-                        <iconify-icon icon="solar:library-outline"></iconify-icon>
+                    <li class="nav-item">
+                        <a class="nav-link menu-arrow" href="#sidebarError" data-bs-toggle="collapse" role="button"
+                            aria-expanded="false" aria-controls="sidebarError">
 
-                    </span>
-                    <span class="nav-text"> O'chirilganlar </span>
-                </NavLink>
-            </li>
+                            <span class="nav-icon">
+                                <iconify-icon icon="solar:box-outline"></iconify-icon>
+
+                            </span>
+                            <span class="nav-text"> Jihozlar </span>
 
 
-            <li class="nav-item">
-                <NavLink class="nav-link" href="logs" Match="NavLinkMatch.All">
-                    <span class="nav-icon">
-                        <iconify-icon icon="solar:share-circle-outline"></iconify-icon>
 
-                    </span>
-                    <span class="nav-text"> Harakatlar </span>
-                </NavLink>
-            </li>
+                        </a>
+                        <div class="collapse" id="sidebarError">
+                            <ul class="nav sub-navbar-nav">
+                                <li class="sub-nav-item">
+                                    <NavLink class="sub-nav-link" href="equipments">Jihozlar ro'yxati</NavLink>
+                                </li>
+                                <li class="sub-nav-item">
+                                    <NavLink class="sub-nav-link" href="equipments/move">Jihozlarni ko'chirish</NavLink>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+
+                    <li class="nav-item">
+                        <NavLink class="nav-link" href="users" Match="NavLinkMatch.All">
+                            <span class="nav-icon">
+                                <iconify-icon icon="solar:user-circle-outline"></iconify-icon>
+
+                            </span>
+                            <span class="nav-text"> Foydalanuvchilar </span>
+                        </NavLink>
+                    </li>
+
+
+
+                    <li class="nav-item">
+                        <NavLink class="nav-link" href="departments" Match="NavLinkMatch.All">
+                            <span class="nav-icon">
+                                <iconify-icon icon="solar:map-outline"></iconify-icon>
+
+                            </span>
+                            <span class="nav-text"> Binolar </span>
+                        </NavLink>
+                    </li>
+
+                    <li class="nav-item">
+                        <NavLink class="nav-link" href="rooms" Match="NavLinkMatch.All">
+                            <span class="nav-icon">
+                                <iconify-icon icon="solar:map-outline"></iconify-icon>
+
+                            </span>
+                            <span class="nav-text"> Xonalar </span>
+                        </NavLink>
+                    </li>
+
+
+                    <li class="nav-item">
+                        <NavLink class="nav-link" href="parameters" Match="NavLinkMatch.All">
+                            <span class="nav-icon">
+                                <iconify-icon icon="solar:window-frame-outline"></iconify-icon>
+
+
+                            </span>
+                            <span class="nav-text"> Parameterlar </span>
+                        </NavLink>
+                    </li>
+
+
+                    <li class="nav-item">
+                        <NavLink class="nav-link" href="trashes" Match="NavLinkMatch.All">
+                            <span class="nav-icon">
+                                <iconify-icon icon="solar:library-outline"></iconify-icon>
+
+                            </span>
+                            <span class="nav-text"> O'chirilganlar </span>
+                        </NavLink>
+                    </li>
+
+                }
+
+
+
+                @if (authContext.User.IsInRole("superAdmin"))
+                {
+
+
+                    <li class="nav-item">
+                        <NavLink class="nav-link" href="logs" Match="NavLinkMatch.All">
+                            <span class="nav-icon">
+                                <iconify-icon icon="solar:share-circle-outline"></iconify-icon>
+
+                            </span>
+                            <span class="nav-text"> Harakatlar </span>
+                        </NavLink>
+                    </li>
+
+                }
+
+
+
+                @if (authContext.User.IsInRole("guard") || authContext.User.IsInRole("staff"))
+                {
+
+
+                    <li class="nav-item">
+                        <NavLink class="nav-link" href="my-equipments" Match="NavLinkMatch.All">
+                            <span class="nav-icon">
+                                <iconify-icon icon="solar:share-circle-outline"></iconify-icon>
+
+                            </span>
+                            <span class="nav-text"> Mening jihozlarim </span>
+                        </NavLink>
+                    </li>
+
+                }
+
+
+
+
+
+
+            </AuthorizeView>
+
 
 
         </ul>

@@ -6,6 +6,6 @@ namespace BlazorApp4.Clients;
 
 public class RoomClient : BaseClient<Room>
 {
-    public RoomClient(HttpClient httpClient, StorageService storageService)
-        : base(httpClient, "/api/rooms", storageService) { }
+    public RoomClient(IHttpClientFactory factory, StorageService storageService)
+        : base(factory, "/api/rooms", storageService) { }
 }

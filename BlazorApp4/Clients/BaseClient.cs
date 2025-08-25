@@ -19,9 +19,9 @@ public class BaseClient<T>
 
     protected readonly StorageService _storageService;
 
-    public BaseClient(HttpClient httpClient, string url, StorageService storageService)
+    public BaseClient(IHttpClientFactory factory, string url, StorageService storageService)
     {
-        _client = httpClient;
+        _client = factory.CreateClient("ApiClient");
 
         if (string.IsNullOrWhiteSpace(url))
         {
@@ -32,19 +32,8 @@ public class BaseClient<T>
         _storageService = storageService;
     }
 
-    protected async Task BeforeSend()
-    {
-        string? token = await _storageService.ReadFromLocalStorage("token");
-        _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(
-            "Bearer",
-            token ?? "token"
-        );
-    }
-
     public virtual async Task<Response<List<T>>> GetAllAsync()
     {
-        await BeforeSend();
-
         try
         {
             var response = await _client.GetFromJsonAsync<Response<List<T>>>(this.url);
@@ -68,8 +57,6 @@ public class BaseClient<T>
 
     public virtual async Task<Response<List<T>>> GetAllAsync<TParam>(TParam searchParam)
     {
-        await BeforeSend();
-
         string query = QueryStringHelper.ToQueryString(searchParam);
 
         try
@@ -95,7 +82,6 @@ public class BaseClient<T>
 
     public virtual async Task<Response<T>> CreateAsync<TDto>(TDto entity)
     {
-        await BeforeSend();
         var httpResponse = await _client.PostAsJsonAsync(url, entity);
 
         var response = await httpResponse.Content.ReadFromJsonAsync<Response<T>>();
@@ -105,8 +91,6 @@ public class BaseClient<T>
 
     public virtual async Task<Response<T>> GetAsync(int id)
     {
-        await BeforeSend();
-
         try
         {
             var response = await _client.GetFromJsonAsync<Response<T>>($"{this.url}/{id}");
@@ -126,8 +110,6 @@ public class BaseClient<T>
 
     public virtual async Task<Response<T>> UpdateAsync<TDto>(int id, TDto entity)
     {
-        await BeforeSend();
-
         var httpResponse = await _client.PutAsJsonAsync($"{url}/{id}", entity);
 
         // 2. Javobni o‘qiymiz va deserializatsiya qilamiz

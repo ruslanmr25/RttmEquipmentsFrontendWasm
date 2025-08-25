@@ -1,5 +1,5 @@
 ﻿@page "/categories"
-
+@attribute [Authorize(Roles = "admin,superAdmin,viewer")]
 
 <div class="card fade-in">
      <div class="card-header">

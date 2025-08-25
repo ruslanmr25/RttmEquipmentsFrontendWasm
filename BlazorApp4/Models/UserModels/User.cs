@@ -20,7 +20,7 @@ public class User
 
     public List<Equipment>? Equipments { get; set; }
 
-    public Position? Position { get; set; }
+    public List<Position>? Positions { get; set; }
 
     public int? EquipmentsCount { get; set; }
 }

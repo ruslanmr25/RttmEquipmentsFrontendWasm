@@ -7,13 +7,12 @@ using BlazorApp4.Services;
 
 namespace BlazorApp4.Clients;
 
-public class LogClient(HttpClient httpClient, StorageService storageService)
-    : BaseClient<Log>(httpClient, "/api/logs", storageService)
+public class LogClient(IHttpClientFactory factory, StorageService storageService)
+    : BaseClient<Log>(factory, "/api/logs", storageService)
 {
     public async Task<Response<Log>> GetAsync(string model, int id)
     {
-        await BeforeSend();
-
+     
         try
         {
             var response = await _client.GetFromJsonAsync<Response<Log>>(

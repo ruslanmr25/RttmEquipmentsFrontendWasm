@@ -1,5 +1,10 @@
 ﻿@page "/trashes"
 
+
+
+
+@attribute [Authorize(Roles = "superAdmin,admin,viewer")]
+
 <div class="card fade-in">
      <div class="card-body">
           <div class="row">
@@ -200,7 +205,7 @@
           equipments = response.Data ?? new();
 
           var userResponse = await UserClient.GetAllAsync();
-          users = userResponse.Data!;
+     users = userResponse.Data ?? new();
 
 
           var departmentReponse = await DepartmentClient.GetAllAsync();
