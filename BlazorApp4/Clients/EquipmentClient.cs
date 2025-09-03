@@ -1,6 +1,8 @@
 using System;
 using System.Net.Http.Json;
+using System.Text;
 using System.Text.Json;
+using System.Text.Unicode;
 using System.Threading.Tasks;
 using BlazorApp4.Models;
 using BlazorApp4.Responses;
@@ -120,22 +122,28 @@ public class EquipmentClient(IHttpClientFactory factory, StorageService storageS
         return result!;
     }
 
-    public async Task<Response<Equipment>> SendEquipmentTo(int userId, List<Equipment> equipments)
+    public async Task<Response<Equipment>> SendEquipmentTo(
+        int userId,
+        List<Equipment> equipments,
+        MultipartFormDataContent content
+    )
     {
-        var body = new
+        var equipmentIds = equipments.Select(equipment => equipment.Id).ToArray();
+        foreach (var id in equipmentIds)
         {
-            UserId = userId,
-            Equipments = equipments.Select(equipment => equipment.Id).ToArray(),
-        };
+            content.Add(new StringContent(id.ToString()), "equipments[]");
+        }
+        content.Add(new StringContent(userId.ToString()), "userId");
 
-        var response = await _client.PutAsJsonAsync($"{this.url}/sendto", body);
+        content.Add(new StringContent(userId.ToString()), "userId");
+
+        var response = await _client.PostAsync($"{this.url}/sendto", content);
 
         response.EnsureSuccessStatusCode(); // 200 OK bo‘lmasa exception
 
-        var result = await response.Content.ReadFromJsonAsync<Response<Equipment>>();
-
-        if (result is null)
-            throw new Exception("API bo‘sh javob qaytardi");
+        var result =
+            await response.Content.ReadFromJsonAsync<Response<Equipment>>()
+            ?? throw new Exception("API bo‘sh javob qaytardi");
 
         return result;
     }

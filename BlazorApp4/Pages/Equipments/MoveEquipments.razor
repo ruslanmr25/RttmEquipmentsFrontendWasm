@@ -27,8 +27,16 @@
                     </select>
                </div>
 
+               <div class="col-md6 mb-3">
+                    <InputFile OnChange="HandleFileSelected" class="form-control"
+                         accept="application/pdf, application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document" />
+
+
+               </div>
+
                <div class="col-md-6">
-                    <button class="btn btn-primary" @onclick="SendAsync">O'tkazish</button>
+                    <LoadingButton Name="O'tkazish" RunEvent="SendAsync" CssClass="btn btn-primary" IsRequestSending="@isRequestSending">
+                         </LoadingButton>
                </div>
           </div>
 
@@ -130,16 +138,22 @@
      protected int? selectedUserId;
 
 
+     private string? errorMessage;
+
+     protected bool canUpload = false;
+
+     private IBrowserFile? selectedFile;
+
+     protected bool isRequestSending = false;
 
      protected List<User> users = new();
+     private string? selectedFileName;
 
      private string CssClass = "";
 
 
      protected override async Task OnInitializedAsync()
      {
-          var response = await EquipmentClient.GetAllAsync();
-
 
           if (AppStateService.Equipments is null)
           {
@@ -156,7 +170,44 @@
      }
 
 
+     private void HandleFileSelected(InputFileChangeEventArgs e)
+     {
 
+          selectedFile = e.File;
+          errorMessage = null;
+          selectedFileName = null;
+
+          canUpload = false;
+
+          if (selectedFile != null)
+          {
+               var allowedTypes = new[]
+               {
+"application/pdf",
+"application/msword",
+"application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+};
+
+               if (!allowedTypes.Contains(selectedFile.ContentType))
+               {
+                    errorMessage = "Faqat PDF yoki DOCX fayl tanlashingiz mumkin!";
+                    return;
+               }
+
+               if (selectedFile.Size > 10 * 1024 * 1024)
+               {
+                    errorMessage = "Fayl hajmi 10 MB dan oshmasligi kerak!";
+                    return;
+               }
+               selectedFileName = selectedFile.Name;
+
+               canUpload = true;
+
+
+
+          }
+
+     }
      protected override void OnAfterRender(bool firstRender)
      {
 
@@ -172,14 +223,30 @@
      protected async Task SendAsync()
      {
 
-          if (selectedUserId is not null)
+          if (selectedUserId is not null && equipments is not null && selectedFile is not null)
           {
 
-               var response = await EquipmentClient.SendEquipmentTo(selectedUserId!.Value, equipments);
+               isRequestSending = true;
+
+               var content = new MultipartFormDataContent();
+               var stream = selectedFile.OpenReadStream(10 * 1024 * 1024);
+               content.Add(new StreamContent(stream), "file", selectedFile.Name);
+
+
+
+               var response = await EquipmentClient.SendEquipmentTo(selectedUserId!.Value, equipments, content);
 
                ToastrService.ShowInfo(response.Message!);
 
+               AppStateService.Equipments = null;
+
+
+               isRequestSending = false;
+
+
                NavigationManager.NavigateTo("equipments");
+
+
           }
           else
           {

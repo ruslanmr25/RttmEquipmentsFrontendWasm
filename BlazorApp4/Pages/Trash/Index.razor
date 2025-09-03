@@ -5,6 +5,7 @@
 
 @attribute [Authorize(Roles = "superAdmin,admin,viewer")]
 
+
 <div class="card fade-in">
      <div class="card-body">
           <div class="row">
@@ -15,6 +16,8 @@
 
                <div class="col-md-4 mb-3">
                     <label class="form-label w-auto">Invertar raqami:</label>
+
+
                     <input @bind="equipmentSearchParameters.InvertarId" type="number" class="form-control" />
                </div>
 
@@ -36,40 +39,42 @@
 
                <div class="col-md-4 mb-3">
                     <label class="form-label w-auto">Bino</label>
+                    <select class="form-control" @onchange="OnDepartmentChangedAsync">
+                         <option value="">-- Tanlang --</option>
 
-                    <ToggleComponent
-                         Name="@(equipmentSearchParameters.DepartmentId is null?"-- Tanlash --":$" {departments?.FirstOrDefault(d => d.Id == equipmentSearchParameters.DepartmentId)?.Name}")">
-
-                         @if (departments is not null)
+                         @foreach (var department in departments ?? new())
                          {
-
-                              @foreach (Department department in departments)
-                              {
-                                   <div @onclick="() => ChangeDepartmentName(department)" role="button" class="toggle-item">
-                                        @department.Name</div>
-                              }
-
-
+                              <option value="@department.Id">@department.Name</option>
                          }
+                    </select>
 
-
-                    </ToggleComponent>
                </div>
 
                <div class="col-md-4 mb-3">
-                    <label class="form-label w-auto">Joylashuvi:</label>
-                    <input type="text" class="form-control" />
+                    <label class="form-label w-auto">Xonasi:</label>
+                    <select class="form-control" @bind="equipmentSearchParameters.RoomId">
+                         <option value="">-- Tanlang --</option>
+
+                         @foreach (Room room in rooms ?? new())
+                         {
+                              <option value="@room.Id">@room.Name</option>
+                         }
+                    </select>
                </div>
 
                <div class="col-md-4 mb-3">
                     <label class="form-label w-auto">Turini tanlang:</label>
-                    <input type="text" class="form-control" />
+                    <select class="form-control" @bind="equipmentSearchParameters.EquipmentTypeId">
+
+                         <option value="">-- Tanlang --</option>
+
+                         @foreach (EquipmentType equipmentType in equipmentTypes ?? new())
+                         {
+                              <option value="@equipmentType.Id">@equipmentType.Name</option>
+                         }
+                    </select>
                </div>
 
-               <div class="col-md-4 mb-3">
-                    <label class="form-label w-auto">Parametrlari:</label>
-                    <input type="number" class="form-control" />
-               </div>
           </div>
 
 
@@ -81,7 +86,6 @@
      </div>
 
 </div>
-
 <div class="card @CssClass">
      <div class="card-header d-flex justify-content-between align-items-center">
 
@@ -189,7 +193,15 @@
 
      protected List<Department>? departments;
 
+
+     protected List<Room>? rooms;
+
      protected List<User> users = new();
+
+     protected List<EquipmentType>? equipmentTypes;
+
+
+
 
      protected Meta? meta;
      private string CssClass = "";
@@ -205,7 +217,7 @@
           equipments = response.Data ?? new();
 
           var userResponse = await UserClient.GetAllAsync();
-     users = userResponse.Data ?? new();
+          users = userResponse.Data ?? new();
 
 
           var departmentReponse = await DepartmentClient.GetAllAsync();
@@ -263,6 +275,28 @@
                StateHasChanged();
           }
           base.OnAfterRender(firstRender);
+     }
+     protected async Task OnDepartmentChangedAsync(ChangeEventArgs e)
+     {
+
+          if (int.TryParse(e.Value?.ToString(), out int value))
+          {
+
+               equipmentSearchParameters.DepartmentId = value;
+
+               var response = await DepartmentClient.GetAsync(value);
+
+               rooms = response.Data?.Rooms ?? new();
+
+
+          }
+
+          else
+          {
+               equipmentSearchParameters.DepartmentId = null;
+
+          }
+
      }
 
 

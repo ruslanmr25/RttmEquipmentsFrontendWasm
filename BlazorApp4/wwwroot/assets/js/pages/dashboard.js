@@ -4,14 +4,14 @@ window.Start = function (chartData) {
     // chartData object ichida series, categories, labels va h.k. keladi
 
     // 1. Line/Bar chart options
-    var optionsLine = {
-        series: chartData.lineSeries,
-        chart: { height: 313, type: "line", toolbar: { show: false } },
-        xaxis: { categories: chartData.categories },
-        colors: ["#1a80f8", "#17c553", "#7942ed"]
-    };
-    var chartLine = new ApexCharts(document.querySelector("#dash-performance-chart"), optionsLine);
-    chartLine.render();
+    // var optionsLine = {
+    //     series: chartData.lineSeries,
+    //     chart: { height: 313, type: "line", toolbar: { show: false } },
+    //     xaxis: { categories: chartData.categories },
+    //     colors: ["#1a80f8", "#17c553", "#7942ed"]
+    // };
+    // var chartLine = new ApexCharts(document.querySelector("#dash-performance-chart"), optionsLine);
+    // chartLine.render();
 
     // 2. Donut chart options
     var optionsDonut = {

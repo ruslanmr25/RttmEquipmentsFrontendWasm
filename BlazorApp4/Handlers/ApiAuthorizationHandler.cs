@@ -28,6 +28,7 @@ public class ApiAuthorizationHandler : DelegatingHandler
     {
         try
         {
+            // Tokenni headerga qo‘shish
             string? token = await _storageService.ReadFromLocalStorage("token");
             if (!string.IsNullOrEmpty(token))
             {
@@ -37,30 +38,59 @@ public class ApiAuthorizationHandler : DelegatingHandler
 
             var response = await base.SendAsync(request, cancellationToken);
 
-            if (response.StatusCode == System.Net.HttpStatusCode.Unauthorized) // 401
+            // 🔹 Status kodlarni tekshirish
+            if (!response.IsSuccessStatusCode)
             {
-                Console.WriteLine("shu yerdan o'tdi");
-                _navigation.NavigateTo("/login", false);
-            }
-            else if (response.StatusCode == System.Net.HttpStatusCode.Forbidden) // 403
-            {
-                _navigation.NavigateTo("/forbidden", false);
+                switch (response.StatusCode)
+                {
+                    case System.Net.HttpStatusCode.Unauthorized: // 401
+                        _toastrService.ShowWarning("Avtorizatsiya kerak. Qayta login qiling.");
+                        _navigation.NavigateTo("/login", forceLoad: false);
+                        break;
+
+                    case System.Net.HttpStatusCode.Forbidden: // 403
+                        _toastrService.ShowError("Sizda ruxsat yo‘q.");
+                        _navigation.NavigateTo("/forbidden", forceLoad: false);
+                        break;
+
+                    case System.Net.HttpStatusCode.NotFound: // 404
+                        _toastrService.ShowError("Resurs topilmadi.");
+                        break;
+
+                    case System.Net.HttpStatusCode.InternalServerError: // 500
+                        _toastrService.ShowError("Serverdagi xatolik.");
+                        break;
+
+                    default:
+                        _toastrService.ShowInfo($"Xato status kodi: {(int)response.StatusCode}");
+                        break;
+                }
             }
 
             return response;
         }
         catch (HttpRequestException ex)
         {
-            // Bu joyda "Failed to fetch", "Connection refused" kabi xatolarni tutasan
-            _toastrService.ShowError("Serverga ulanib bo'lmadi");
+            // 🔹 Brauzer tarmoq yoki CORS xatolari ("Failed to fetch")
+            _toastrService.ShowError("Serverga ulanishda muammo!");
 
-            // Masalan foydalanuvchini error sahifaga yuborish mumkin
-            _navigation.NavigateTo("/server-down", false);
+            Console.WriteLine($"HttpRequestException: {ex.Message}");
 
-            // Bo'sh response qaytarish (yoki custom response yasash)
+            // Xatolikdan keyin "fake" response qaytaryapmiz
             return new HttpResponseMessage(System.Net.HttpStatusCode.ServiceUnavailable)
             {
-                ReasonPhrase = "Server bilan bog‘lanib bo‘lmadi",
+                Content = new StringContent("Serverga ulanishda muammo"),
+            };
+        }
+        catch (TaskCanceledException ex)
+        {
+            // 🔹 Timeout bo‘lsa
+            _toastrService.ShowError("So‘rov juda uzoq davom etdi (timeout).");
+            Console.WriteLine($"TaskCanceledException: {ex.Message}");
+
+            return new HttpResponseMessage(System.Net.HttpStatusCode.RequestTimeout)
+            {
+                Content = new StringContent("So‘rov vaqti tugadi"),
             };
         }
     }

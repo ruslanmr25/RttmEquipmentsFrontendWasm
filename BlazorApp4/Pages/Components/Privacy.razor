@@ -1,0 +1,110 @@
+﻿@using System.Threading.Tasks
+<Modal @bind-Hidden="isHidden" CssClass="d-none" Title="Foydalanish shartlari">
+
+
+     <p>
+          Quyidagi shartlar “Moddiy Javobgarlik” saytiga kiruvchi va undan foydalanayotgan har bir foydalanuvchiga
+          tatbiq
+          etiladi. <br>
+
+     <h5>
+          1. Saytdan foydalanish <br>
+
+     </h5>
+
+     Saytdan faqat qonuniy maqsadlarda foydalanish mumkin.<br>
+
+     Foydalanuvchi yolg‘on yoki noqonuniy ma’lumot kiritmasligi kerak.<br>
+
+     <h5>
+
+          2. Saytdan olingan ma'lumotlarni tarqatmaslik<br>
+     </h5>
+
+     Saytda joylashtirilgan barcha ma'lumotlar xavfsiz saqlanishi shart. Ularni
+     ruxsatsiz tarqatish taqiqlanadi.<br>
+
+     <h5>
+
+          3. Javobgarlikni cheklash
+     </h5>
+     Biz saytdan noto'g'ri foydalanish tufayli yuzaga keladigan bevosita va bilvosita zararlar uchun javobgar emasmiz!
+
+     <h5>
+
+          5. Siyosatdagi o‘zgarishlar
+     </h5>
+
+     Ushbu platformaning maxfiylik siyosati istalgan vaqtda yangilanishi mumkin. Yangilangan siyosat saytda e’lon
+     qilinadi
+     va e’lon qilingan kundan kuchga kiradi.<br>
+     </p>
+
+     <div>
+
+
+          So‘nggi yangilanish sanasi: 28-avgust, 2025
+     </div>
+
+
+     <div class="mt-3 d-flex justify-content-end">
+
+          <button type="button" @onclick="OnAcquaintedAsync" class="btn btn-dark btn-lg fw-medium">Roziman</button>
+     </div>
+
+
+</Modal>
+
+
+
+<h5 class="text-dark mb-3">
+
+     <input checked="@Value" type="checkbox" id="check" @onclick:preventDefault @onclick="Open">
+     <label for="check">
+
+          Foydalanish talablariga roziman
+     </label>
+
+</h5>
+
+@code {
+
+     [Parameter]
+     public bool Value { get; set; } = false;
+
+
+     [Parameter]
+
+     public EventCallback<bool> ValueChanged { get; set; }
+
+     private async Task UpdateValue()
+     {
+          Value = true;
+          await ValueChanged.InvokeAsync(Value);
+
+
+     }
+
+
+     public async Task OnAcquaintedAsync()
+     {
+          await UpdateValue();
+          isHidden = !isHidden;
+          StateHasChanged();
+
+     }
+
+
+     protected void Open()
+     {
+
+          isHidden = !isHidden;
+
+
+
+     }
+     bool isHidden = true;
+
+
+
+}

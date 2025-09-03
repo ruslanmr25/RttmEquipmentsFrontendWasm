@@ -1,24 +1,51 @@
 ﻿@page "/black"
 
-<AuthorizeView  Context="authContext">
-    <Authorized>
-        <h3>Xush kelibsiz!</h3>
-    </Authorized>
-    <NotAuthorized>
-        @if (!authContext.User.Identity.IsAuthenticated)
-        {
-            RedirectToLogin();
-        }
-        else
-        {
-            RedirectToForbidden();
-        }
-    </NotAuthorized>
-</AuthorizeView>
 
+
+<div class="container">
+
+
+
+    @if (parameters is not null)
+    {
+
+
+        <MultiSelectComponent @bind-Value="selected" TItem="Parameter" Items="parameters" GetText="@(p => p.Name)"
+            GetValue="@(p => p.Id)">
+        </MultiSelectComponent>
+    }
+
+</div>
+
+
+@inject IJSRuntime JS
+
+@inject ParameterClient ParameterClient
 @code {
-    [Inject] NavigationManager Navigation { get; set; }
 
-    void RedirectToLogin() => Navigation.NavigateTo("/login", true);
-    void RedirectToForbidden() => Navigation.NavigateTo("/forbidden", true);
+    protected List<Parameter> parameters = new();
+
+
+    protected List<int> selected = new();
+
+
+
+    protected override async Task OnInitializedAsync()
+    {
+
+        var resp = await ParameterClient.GetAllAsync();
+
+        parameters = resp.Data ?? new();
+
+    }
+    @* 
+
+    protected override Task OnAfterRenderAsync(bool firstRender)
+    {
+
+
+        JS.InvokeVoidAsync("multiselect");
+
+        return base.OnAfterRenderAsync(firstRender);
+    } *@
 }

@@ -114,6 +114,21 @@
     }
 </div>
 
+@if (equipment?.History is not null)
+{
+
+    <div class=" card fade-in">
+
+
+        @foreach (var log in equipment.History)
+        {
+            @log.Action
+
+        }
+
+
+    </div>
+}
 
 @inject EquipmentClient EquipmentClient
 @inject FileUploadClient FileUploadClient

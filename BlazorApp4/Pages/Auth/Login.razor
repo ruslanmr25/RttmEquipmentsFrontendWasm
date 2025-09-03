@@ -22,7 +22,7 @@
 
                         <EditForm Model="@loginDto" OnValidSubmit="@SubmitAsync">
 
-                            <DataAnnotationsValidator></DataAnnotationsValidator>
+                            @* <DataAnnotationsValidator></DataAnnotationsValidator> *@
 
                             <div class="mb-3">
                                 <label class="form-label" for="name">Foydalanuvchi nomi:</label>
@@ -67,6 +67,14 @@
                                 </button>
                             </div>
 
+                            @if (isLoginFailed)
+                            {
+                                <NavLink href="/register">
+
+                                    Hisobingiz yo'qmi unda bu yerga bosing
+                                </NavLink>
+                            }
+
                         </EditForm>
                     </div>
                 </div>
@@ -77,14 +85,6 @@
 </div>
 
 
-@if (errorMessage != null)
-{
-
-    <p>
-        @errorMessage
-    </p>
-
-}
 
 @inject NavigationManager NavigationManager
 @inject AuthClient AuthClient
@@ -94,57 +94,79 @@
 @inject StorageService StorageService
 
 @code {
-
+    protected bool isLoginFailed = false;
+    protected string? errorMessage;
     protected LoginDto loginDto = new();
 
-    protected User? User;
     protected string? Token;
-    protected string? errorMessage;
 
     protected bool isRequestSending = false;
 
     protected async Task SubmitAsync()
     {
-
         isRequestSending = true;
+        isLoginFailed = false;
 
-        var response = await AuthClient.Login(loginDto);
 
-        if (response.StatusCode == 200)
+        try
         {
-            Token = response.Data!.Token;
 
-            var apiAuth = (ApiAuthenticationStateProvider)AuthProvider;
-            await apiAuth.MarkUserAsAuthenticated(Token);
-            ToastrService.ShowSucess(response.Message ?? "Nimadir xato ketti");
+            var response = await AuthClient.Login(loginDto);
 
-            errorMessage = null;
-
-            var state = await AuthProvider.GetAuthenticationStateAsync();
-
-            Console.WriteLine(state);
-
-            if (state.User.IsInRole("staff") || state.User.IsInRole("guard"))
+            if (response.StatusCode == 200)
             {
 
-                NavigationManager.NavigateTo("/my-equipments");
 
-                return;
+                Token = response.Data!.Token;
+
+                var apiAuth = (ApiAuthenticationStateProvider)AuthProvider;
+                await apiAuth.MarkUserAsAuthenticated(Token);
+                ToastrService.ShowSucess(response.Message ?? "Nimadir xato ketti");
+
+                errorMessage = null;
+
+                var state = await AuthProvider.GetAuthenticationStateAsync();
+
+                Console.WriteLine(state);
+
+                if (state.User.IsInRole("staff") || state.User.IsInRole("guard"))
+                {
+
+
+                    NavigationManager.NavigateTo("/my-equipments");
+
+                    return;
+
+                }
+
+                NavigationManager.NavigateTo("/");
+
+
+            }
+            else if (response.StatusCode == 422)
+            {
+                loginDto.Password = "";
+                errorMessage = response.Message;
+
+                isLoginFailed = true;
+
 
             }
 
-            NavigationManager.NavigateTo("/");
 
 
         }
-        else if (response.StatusCode == 422)
+        catch (Exception)
         {
-            loginDto.Password = "";
-            errorMessage = response.Message;
+
+
+            ToastrService.ShowError("Server bilan aloqa mavjud emas");
 
         }
-
-        isRequestSending = false;
+        finally
+        {
+            isRequestSending = false;
+        }
 
     }
 

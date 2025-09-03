@@ -19,7 +19,7 @@
                                 </div>
                             </div>
                             <div class="col-6 text-end">
-                                <p class="text-muted mb-0 text-truncate">Jihozlar soni</p>
+                                <p class="text-muted mb-0 text-truncate">Jihozlar</p>
                                 <h3 class="text-dark mt-2 mb-0">@statisticData.EquipmentsCount</h3>
                             </div>
                         </div>
@@ -34,12 +34,13 @@
                         <div class="row">
                             <div class="col-6">
                                 <div class="avatar-md bg-primary bg-opacity-10 rounded-circle">
-                                    <iconify-icon icon="solar:bag-check-outline"
+                                      <iconify-icon icon="solar:users-group-two-rounded-outline"
                                                   class="fs-32 text-primary avatar-title"></iconify-icon>
+
                                 </div>
                             </div>
                             <div class="col-6 text-end">
-                                <p class="text-muted mb-0 text-truncate">Foydalanuvchilar soni</p>
+                                <p class="text-muted mb-0 text">Foydalanuvchilar</p>
                                 <h3 class="text-dark mt-2 mb-0">@statisticData.UserCount</h3>
                             </div>
                         </div>
@@ -60,7 +61,7 @@
                                 </div>
                             </div>
                             <div class="col-6 text-end">
-                                <p class="text-muted mb-0 text-truncate">Foydalanishdan chiqarilgan jihozlar soni</p>
+                                <p class="text-muted mb-0 text">Yaroqsiz jihozlar</p>
                                 <h3 class="text-dark mt-2 mb-0">@statisticData.DeletedEquipmentCount</h3>
                             </div>
                         </div>
@@ -76,12 +77,14 @@
                         <div class="row">
                             <div class="col-6">
                                 <div class="avatar-md bg-primary bg-opacity-10 rounded-circle">
-                                    <iconify-icon icon="solar:users-group-two-rounded-outline"
+                                 
+                                                    <iconify-icon icon="solar:bag-check-outline"
                                                   class="fs-32 text-primary avatar-title"></iconify-icon>
+                               
                                 </div>
                             </div>
                             <div class="col-6 text-end">
-                                <p class="text-muted mb-0 text-truncate">Binolar soni</p>
+                                <p class="text-muted mb-0 text-truncate">Binolar</p>
                                 <h3 class="text-dark mt-2 mb-0">@statisticData.DepartmentCount</h3>
                             </div>
                         </div>
@@ -225,6 +228,8 @@
 <!-- Dashboard Js -->
 @inject IJSRuntime JS
 
+
+@inject ToastrService ToastrService
 @inject StatisticsClient StatisticsClient
 @code
 {
@@ -233,9 +238,24 @@
     StatisticData? statisticData;
     protected override async Task OnInitializedAsync()
     {
+       
 
-        var response = await StatisticsClient.GetAllAsync();
+
+       try{
+    var response = await StatisticsClient.GetAllAsync();
         statisticData = response.Data;
+       }
+       catch(Exception)
+       {
+
+
+        
+        ToastrService.ShowError("Server bilan aloqa mavjud emas. Keyinroq urinib ko'ring");
+
+        statisticData=new();
+
+    
+       }
 
 
     }
@@ -262,6 +282,10 @@
                 departmentSeries = statisticData.Departments.Select(d => d.EquipmentsCount).ToArray(),
 
             };
+
+
+
+     
 
 
             await JS.InvokeVoidAsync("Start", chartData);

@@ -56,6 +56,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQXV0aFxSZWRpcmVjdC5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
+[D:/Projects/visual studio/BlazorApp4/BlazorApp4/Pages/Auth/Register.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQXV0aFxSZWdpc3Rlci5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
 [D:/Projects/visual studio/BlazorApp4/BlazorApp4/Pages/BlackPage.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQmxhY2tQYWdlLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
@@ -74,6 +78,14 @@ build_metadata.AdditionalFiles.CssScope =
 
 [D:/Projects/visual studio/BlazorApp4/BlazorApp4/Pages/Components/Modal.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ29tcG9uZW50c1xNb2RhbC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projects/visual studio/BlazorApp4/BlazorApp4/Pages/Components/MultiSelectComponent.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ29tcG9uZW50c1xNdWx0aVNlbGVjdENvbXBvbmVudC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/Projects/visual studio/BlazorApp4/BlazorApp4/Pages/Components/Privacy.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ29tcG9uZW50c1xQcml2YWN5LnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
 [D:/Projects/visual studio/BlazorApp4/BlazorApp4/Pages/Components/ToastrComponent.razor]

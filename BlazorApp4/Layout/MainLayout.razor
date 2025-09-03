@@ -37,3 +37,24 @@
     <!-- ==================================================== -->
 
 </div>
+
+
+
+
+
+@inject IJSRuntime jSRuntime
+@code {
+
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if(firstRender)
+        {
+
+        await jSRuntime.InvokeVoidAsync("appInit");
+        }
+
+    }
+
+
+}

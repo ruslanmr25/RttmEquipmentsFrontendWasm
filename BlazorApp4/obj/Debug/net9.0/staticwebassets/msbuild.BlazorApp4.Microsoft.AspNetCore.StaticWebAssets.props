@@ -84,8 +84,8 @@
       <RelatedAsset></RelatedAsset>
       <AssetTraitName></AssetTraitName>
       <AssetTraitValue></AssetTraitValue>
-      <Fingerprint>vcc57jjtmn</Fingerprint>
-      <Integrity>z9COpMBihgwmMR0kJgVwEjqg0EvVW6IuJCQOPlYj+R8=</Integrity>
+      <Fingerprint>6x3qmim50l</Fingerprint>
+      <Integrity>WpQ89EjeAINrEuGs6ZWfzJrMKfPoqdTMibtx+64wYM0=</Integrity>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\assets\css\MultiSelect.css'))</OriginalItemSpec>
@@ -912,8 +912,8 @@
       <RelatedAsset></RelatedAsset>
       <AssetTraitName></AssetTraitName>
       <AssetTraitValue></AssetTraitValue>
-      <Fingerprint>a9nqqpt1ir</Fingerprint>
-      <Integrity>wpnn9sFgafmWowtIQEbMfg7MvnlwOaQNySmwanyiuBw=</Integrity>
+      <Fingerprint>3ro6ym0e2i</Fingerprint>
+      <Integrity>MUPo+JF8OWqPynY/Wf4WIDodsewPg0FSbYsk6ZgXlPE=</Integrity>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\assets\js\app.js'))</OriginalItemSpec>
@@ -984,8 +984,8 @@
       <RelatedAsset></RelatedAsset>
       <AssetTraitName></AssetTraitName>
       <AssetTraitValue></AssetTraitValue>
-      <Fingerprint>5lifrnfhj3</Fingerprint>
-      <Integrity>Jw0JiVCQtYP2KL12yd8BB0XMr0jwFAsYJ+8N1DLg77M=</Integrity>
+      <Fingerprint>trl2zu86xx</Fingerprint>
+      <Integrity>uRUVsVJ9x6EJodLH3d99G71uSFTALPRySUVH4wF+Kt4=</Integrity>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\assets\js\MultiSelect.js'))</OriginalItemSpec>
@@ -1020,8 +1020,8 @@
       <RelatedAsset></RelatedAsset>
       <AssetTraitName></AssetTraitName>
       <AssetTraitValue></AssetTraitValue>
-      <Fingerprint>23gzvhboq5</Fingerprint>
-      <Integrity>Lk8Srv5O+YZfa8XJ8OaLgVAnIca1TGAL/YLtA9Jzlok=</Integrity>
+      <Fingerprint>m65iybjsl4</Fingerprint>
+      <Integrity>voirQMcKb75S3M/ovuRtYTbdnicgDaa5dBUrXE89OYM=</Integrity>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\assets\js\pages\dashboard.js'))</OriginalItemSpec>
@@ -27414,6 +27414,24 @@
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\css\app.css'))</OriginalItemSpec>
     </StaticWebAsset>
+    <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\css\multiselect.css'))">
+      <SourceType>Package</SourceType>
+      <SourceId>BlazorApp4</SourceId>
+      <ContentRoot>$(MSBuildThisFileDirectory)..\staticwebassets\</ContentRoot>
+      <BasePath>/</BasePath>
+      <RelativePath>css/multiselect.css</RelativePath>
+      <AssetKind>All</AssetKind>
+      <AssetMode>All</AssetMode>
+      <AssetRole>Primary</AssetRole>
+      <RelatedAsset></RelatedAsset>
+      <AssetTraitName></AssetTraitName>
+      <AssetTraitValue></AssetTraitValue>
+      <Fingerprint>hayfvobqci</Fingerprint>
+      <Integrity>p5VOG1U/yA2ZYSi5EHSWlSSD1ZhwlJ9ha56ziqqx5fI=</Integrity>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+      <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\css\multiselect.css'))</OriginalItemSpec>
+    </StaticWebAsset>
     <StaticWebAsset Include="$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\favicon.png'))">
       <SourceType>Package</SourceType>
       <SourceId>BlazorApp4</SourceId>
@@ -27498,8 +27516,8 @@
       <RelatedAsset></RelatedAsset>
       <AssetTraitName></AssetTraitName>
       <AssetTraitValue></AssetTraitValue>
-      <Fingerprint>3wx0rarwbp</Fingerprint>
-      <Integrity>bUFTkit6qzzbmLP6/lztPc9qWyhbgCU5mpIvXkC/M6U=</Integrity>
+      <Fingerprint>2p3xmbvz01</Fingerprint>
+      <Integrity>9iJadhO0kKUpLmT26N1mNinWO20vbvwt2XF9e3JX2bw=</Integrity>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\index.html'))</OriginalItemSpec>

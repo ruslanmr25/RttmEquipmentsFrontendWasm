@@ -6097,6 +6097,10 @@
       "PackagePath": "staticwebassets\\css\\app.css"
     },
     {
+      "Id": "D:\\Projects\\visual studio\\BlazorApp4\\BlazorApp4\\wwwroot\\css\\multiselect.css",
+      "PackagePath": "staticwebassets\\css\\multiselect.css"
+    },
+    {
       "Id": "D:\\Projects\\visual studio\\BlazorApp4\\BlazorApp4\\wwwroot\\favicon.png",
       "PackagePath": "staticwebassets\\favicon.png"
     },

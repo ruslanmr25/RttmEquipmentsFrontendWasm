@@ -3,16 +3,68 @@
   "WorkspaceRootPath": "D:\\Projects\\visual studio\\BlazorApp4\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{0CDD7457-1552-4F38-BDA7-D9B9A8B12EB3}|BlazorApp4\\BlazorApp4.csproj|d:\\projects\\visual studio\\blazorapp4\\blazorapp4\\pages\\home.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{0CDD7457-1552-4F38-BDA7-D9B9A8B12EB3}|BlazorApp4\\BlazorApp4.csproj|solutionrelative:blazorapp4\\pages\\home.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{0CDD7457-1552-4F38-BDA7-D9B9A8B12EB3}|BlazorApp4\\BlazorApp4.csproj|d:\\projects\\visual studio\\blazorapp4\\blazorapp4\\app.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{0CDD7457-1552-4F38-BDA7-D9B9A8B12EB3}|BlazorApp4\\BlazorApp4.csproj|solutionrelative:blazorapp4\\app.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{0CDD7457-1552-4F38-BDA7-D9B9A8B12EB3}|BlazorApp4\\BlazorApp4.csproj|d:\\projects\\visual studio\\blazorapp4\\blazorapp4\\wwwroot\\assets\\js\\pages\\dashboard.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
-      "RelativeMoniker": "D:0:0:{0CDD7457-1552-4F38-BDA7-D9B9A8B12EB3}|BlazorApp4\\BlazorApp4.csproj|solutionrelative:blazorapp4\\wwwroot\\assets\\js\\pages\\dashboard.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+      "AbsoluteMoniker": "D:0:0:{0CDD7457-1552-4F38-BDA7-D9B9A8B12EB3}|BlazorApp4\\BlazorApp4.csproj|d:\\projects\\visual studio\\blazorapp4\\blazorapp4\\wwwroot\\index.html||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{0CDD7457-1552-4F38-BDA7-D9B9A8B12EB3}|BlazorApp4\\BlazorApp4.csproj|solutionrelative:blazorapp4\\wwwroot\\index.html||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0CDD7457-1552-4F38-BDA7-D9B9A8B12EB3}|BlazorApp4\\BlazorApp4.csproj|d:\\projects\\visual studio\\blazorapp4\\blazorapp4\\wwwroot\\assets\\vendor\\daterangepicker\\index.html||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{0CDD7457-1552-4F38-BDA7-D9B9A8B12EB3}|BlazorApp4\\BlazorApp4.csproj|solutionrelative:blazorapp4\\wwwroot\\assets\\vendor\\daterangepicker\\index.html||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{0CDD7457-1552-4F38-BDA7-D9B9A8B12EB3}|BlazorApp4\\BlazorApp4.csproj|d:\\projects\\visual studio\\blazorapp4\\blazorapp4\\wwwroot\\assets\\js\\app.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
       "RelativeMoniker": "D:0:0:{0CDD7457-1552-4F38-BDA7-D9B9A8B12EB3}|BlazorApp4\\BlazorApp4.csproj|solutionrelative:blazorapp4\\wwwroot\\assets\\js\\app.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0CDD7457-1552-4F38-BDA7-D9B9A8B12EB3}|BlazorApp4\\BlazorApp4.csproj|d:\\projects\\visual studio\\blazorapp4\\blazorapp4\\pages\\auth\\login.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{0CDD7457-1552-4F38-BDA7-D9B9A8B12EB3}|BlazorApp4\\BlazorApp4.csproj|solutionrelative:blazorapp4\\pages\\auth\\login.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0CDD7457-1552-4F38-BDA7-D9B9A8B12EB3}|BlazorApp4\\BlazorApp4.csproj|d:\\projects\\visual studio\\blazorapp4\\blazorapp4\\services\\storageservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0CDD7457-1552-4F38-BDA7-D9B9A8B12EB3}|BlazorApp4\\BlazorApp4.csproj|solutionrelative:blazorapp4\\services\\storageservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0CDD7457-1552-4F38-BDA7-D9B9A8B12EB3}|BlazorApp4\\BlazorApp4.csproj|d:\\projects\\visual studio\\blazorapp4\\blazorapp4\\wwwroot\\assets\\js\\storage.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{0CDD7457-1552-4F38-BDA7-D9B9A8B12EB3}|BlazorApp4\\BlazorApp4.csproj|solutionrelative:blazorapp4\\wwwroot\\assets\\js\\storage.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0CDD7457-1552-4F38-BDA7-D9B9A8B12EB3}|BlazorApp4\\BlazorApp4.csproj|d:\\projects\\visual studio\\blazorapp4\\blazorapp4\\providers\\apiauthenticationstateprovider.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0CDD7457-1552-4F38-BDA7-D9B9A8B12EB3}|BlazorApp4\\BlazorApp4.csproj|solutionrelative:blazorapp4\\providers\\apiauthenticationstateprovider.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0CDD7457-1552-4F38-BDA7-D9B9A8B12EB3}|BlazorApp4\\BlazorApp4.csproj|d:\\projects\\visual studio\\blazorapp4\\blazorapp4\\models\\usermodels\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0CDD7457-1552-4F38-BDA7-D9B9A8B12EB3}|BlazorApp4\\BlazorApp4.csproj|solutionrelative:blazorapp4\\models\\usermodels\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0CDD7457-1552-4F38-BDA7-D9B9A8B12EB3}|BlazorApp4\\BlazorApp4.csproj|d:\\projects\\visual studio\\blazorapp4\\blazorapp4\\clients\\authclient.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0CDD7457-1552-4F38-BDA7-D9B9A8B12EB3}|BlazorApp4\\BlazorApp4.csproj|solutionrelative:blazorapp4\\clients\\authclient.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0CDD7457-1552-4F38-BDA7-D9B9A8B12EB3}|BlazorApp4\\BlazorApp4.csproj|d:\\projects\\visual studio\\blazorapp4\\blazorapp4\\pages\\blackpage.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{0CDD7457-1552-4F38-BDA7-D9B9A8B12EB3}|BlazorApp4\\BlazorApp4.csproj|solutionrelative:blazorapp4\\pages\\blackpage.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0CDD7457-1552-4F38-BDA7-D9B9A8B12EB3}|BlazorApp4\\BlazorApp4.csproj|d:\\projects\\visual studio\\blazorapp4\\blazorapp4\\pages\\home.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{0CDD7457-1552-4F38-BDA7-D9B9A8B12EB3}|BlazorApp4\\BlazorApp4.csproj|solutionrelative:blazorapp4\\pages\\home.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0CDD7457-1552-4F38-BDA7-D9B9A8B12EB3}|BlazorApp4\\BlazorApp4.csproj|d:\\projects\\visual studio\\blazorapp4\\blazorapp4\\_imports.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{0CDD7457-1552-4F38-BDA7-D9B9A8B12EB3}|BlazorApp4\\BlazorApp4.csproj|solutionrelative:blazorapp4\\_imports.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0CDD7457-1552-4F38-BDA7-D9B9A8B12EB3}|BlazorApp4\\BlazorApp4.csproj|d:\\projects\\visual studio\\blazorapp4\\blazorapp4\\layout\\mainlayout.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{0CDD7457-1552-4F38-BDA7-D9B9A8B12EB3}|BlazorApp4\\BlazorApp4.csproj|solutionrelative:blazorapp4\\layout\\mainlayout.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0CDD7457-1552-4F38-BDA7-D9B9A8B12EB3}|BlazorApp4\\BlazorApp4.csproj|d:\\projects\\visual studio\\blazorapp4\\blazorapp4\\layout\\loginlayout.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{0CDD7457-1552-4F38-BDA7-D9B9A8B12EB3}|BlazorApp4\\BlazorApp4.csproj|solutionrelative:blazorapp4\\layout\\loginlayout.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0CDD7457-1552-4F38-BDA7-D9B9A8B12EB3}|BlazorApp4\\BlazorApp4.csproj|d:\\projects\\visual studio\\blazorapp4\\blazorapp4\\wwwroot\\assets\\js\\pages\\dashboard.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{0CDD7457-1552-4F38-BDA7-D9B9A8B12EB3}|BlazorApp4\\BlazorApp4.csproj|solutionrelative:blazorapp4\\wwwroot\\assets\\js\\pages\\dashboard.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{0CDD7457-1552-4F38-BDA7-D9B9A8B12EB3}|BlazorApp4\\BlazorApp4.csproj|d:\\projects\\visual studio\\blazorapp4\\blazorapp4\\pages\\equipments\\show.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
@@ -23,16 +75,8 @@
       "RelativeMoniker": "D:0:0:{0CDD7457-1552-4F38-BDA7-D9B9A8B12EB3}|BlazorApp4\\BlazorApp4.csproj|solutionrelative:blazorapp4\\wwwroot\\assets\\js\\camera.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{0CDD7457-1552-4F38-BDA7-D9B9A8B12EB3}|BlazorApp4\\BlazorApp4.csproj|d:\\projects\\visual studio\\blazorapp4\\blazorapp4\\pages\\blackpage.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{0CDD7457-1552-4F38-BDA7-D9B9A8B12EB3}|BlazorApp4\\BlazorApp4.csproj|solutionrelative:blazorapp4\\pages\\blackpage.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{0CDD7457-1552-4F38-BDA7-D9B9A8B12EB3}|BlazorApp4\\BlazorApp4.csproj|d:\\projects\\visual studio\\blazorapp4\\blazorapp4\\wwwroot\\assets\\css\\custom-style.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
       "RelativeMoniker": "D:0:0:{0CDD7457-1552-4F38-BDA7-D9B9A8B12EB3}|BlazorApp4\\BlazorApp4.csproj|solutionrelative:blazorapp4\\wwwroot\\assets\\css\\custom-style.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{0CDD7457-1552-4F38-BDA7-D9B9A8B12EB3}|BlazorApp4\\BlazorApp4.csproj|d:\\projects\\visual studio\\blazorapp4\\blazorapp4\\wwwroot\\index.html||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{0CDD7457-1552-4F38-BDA7-D9B9A8B12EB3}|BlazorApp4\\BlazorApp4.csproj|solutionrelative:blazorapp4\\wwwroot\\index.html||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{0CDD7457-1552-4F38-BDA7-D9B9A8B12EB3}|BlazorApp4\\BlazorApp4.csproj|d:\\projects\\visual studio\\blazorapp4\\blazorapp4\\clients\\fileuploadclient.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -63,32 +107,12 @@
       "RelativeMoniker": "D:0:0:{0CDD7457-1552-4F38-BDA7-D9B9A8B12EB3}|BlazorApp4\\BlazorApp4.csproj|solutionrelative:blazorapp4\\clients\\equipmentclient.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{0CDD7457-1552-4F38-BDA7-D9B9A8B12EB3}|BlazorApp4\\BlazorApp4.csproj|d:\\projects\\visual studio\\blazorapp4\\blazorapp4\\clients\\authclient.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{0CDD7457-1552-4F38-BDA7-D9B9A8B12EB3}|BlazorApp4\\BlazorApp4.csproj|solutionrelative:blazorapp4\\clients\\authclient.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{0CDD7457-1552-4F38-BDA7-D9B9A8B12EB3}|BlazorApp4\\BlazorApp4.csproj|d:\\projects\\visual studio\\blazorapp4\\blazorapp4\\pages\\auth\\login.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{0CDD7457-1552-4F38-BDA7-D9B9A8B12EB3}|BlazorApp4\\BlazorApp4.csproj|solutionrelative:blazorapp4\\pages\\auth\\login.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{0CDD7457-1552-4F38-BDA7-D9B9A8B12EB3}|BlazorApp4\\BlazorApp4.csproj|d:\\projects\\visual studio\\blazorapp4\\blazorapp4\\services\\storageservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{0CDD7457-1552-4F38-BDA7-D9B9A8B12EB3}|BlazorApp4\\BlazorApp4.csproj|solutionrelative:blazorapp4\\services\\storageservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{0CDD7457-1552-4F38-BDA7-D9B9A8B12EB3}|BlazorApp4\\BlazorApp4.csproj|d:\\projects\\visual studio\\blazorapp4\\blazorapp4\\models\\errordto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{0CDD7457-1552-4F38-BDA7-D9B9A8B12EB3}|BlazorApp4\\BlazorApp4.csproj|solutionrelative:blazorapp4\\models\\errordto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{0CDD7457-1552-4F38-BDA7-D9B9A8B12EB3}|BlazorApp4\\BlazorApp4.csproj|d:\\projects\\visual studio\\blazorapp4\\blazorapp4\\responses\\loginresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{0CDD7457-1552-4F38-BDA7-D9B9A8B12EB3}|BlazorApp4\\BlazorApp4.csproj|solutionrelative:blazorapp4\\responses\\loginresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{0CDD7457-1552-4F38-BDA7-D9B9A8B12EB3}|BlazorApp4\\BlazorApp4.csproj|d:\\projects\\visual studio\\blazorapp4\\blazorapp4\\_imports.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{0CDD7457-1552-4F38-BDA7-D9B9A8B12EB3}|BlazorApp4\\BlazorApp4.csproj|solutionrelative:blazorapp4\\_imports.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{0CDD7457-1552-4F38-BDA7-D9B9A8B12EB3}|BlazorApp4\\BlazorApp4.csproj|d:\\projects\\visual studio\\blazorapp4\\blazorapp4\\layout\\mainlayout.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{0CDD7457-1552-4F38-BDA7-D9B9A8B12EB3}|BlazorApp4\\BlazorApp4.csproj|solutionrelative:blazorapp4\\layout\\mainlayout.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{0CDD7457-1552-4F38-BDA7-D9B9A8B12EB3}|BlazorApp4\\BlazorApp4.csproj|d:\\projects\\visual studio\\blazorapp4\\blazorapp4\\layout\\navmenu.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
@@ -106,7 +130,7 @@
       "DocumentGroups": [
         {
           "DockedHeight": 200,
-          "SelectedChildIndex": 14,
+          "SelectedChildIndex": 13,
           "Children": [
             {
               "$type": "Bookmark",
@@ -134,85 +158,202 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "dashboard.js",
-              "DocumentMoniker": "D:\\Projects\\visual studio\\BlazorApp4\\BlazorApp4\\wwwroot\\assets\\js\\pages\\dashboard.js",
-              "RelativeDocumentMoniker": "BlazorApp4\\wwwroot\\assets\\js\\pages\\dashboard.js",
-              "ToolTip": "D:\\Projects\\visual studio\\BlazorApp4\\BlazorApp4\\wwwroot\\assets\\js\\pages\\dashboard.js",
-              "RelativeToolTip": "BlazorApp4\\wwwroot\\assets\\js\\pages\\dashboard.js",
-              "ViewState": "AgIAAAoAAAAAAAAAAAAAwB8AAAAzAAAAAAAAAA==",
+              "DocumentIndex": 2,
+              "Title": "index.html",
+              "DocumentMoniker": "D:\\Projects\\visual studio\\BlazorApp4\\BlazorApp4\\wwwroot\\assets\\vendor\\daterangepicker\\index.html",
+              "RelativeDocumentMoniker": "BlazorApp4\\wwwroot\\assets\\vendor\\daterangepicker\\index.html",
+              "ToolTip": "D:\\Projects\\visual studio\\BlazorApp4\\BlazorApp4\\wwwroot\\assets\\vendor\\daterangepicker\\index.html",
+              "RelativeToolTip": "BlazorApp4\\wwwroot\\assets\\vendor\\daterangepicker\\index.html",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
+              "WhenOpened": "2025-08-21T06:56:38.771Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "storage.js",
+              "DocumentMoniker": "D:\\Projects\\visual studio\\BlazorApp4\\BlazorApp4\\wwwroot\\assets\\js\\storage.js",
+              "RelativeDocumentMoniker": "BlazorApp4\\wwwroot\\assets\\js\\storage.js",
+              "ToolTip": "D:\\Projects\\visual studio\\BlazorApp4\\BlazorApp4\\wwwroot\\assets\\js\\storage.js",
+              "RelativeToolTip": "BlazorApp4\\wwwroot\\assets\\js\\storage.js",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAARAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
-              "WhenOpened": "2025-08-20T08:32:36.802Z",
+              "WhenOpened": "2025-08-21T06:53:13.205Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 8,
-              "Title": "FileUploadClient.cs",
-              "DocumentMoniker": "D:\\Projects\\visual studio\\BlazorApp4\\BlazorApp4\\Clients\\FileUploadClient.cs",
-              "RelativeDocumentMoniker": "BlazorApp4\\Clients\\FileUploadClient.cs",
-              "ToolTip": "D:\\Projects\\visual studio\\BlazorApp4\\BlazorApp4\\Clients\\FileUploadClient.cs",
-              "RelativeToolTip": "BlazorApp4\\Clients\\FileUploadClient.cs",
-              "ViewState": "AgIAABAAAAAAAAAAAAAzwCgAAAAAAAAAAAAAAA==",
+              "Title": "User.cs",
+              "DocumentMoniker": "D:\\Projects\\visual studio\\BlazorApp4\\BlazorApp4\\Models\\UserModels\\User.cs",
+              "RelativeDocumentMoniker": "BlazorApp4\\Models\\UserModels\\User.cs",
+              "ToolTip": "D:\\Projects\\visual studio\\BlazorApp4\\BlazorApp4\\Models\\UserModels\\User.cs",
+              "RelativeToolTip": "BlazorApp4\\Models\\UserModels\\User.cs",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAABIAAAAaAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-19T04:10:40.23Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 12,
-              "Title": "CategoryClient.cs",
-              "DocumentMoniker": "D:\\Projects\\visual studio\\BlazorApp4\\BlazorApp4\\Clients\\CategoryClient.cs",
-              "RelativeDocumentMoniker": "BlazorApp4\\Clients\\CategoryClient.cs",
-              "ToolTip": "D:\\Projects\\visual studio\\BlazorApp4\\BlazorApp4\\Clients\\CategoryClient.cs",
-              "RelativeToolTip": "BlazorApp4\\Clients\\CategoryClient.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-01T16:28:53.85Z",
+              "WhenOpened": "2025-08-21T06:47:23.483Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 7,
+              "Title": "ApiAuthenticationStateProvider.cs",
+              "DocumentMoniker": "D:\\Projects\\visual studio\\BlazorApp4\\BlazorApp4\\Providers\\ApiAuthenticationStateProvider.cs",
+              "RelativeDocumentMoniker": "BlazorApp4\\Providers\\ApiAuthenticationStateProvider.cs",
+              "ToolTip": "D:\\Projects\\visual studio\\BlazorApp4\\BlazorApp4\\Providers\\ApiAuthenticationStateProvider.cs",
+              "RelativeToolTip": "BlazorApp4\\Providers\\ApiAuthenticationStateProvider.cs",
+              "ViewState": "AgIAABoAAAAAAAAAAAAMwCsAAAAIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-21T05:57:30.614Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "Login.razor",
+              "DocumentMoniker": "D:\\Projects\\visual studio\\BlazorApp4\\BlazorApp4\\Pages\\Auth\\Login.razor",
+              "RelativeDocumentMoniker": "BlazorApp4\\Pages\\Auth\\Login.razor",
+              "ToolTip": "D:\\Projects\\visual studio\\BlazorApp4\\BlazorApp4\\Pages\\Auth\\Login.razor",
+              "RelativeToolTip": "BlazorApp4\\Pages\\Auth\\Login.razor",
+              "ViewState": "AgIAAGgAAAAAAAAAAAAxwHkAAAAdAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-08-01T10:37:59.246Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "StorageService.cs",
+              "DocumentMoniker": "D:\\Projects\\visual studio\\BlazorApp4\\BlazorApp4\\Services\\StorageService.cs",
+              "RelativeDocumentMoniker": "BlazorApp4\\Services\\StorageService.cs",
+              "ToolTip": "D:\\Projects\\visual studio\\BlazorApp4\\BlazorApp4\\Services\\StorageService.cs",
+              "RelativeToolTip": "BlazorApp4\\Services\\StorageService.cs",
+              "ViewState": "AgIAAA8AAAAAAAAAAAAuwCEAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-01T14:14:25.979Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
               "Title": "index.html",
               "DocumentMoniker": "D:\\Projects\\visual studio\\BlazorApp4\\BlazorApp4\\wwwroot\\index.html",
               "RelativeDocumentMoniker": "BlazorApp4\\wwwroot\\index.html",
               "ToolTip": "D:\\Projects\\visual studio\\BlazorApp4\\BlazorApp4\\wwwroot\\index.html",
               "RelativeToolTip": "BlazorApp4\\wwwroot\\index.html",
-              "ViewState": "AgIAABsAAAAAAAAAAAAAAEIAAAAYAAAAAAAAAA==",
+              "ViewState": "AgIAADYAAAAAAAAAAAAAAFMAAAAHAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001512|",
               "WhenOpened": "2025-07-30T13:20:14.873Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "camera.js",
-              "DocumentMoniker": "D:\\Projects\\visual studio\\BlazorApp4\\BlazorApp4\\wwwroot\\assets\\js\\camera.js",
-              "RelativeDocumentMoniker": "BlazorApp4\\wwwroot\\assets\\js\\camera.js",
-              "ToolTip": "D:\\Projects\\visual studio\\BlazorApp4\\BlazorApp4\\wwwroot\\assets\\js\\camera.js",
-              "RelativeToolTip": "BlazorApp4\\wwwroot\\assets\\js\\camera.js",
-              "ViewState": "AgIAABQAAAAAAAAAAAAqwDAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
-              "WhenOpened": "2025-08-19T03:33:12.935Z",
+              "DocumentIndex": 0,
+              "Title": "App.razor",
+              "DocumentMoniker": "D:\\Projects\\visual studio\\BlazorApp4\\BlazorApp4\\App.razor",
+              "RelativeDocumentMoniker": "BlazorApp4\\App.razor",
+              "ToolTip": "D:\\Projects\\visual studio\\BlazorApp4\\BlazorApp4\\App.razor",
+              "RelativeToolTip": "BlazorApp4\\App.razor",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-08-21T06:10:22.722Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 9,
+              "Title": "AuthClient.cs",
+              "DocumentMoniker": "D:\\Projects\\visual studio\\BlazorApp4\\BlazorApp4\\Clients\\AuthClient.cs",
+              "RelativeDocumentMoniker": "BlazorApp4\\Clients\\AuthClient.cs",
+              "ToolTip": "D:\\Projects\\visual studio\\BlazorApp4\\BlazorApp4\\Clients\\AuthClient.cs",
+              "RelativeToolTip": "BlazorApp4\\Clients\\AuthClient.cs",
+              "ViewState": "AgIAABUAAAAAAAAAAIAywC0AAABOAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-01T11:14:26.83Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "app.js",
+              "DocumentMoniker": "D:\\Projects\\visual studio\\BlazorApp4\\BlazorApp4\\wwwroot\\assets\\js\\app.js",
+              "RelativeDocumentMoniker": "BlazorApp4\\wwwroot\\assets\\js\\app.js",
+              "ToolTip": "D:\\Projects\\visual studio\\BlazorApp4\\BlazorApp4\\wwwroot\\assets\\js\\app.js",
+              "RelativeToolTip": "BlazorApp4\\wwwroot\\assets\\js\\app.js",
+              "ViewState": "AgIAADIBAAAAAAAAAAAAAAEAAAALAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2025-07-31T04:44:07.87Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
               "Title": "BlackPage.razor",
               "DocumentMoniker": "D:\\Projects\\visual studio\\BlazorApp4\\BlazorApp4\\Pages\\BlackPage.razor",
               "RelativeDocumentMoniker": "BlazorApp4\\Pages\\BlackPage.razor",
               "ToolTip": "D:\\Projects\\visual studio\\BlazorApp4\\BlazorApp4\\Pages\\BlackPage.razor",
               "RelativeToolTip": "BlazorApp4\\Pages\\BlackPage.razor",
-              "ViewState": "AgIAAAMAAAAAAAAAAAAAAAUAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABgAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
               "WhenOpened": "2025-08-19T03:33:36.633Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 11,
+              "Title": "Home.razor",
+              "DocumentMoniker": "D:\\Projects\\visual studio\\BlazorApp4\\BlazorApp4\\Pages\\Home.razor",
+              "RelativeDocumentMoniker": "BlazorApp4\\Pages\\Home.razor",
+              "ToolTip": "D:\\Projects\\visual studio\\BlazorApp4\\BlazorApp4\\Pages\\Home.razor",
+              "RelativeToolTip": "BlazorApp4\\Pages\\Home.razor",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-07-30T13:23:24.053Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "_Imports.razor",
+              "DocumentMoniker": "D:\\Projects\\visual studio\\BlazorApp4\\BlazorApp4\\_Imports.razor",
+              "RelativeDocumentMoniker": "BlazorApp4\\_Imports.razor",
+              "ToolTip": "D:\\Projects\\visual studio\\BlazorApp4\\BlazorApp4\\_Imports.razor",
+              "RelativeToolTip": "BlazorApp4\\_Imports.razor",
+              "ViewState": "AgIAACEAAAAAAAAAAAAAADAAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-08-01T10:38:34.936Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "MainLayout.razor",
+              "DocumentMoniker": "D:\\Projects\\visual studio\\BlazorApp4\\BlazorApp4\\Layout\\MainLayout.razor",
+              "RelativeDocumentMoniker": "BlazorApp4\\Layout\\MainLayout.razor",
+              "ToolTip": "D:\\Projects\\visual studio\\BlazorApp4\\BlazorApp4\\Layout\\MainLayout.razor",
+              "RelativeToolTip": "BlazorApp4\\Layout\\MainLayout.razor",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACgAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-07-30T13:31:36.908Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "LoginLayout.razor",
+              "DocumentMoniker": "D:\\Projects\\visual studio\\BlazorApp4\\BlazorApp4\\Layout\\LoginLayout.razor",
+              "RelativeDocumentMoniker": "BlazorApp4\\Layout\\LoginLayout.razor",
+              "ToolTip": "D:\\Projects\\visual studio\\BlazorApp4\\BlazorApp4\\Layout\\LoginLayout.razor",
+              "RelativeToolTip": "BlazorApp4\\Layout\\LoginLayout.razor",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2025-08-21T06:10:12.99Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 21,
               "Title": "UploadPage.razor",
               "DocumentMoniker": "D:\\Projects\\visual studio\\BlazorApp4\\BlazorApp4\\Pages\\Equipments\\UploadPage.razor",
               "RelativeDocumentMoniker": "BlazorApp4\\Pages\\Equipments\\UploadPage.razor",
@@ -225,33 +366,59 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "app.js",
-              "DocumentMoniker": "D:\\Projects\\visual studio\\BlazorApp4\\BlazorApp4\\wwwroot\\assets\\js\\app.js",
-              "RelativeDocumentMoniker": "BlazorApp4\\wwwroot\\assets\\js\\app.js",
-              "ToolTip": "D:\\Projects\\visual studio\\BlazorApp4\\BlazorApp4\\wwwroot\\assets\\js\\app.js",
-              "RelativeToolTip": "BlazorApp4\\wwwroot\\assets\\js\\app.js",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAuwAMAAABLAAAAAAAAAA==",
+              "DocumentIndex": 17,
+              "Title": "camera.js",
+              "DocumentMoniker": "D:\\Projects\\visual studio\\BlazorApp4\\BlazorApp4\\wwwroot\\assets\\js\\camera.js",
+              "RelativeDocumentMoniker": "BlazorApp4\\wwwroot\\assets\\js\\camera.js",
+              "ToolTip": "D:\\Projects\\visual studio\\BlazorApp4\\BlazorApp4\\wwwroot\\assets\\js\\camera.js",
+              "RelativeToolTip": "BlazorApp4\\wwwroot\\assets\\js\\camera.js",
+              "ViewState": "AgIAABQAAAAAAAAAAAAqwDAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
-              "WhenOpened": "2025-07-31T04:44:07.87Z",
+              "WhenOpened": "2025-08-19T03:33:12.935Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "Home.razor",
-              "DocumentMoniker": "D:\\Projects\\visual studio\\BlazorApp4\\BlazorApp4\\Pages\\Home.razor",
-              "RelativeDocumentMoniker": "BlazorApp4\\Pages\\Home.razor",
-              "ToolTip": "D:\\Projects\\visual studio\\BlazorApp4\\BlazorApp4\\Pages\\Home.razor",
-              "RelativeToolTip": "BlazorApp4\\Pages\\Home.razor",
-              "ViewState": "AgIAAJUAAAAAAAAAAAAAAJsAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-07-30T13:23:24.053Z",
+              "DocumentIndex": 23,
+              "Title": "CategoryClient.cs",
+              "DocumentMoniker": "D:\\Projects\\visual studio\\BlazorApp4\\BlazorApp4\\Clients\\CategoryClient.cs",
+              "RelativeDocumentMoniker": "BlazorApp4\\Clients\\CategoryClient.cs",
+              "ToolTip": "D:\\Projects\\visual studio\\BlazorApp4\\BlazorApp4\\Clients\\CategoryClient.cs",
+              "RelativeToolTip": "BlazorApp4\\Clients\\CategoryClient.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-01T16:28:53.85Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 19,
+              "Title": "FileUploadClient.cs",
+              "DocumentMoniker": "D:\\Projects\\visual studio\\BlazorApp4\\BlazorApp4\\Clients\\FileUploadClient.cs",
+              "RelativeDocumentMoniker": "BlazorApp4\\Clients\\FileUploadClient.cs",
+              "ToolTip": "D:\\Projects\\visual studio\\BlazorApp4\\BlazorApp4\\Clients\\FileUploadClient.cs",
+              "RelativeToolTip": "BlazorApp4\\Clients\\FileUploadClient.cs",
+              "ViewState": "AgIAABAAAAAAAAAAAAAzwCgAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-08-19T04:10:40.23Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "dashboard.js",
+              "DocumentMoniker": "D:\\Projects\\visual studio\\BlazorApp4\\BlazorApp4\\wwwroot\\assets\\js\\pages\\dashboard.js",
+              "RelativeDocumentMoniker": "BlazorApp4\\wwwroot\\assets\\js\\pages\\dashboard.js",
+              "ToolTip": "D:\\Projects\\visual studio\\BlazorApp4\\BlazorApp4\\wwwroot\\assets\\js\\pages\\dashboard.js",
+              "RelativeToolTip": "BlazorApp4\\wwwroot\\assets\\js\\pages\\dashboard.js",
+              "ViewState": "AgIAAAoAAAAAAAAAAAAAwB8AAAAzAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2025-08-20T08:32:36.802Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
               "Title": "Show.razor",
               "DocumentMoniker": "D:\\Projects\\visual studio\\BlazorApp4\\BlazorApp4\\Pages\\Equipments\\Show.razor",
               "RelativeDocumentMoniker": "BlazorApp4\\Pages\\Equipments\\Show.razor",
@@ -264,7 +431,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 18,
               "Title": "custom-style.css",
               "DocumentMoniker": "D:\\Projects\\visual studio\\BlazorApp4\\BlazorApp4\\wwwroot\\assets\\css\\custom-style.css",
               "RelativeDocumentMoniker": "BlazorApp4\\wwwroot\\assets\\css\\custom-style.css",
@@ -277,7 +444,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 25,
               "Title": "EquipmentClient.cs",
               "DocumentMoniker": "D:\\Projects\\visual studio\\BlazorApp4\\BlazorApp4\\Clients\\EquipmentClient.cs",
               "RelativeDocumentMoniker": "BlazorApp4\\Clients\\EquipmentClient.cs",
@@ -290,7 +457,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 22,
               "Title": "BaseClient.cs",
               "DocumentMoniker": "D:\\Projects\\visual studio\\BlazorApp4\\BlazorApp4\\Clients\\BaseClient.cs",
               "RelativeDocumentMoniker": "BlazorApp4\\Clients\\BaseClient.cs",
@@ -303,7 +470,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 24,
               "Title": "EquipmentTypeClient.cs",
               "DocumentMoniker": "D:\\Projects\\visual studio\\BlazorApp4\\BlazorApp4\\Clients\\EquipmentTypeClient.cs",
               "RelativeDocumentMoniker": "BlazorApp4\\Clients\\EquipmentTypeClient.cs",
@@ -316,7 +483,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 20,
               "Title": "index.js",
               "DocumentMoniker": "D:\\Projects\\visual studio\\BlazorApp4\\BlazorApp4\\wwwroot\\assets\\vendor\\dayjs\\esm\\index.js",
               "RelativeDocumentMoniker": "BlazorApp4\\wwwroot\\assets\\vendor\\dayjs\\esm\\index.js",
@@ -329,33 +496,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 17,
-              "Title": "StorageService.cs",
-              "DocumentMoniker": "D:\\Projects\\visual studio\\BlazorApp4\\BlazorApp4\\Services\\StorageService.cs",
-              "RelativeDocumentMoniker": "BlazorApp4\\Services\\StorageService.cs",
-              "ToolTip": "D:\\Projects\\visual studio\\BlazorApp4\\BlazorApp4\\Services\\StorageService.cs",
-              "RelativeToolTip": "BlazorApp4\\Services\\StorageService.cs",
-              "ViewState": "AgIAABcAAAAAAAAAAAAgwCQAAABKAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-01T14:14:25.979Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 15,
-              "Title": "AuthClient.cs",
-              "DocumentMoniker": "D:\\Projects\\visual studio\\BlazorApp4\\BlazorApp4\\Clients\\AuthClient.cs",
-              "RelativeDocumentMoniker": "BlazorApp4\\Clients\\AuthClient.cs",
-              "ToolTip": "D:\\Projects\\visual studio\\BlazorApp4\\BlazorApp4\\Clients\\AuthClient.cs",
-              "RelativeToolTip": "BlazorApp4\\Clients\\AuthClient.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAXAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-01T11:14:26.83Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 18,
+              "DocumentIndex": 26,
               "Title": "ErrorDto.cs",
               "DocumentMoniker": "D:\\Projects\\visual studio\\BlazorApp4\\BlazorApp4\\Models\\ErrorDto.cs",
               "RelativeDocumentMoniker": "BlazorApp4\\Models\\ErrorDto.cs",
@@ -368,7 +509,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 19,
+              "DocumentIndex": 27,
               "Title": "LoginResponse.cs",
               "DocumentMoniker": "D:\\Projects\\visual studio\\BlazorApp4\\BlazorApp4\\Responses\\LoginResponse.cs",
               "RelativeDocumentMoniker": "BlazorApp4\\Responses\\LoginResponse.cs",
@@ -381,33 +522,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 20,
-              "Title": "_Imports.razor",
-              "DocumentMoniker": "D:\\Projects\\visual studio\\BlazorApp4\\BlazorApp4\\_Imports.razor",
-              "RelativeDocumentMoniker": "BlazorApp4\\_Imports.razor",
-              "ToolTip": "D:\\Projects\\visual studio\\BlazorApp4\\BlazorApp4\\_Imports.razor",
-              "RelativeToolTip": "BlazorApp4\\_Imports.razor",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABUAAAAjAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-08-01T10:38:34.936Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 16,
-              "Title": "Login.razor",
-              "DocumentMoniker": "D:\\Projects\\visual studio\\BlazorApp4\\BlazorApp4\\Pages\\Auth\\Login.razor",
-              "RelativeDocumentMoniker": "BlazorApp4\\Pages\\Auth\\Login.razor",
-              "ToolTip": "D:\\Projects\\visual studio\\BlazorApp4\\BlazorApp4\\Pages\\Auth\\Login.razor",
-              "RelativeToolTip": "BlazorApp4\\Pages\\Auth\\Login.razor",
-              "ViewState": "AgIAAGkAAAAAAAAAAAAAAH4AAAAEAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-08-01T10:37:59.246Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 22,
+              "DocumentIndex": 28,
               "Title": "NavMenu.razor",
               "DocumentMoniker": "D:\\Projects\\visual studio\\BlazorApp4\\BlazorApp4\\Layout\\NavMenu.razor",
               "RelativeDocumentMoniker": "BlazorApp4\\Layout\\NavMenu.razor",
@@ -420,20 +535,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 21,
-              "Title": "MainLayout.razor",
-              "DocumentMoniker": "D:\\Projects\\visual studio\\BlazorApp4\\BlazorApp4\\Layout\\MainLayout.razor",
-              "RelativeDocumentMoniker": "BlazorApp4\\Layout\\MainLayout.razor",
-              "ToolTip": "D:\\Projects\\visual studio\\BlazorApp4\\BlazorApp4\\Layout\\MainLayout.razor",
-              "RelativeToolTip": "BlazorApp4\\Layout\\MainLayout.razor",
-              "ViewState": "AgIAACsAAAAAAAAAAAAAAFECAAARAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2025-07-30T13:31:36.908Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 23,
+              "DocumentIndex": 29,
               "Title": "Program.cs",
               "DocumentMoniker": "D:\\Projects\\visual studio\\BlazorApp4\\BlazorApp4\\Program.cs",
               "RelativeDocumentMoniker": "BlazorApp4\\Program.cs",

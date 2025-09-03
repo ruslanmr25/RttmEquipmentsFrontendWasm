@@ -1,6 +1,7 @@
 using System;
 using BlazorApp4.Models.Departments;
 using BlazorApp4.Models.Images;
+using BlazorApp4.Models.Logs;
 using BlazorApp4.Models.Parameters;
 using BlazorApp4.Models.Rooms;
 using BlazorApp4.Models.UserModels;
@@ -30,5 +31,7 @@ public class Equipment
 
     public List<Parameter>? Parameters { get; set; }
 
-    public bool IsSelected { get; set; } = false;   
+    public bool IsSelected { get; set; } = false;
+
+    public List<Log>? History { get; set; }
 }

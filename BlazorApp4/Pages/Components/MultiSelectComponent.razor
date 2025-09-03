@@ -1,0 +1,132 @@
+﻿@typeparam TItem
+@inherits InputBase<List<int>>
+
+<div class="container">
+     @* <div class="dropdown-container">
+          <button id="dropdownButton" type="button" class="dropdown-button">
+               Social
+               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                    <path fill-rule="evenodd"
+                         d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                         clip-rule="evenodd" />
+               </svg>
+          </button>
+
+          <div id="dropdownContent" class="dropdown-content">
+               <div style="padding-top: 0.25rem; padding-bottom: 0.25rem;" role="menu" aria-orientation="vertical"
+                    aria-labelledby="dropdownButton">
+                    <a href="#" class="menu-item" role="menuitem">Facebook</a>
+                    <a href="#" class="menu-item" role="menuitem">Instagram</a>
+                    <a href="#" class="menu-item" role="menuitem">LinkedIn</a>
+               </div>
+          </div>
+     </div> *@
+
+     @* <div class="dropdown-container">
+          <label for="hiddenSelectValue" class="dropdown-label">Choose one</label>
+          <button id="selectDropdownButton" type="button" class="select-dropdown-button">
+               <span id="selectedValue" class="selected-value">Choose one</span>
+               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                    <path fill-rule="evenodd"
+                         d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                         clip-rule="evenodd" />
+               </svg>
+          </button>
+
+          <div id="selectDropdownContent" class="select-dropdown-content">
+               <div style="padding-top: 0.25rem; padding-bottom: 0.25rem;" role="menu" aria-orientation="vertical"
+                    aria-labelledby="selectDropdownButton">
+                    <a href="#" class="select-option" data-value="valor1" role="menuitem">Shoes</a>
+                    <a href="#" class="select-option" data-value="valor2" role="menuitem">Shirts</a>
+                    <a href="#" class="select-option" data-value="valor3" role="menuitem">Pants</a>
+                    <a href="#" class="select-option" data-value="valor4" role="menuitem">Shoes</a>
+               </div>
+          </div>
+          <input type="hidden" id="hiddenSelectValue" name="selectOption" value="">
+     </div> *@
+     <div class="dropdown-container">
+          <label for="hiddenMultiSelectValue" class="dropdown-label">Select</label>
+          <button id="multiSelectDropdownButton" type="button" class="multi-select-button">
+               <span id="selectedMultiValues" class="selected-tags">
+                    <span class="placeholder">Choose</span>
+               </span>
+               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                    <path fill-rule="evenodd"
+                         d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                         clip-rule="evenodd" />
+               </svg>
+          </button>
+
+          <div id="multiSelectDropdownContent" class="dropdown-content">
+               <div style="padding-top: 0.25rem; padding-bottom: 0.25rem;" role="menu" aria-orientation="vertical"
+                    aria-labelledby="multiSelectDropdownButton">
+
+
+                    @if (Items is not null)
+                    {
+
+                         <div class="multi-select-option" data-value="opcionA" role="option">
+                              <span>Option A</span>
+                              <span class="checkbox-icon">
+                                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                        stroke-linecap="round" stroke-linejoin="round" class="feather feather-check"
+                                        style="display: none;">
+                                        <polyline points="20 6 9 17 4 12"></polyline>
+                                   </svg>
+                              </span>
+                         </div>
+                         @foreach (var ite in Items)
+                         {
+
+
+                              <div class="multi-select-option" data-value="opcionA" role="option">
+                                   <span>Option A</span>
+                                   <span class="checkbox-icon">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                             stroke-linecap="round" stroke-linejoin="round" class="feather feather-check"
+                                             style="display: none;">
+                                             <polyline points="20 6 9 17 4 12"></polyline>
+                                        </svg>
+                                   </span>
+                              </div>
+                         }
+
+
+                    }
+
+
+               </div>
+          </div>
+          <input type="hidden" id="hiddenMultiSelectValue" name="multiSelectOption" value="">
+     </div>
+</div>
+
+
+@inject IJSRuntime JS
+@code {
+
+     [Parameter] public List<TItem>? Items { get; set; }
+
+     [Parameter] public Func<TItem, string> GetText { get; set; } = default!;
+
+     [Parameter] public Func<TItem, int> GetValue { get; set; } = default!;
+
+
+     protected override Task OnAfterRenderAsync(bool firstRender)
+     {
+
+
+          JS.InvokeVoidAsync("multiselect");
+
+          return base.OnAfterRenderAsync(firstRender);
+     }
+
+
+     protected override bool TryParseValueFromString(string? value, out List<int> result, out string validationErrorMessage)
+     {
+          // Bu metodni Blazor majburan chaqiradi, lekin biz OnSelectionChanged ichida qiymatlarni to'ldiramiz
+          result = CurrentValue ?? new List<int>();
+          validationErrorMessage = "";
+          return true;
+     }
+}

@@ -94,9 +94,8 @@ class FormValidation {
           this.initFormValidation();
      }
 }
-document.addEventListener("DOMContentLoaded", function (e) {
-     new Components().init(), new FormValidation().init();
-});
+
+
 class ThemeLayout {
      constructor() {
           (this.html = document.getElementsByTagName("html")[0]),
@@ -324,4 +323,14 @@ class ThemeLayout {
                this.setSwitchFromConfig();
      }
 }
-new ThemeLayout().init();
+
+
+window.appInit = () => {
+
+     console.log("✅ appInit ishladi!");
+     new Components().init();
+     new FormValidation().init();
+     new ThemeLayout().init();
+}
+
+// appInit();

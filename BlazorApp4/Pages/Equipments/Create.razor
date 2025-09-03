@@ -21,7 +21,6 @@
 
                <EditForm OnValidSubmit="@HandelValidSubmit" Model="@createEquipmentDto">
 
-                    <ValidationSummary></ValidationSummary>
 
                     <DataAnnotationsValidator></DataAnnotationsValidator>
 
@@ -118,6 +117,10 @@
 
 
                                    </InputMultiSelect>
+     @* 
+                                        <MultiSelectComponent TItem="Parameter" GetText="@(p => p.Name)" GetValue="@(p => p.Id)"
+                                             @bind-Value="createEquipmentDto.Parameters" Items="@parameters">
+                                        </MultiSelectComponent> *@
 
                                    <ValidationMessage For="@(() => createEquipmentDto.Parameters)" />
 

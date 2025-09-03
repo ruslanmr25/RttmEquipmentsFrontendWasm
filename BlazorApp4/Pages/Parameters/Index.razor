@@ -107,7 +107,7 @@
 
                                    <th scope="col">T/r</th>
                                    <th scope="col">Nomi</th>
-                                   <th scope="col">Jihoz turisi</th>
+                                   <th scope="col">Jihoz turi</th>
 
 
 
@@ -134,12 +134,14 @@
                                         <td>@parameter.Name</td>
                                         <td>@parameter.EquipmentType?.Name</td>
 
+                                   <AuthorizeView Roles="superAdmin">
 
                                         <td>
                                              <span role="button" @onclick="() => OpenEditModal(parameter)">
                                                   Tahrirlash
                                              </span>
                                         </td>
+                                   </AuthorizeView>
                                    </tr>
                               }
 
