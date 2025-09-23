@@ -98,7 +98,6 @@
 @inject NavigationManager NavigationManager
 @inject AuthClient AuthClient
 @inject AuthenticationStateProvider AuthProvider
-
 @inject ToastrService ToastrService
 @inject StorageService StorageService
 
@@ -110,7 +109,7 @@
      public bool IsAcquainted { get; set; } = false;
 
      protected User? User;
-     protected string? Token;
+
      protected string? errorMessage;
 
      protected bool isRequestSending = false;
@@ -127,10 +126,10 @@
 
                if (response.StatusCode == 200)
                {
-                    Token = response.Data!.Token;
+                    string token = response.Data!.Token;
 
                     var apiAuth = (ApiAuthenticationStateProvider)AuthProvider;
-                    await apiAuth.MarkUserAsAuthenticated(Token);
+                    await apiAuth.MarkUserAsAuthenticated(token);
                     ToastrService.ShowSucess(response.Message ?? "Nimadir xato ketti");
 
                     errorMessage = null;

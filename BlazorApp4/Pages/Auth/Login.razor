@@ -22,7 +22,7 @@
 
                         <EditForm Model="@loginDto" OnValidSubmit="@SubmitAsync">
 
-                            @* <DataAnnotationsValidator></DataAnnotationsValidator> *@
+                            <DataAnnotationsValidator></DataAnnotationsValidator>
 
                             <div class="mb-3">
                                 <label class="form-label" for="name">Foydalanuvchi nomi:</label>
@@ -86,19 +86,17 @@
 
 
 
-@inject NavigationManager NavigationManager
-@inject AuthClient AuthClient
 @inject AuthenticationStateProvider AuthProvider
-
+@inject NavigationManager NavigationManager
 @inject ToastrService ToastrService
-@inject StorageService StorageService
+@inject AuthClient AuthClient
+
 
 @code {
     protected bool isLoginFailed = false;
     protected string? errorMessage;
     protected LoginDto loginDto = new();
 
-    protected string? Token;
 
     protected bool isRequestSending = false;
 
@@ -106,8 +104,6 @@
     {
         isRequestSending = true;
         isLoginFailed = false;
-
-
         try
         {
 
@@ -117,51 +113,40 @@
             {
 
 
-                Token = response.Data!.Token;
+                string token = response.Data!.Token;
 
                 var apiAuth = (ApiAuthenticationStateProvider)AuthProvider;
-                await apiAuth.MarkUserAsAuthenticated(Token);
-                ToastrService.ShowSucess(response.Message ?? "Nimadir xato ketti");
+                await apiAuth.MarkUserAsAuthenticated(token);
+                ToastrService.ShowSucess(response.Message!);
 
                 errorMessage = null;
 
                 var state = await AuthProvider.GetAuthenticationStateAsync();
 
-                Console.WriteLine(state);
 
                 if (state.User.IsInRole("staff") || state.User.IsInRole("guard"))
                 {
-
-
                     NavigationManager.NavigateTo("/my-equipments");
-
                     return;
-
                 }
 
                 NavigationManager.NavigateTo("/");
 
 
             }
-            else if (response.StatusCode == 422)
+            else if (response.StatusCode == 422 || response.StatusCode == 401)
             {
                 loginDto.Password = "";
                 errorMessage = response.Message;
 
                 isLoginFailed = true;
-
-
             }
-
 
 
         }
         catch (Exception)
         {
-
-
             ToastrService.ShowError("Server bilan aloqa mavjud emas");
-
         }
         finally
         {

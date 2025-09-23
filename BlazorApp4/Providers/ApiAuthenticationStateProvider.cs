@@ -5,7 +5,6 @@ using System.Text.Json;
 using BlazorApp4.Clients;
 using BlazorApp4.Services;
 using Microsoft.AspNetCore.Components.Authorization;
-using Microsoft.JSInterop;
 
 namespace BlazorApp4.Providers;
 
@@ -15,8 +14,6 @@ public class ApiAuthenticationStateProvider : AuthenticationStateProvider
 
     private readonly StorageService _storageService;
 
-    private readonly AuthClient _authClient;
-
     public ApiAuthenticationStateProvider(
         HttpClient httpClient,
         StorageService storageService,
@@ -25,7 +22,6 @@ public class ApiAuthenticationStateProvider : AuthenticationStateProvider
     {
         _client = httpClient;
         _storageService = storageService;
-        _authClient = authClient;
     }
 
     public override async Task<AuthenticationState> GetAuthenticationStateAsync()
