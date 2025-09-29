@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Jihozlar</title>
+    <base href="/" />
+    <link rel="stylesheet" href="css/app.css" />
+    <link rel="icon" type="image/png" href="favicon.png" />
+    <!-- <link href="BlazorApp4.styles.css" rel="stylesheet" /> -->
+    <link href="manifest.webmanifest" rel="manifest" />
+    <link rel="apple-touch-icon" sizes="512x512" href="icon-512.png" />
+    <link rel="apple-touch-icon" sizes="192x192" href="icon-192.png" />
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="robots" content="index, follow" />
+    <meta name="theme-color" content="#ffffff">
+
+    <!-- App favicon -->
+    <link rel="shortcut icon" href="/favicon.png">
+
+    <!-- Google Font Family link -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght$0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet" href="assets/css/MultiSelect.css">
+    <!-- Vendor css -->
+    <link href="assets/css/vendor.min.css" rel="stylesheet" type="text/css" />
+
+    <!-- Icons css -->
+    <link href="assets/css/icons.min.css" rel="stylesheet" type="text/css" />
+
+
+
+    <!-- App css -->
+    <link href="assets/css/style.min.css" rel="stylesheet" type="text/css" />
+    <link href="assets/css/custom-style.css" rel="stylesheet" type="text/css" />
+
+
+    <!-- Theme Config js -->
+    <script src="assets/js/config.js"></script>
+
+</head>
+
+<body>
+    <div id="app">
+        <svg class="loading-progress">
+            <circle r="40%" cx="50%" cy="50%" />
+            <circle r="40%" cx="50%" cy="50%" />
+        </svg>
+        <div class="loading-progress-text"></div>
+    </div>
+
+    <div style="z-index: 1100;" id="blazor-error-ui">
+        Nimadir xato ketti ilstimos sahifani qayta yuklang
+        <a href="." class="reload">Reload</a>
+        <span class="dismiss">🗙</span>
+    </div>
+
+
+
+    <script src="assets/js/vendor.min.js"></script>
+
+
+
+    <script src="assets/js/pages/dashboard.js"></script>
+    <script src="assets/js/custom-js.js"></script>
+    <script src="assets/js/storage.js"></script>
+    <script src="assets/js/camera.js"></script>
+
+
+    <script src="https://apexcharts.com/samples/assets/irregular-data-series.js"></script>
+    <script src="https://apexcharts.com/samples/assets/ohlc.js"></script>
+    <!-- <script src="assets/js/pages/chart.js"></script> -->
+
+
+    <script src="_framework/blazor.webassembly.js"></script>
+
+
+    <script src="assets/js/app.js"></script>
+
+    <script type="module" src="assets/js/MultiSelect.js"></script>
+
+    <script>
+        navigator.serviceWorker.register('service-worker.js');
+    </script>
+
+</body>
+
+</html>
